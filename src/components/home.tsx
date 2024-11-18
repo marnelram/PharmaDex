@@ -55,10 +55,12 @@ export default function Home({ session }: { session: Session | null }) {
   };
 
   return (
-    <div className="sm:max-h-screen h-full bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-between p-8">
+    <div className="sm:max-h-screen h-full bg-[#F5F5F5] flex flex-col items-center justify-between p-8">
       {/* Header */}
-      <header className="w-full max-w-5xl flex justify-between items-center p-4 bg-white shadow-md">
-        <h1 className="text-2xl font-bold">Drug or Pokémon?</h1>
+      <header className="w-full max-w-5xl flex justify-between items-center p-4 bg-white rounded-[15px] shadow-md">
+        <h1 className="text-[32px] font-bold font-['Poppins']">
+          Drug or Pokémon?
+        </h1>
         <div className="relative">
           {session?.user ? (
             <DropdownMenu>
@@ -85,7 +87,7 @@ export default function Home({ session }: { session: Session | null }) {
           ) : (
             <Button
               onClick={() => router.push("/auth/signin")}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-md"
+              className="bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 shadow-md rounded-[25px] text-[14px] font-medium"
             >
               <LogIn className="mr-2 h-5 w-5" />
               Login
@@ -96,21 +98,23 @@ export default function Home({ session }: { session: Session | null }) {
 
       <div className="w-full max-w-4xl mt-8">
         {/* Title */}
-        <h1 className="text-4xl font-bold text-center mb-8 font-['Poppins']">
+        <h1 className="text-[44px] font-bold text-center mb-8 font-['Poppins']">
           Drug or Pokémon?
         </h1>
 
         {/* Main CTA */}
         <Button
-          className="w-full py-8 text-2xl font-bold rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+          className="w-full py-8 text-[22px] font-bold rounded-[25px] bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 shadow-lg font-['Poppins']"
           onClick={() => router.push("/quiz")}
         >
           Start Quiz
         </Button>
 
         {/* Leaderboard Preview */}
-        <Card className="mt-4 p-4">
-          <h2 className="text-xl font-semibold mb-4">Top Players</h2>
+        <Card className="mt-4 p-4 rounded-[15px]">
+          <h2 className="text-[32px] font-bold mb-4 font-['Poppins']">
+            Top Players
+          </h2>
           <div className="flex justify-center items-center gap-12 md:gap-24 lg:gap-36">
             {[1, 2, 3].map((rank) => (
               <div key={rank} className="flex flex-col items-center">
@@ -128,7 +132,7 @@ export default function Home({ session }: { session: Session | null }) {
         </Card>
 
         {/* Quick Facts Carousel */}
-        <Card className="mt-8 h-32">
+        <Card className="mt-8 h-32 rounded-[15px]">
           <CardContent className="p-6 h-full">
             {isLoading ? (
               <div className="flex justify-center items-center py-8">
@@ -155,14 +159,17 @@ export default function Home({ session }: { session: Session | null }) {
                   size="icon"
                   onClick={prevFact}
                   disabled={facts.length <= 1}
+                  className="rounded-[25px]"
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </Button>
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold">
+                  <h3 className="text-[22px] font-medium font-['Poppins']">
                     {facts[currentFact]?.title}
                   </h3>
-                  <p className="mt-2">{facts[currentFact]?.content}</p>
+                  <p className="mt-2 text-[16px] font-['Raleway']">
+                    {facts[currentFact]?.content}
+                  </p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={nextFact}>
                   <ChevronRight className="h-6 w-6" />
@@ -176,7 +183,7 @@ export default function Home({ session }: { session: Session | null }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center"
+            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
             onClick={() => router.push("/quizHistory")}
           >
             <Trophy className="mr-2 h-5 w-5" />
@@ -184,7 +191,7 @@ export default function Home({ session }: { session: Session | null }) {
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center"
+            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
             onClick={() => router.push("/leaderboard")}
           >
             <Users className="mr-2 h-5 w-5" />
@@ -192,7 +199,7 @@ export default function Home({ session }: { session: Session | null }) {
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center"
+            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
             onClick={() => router.push("/achievements")}
           >
             <Award className="mr-2 h-5 w-5" />
@@ -200,7 +207,7 @@ export default function Home({ session }: { session: Session | null }) {
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center"
+            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
             onClick={() => router.push("/settings")}
           >
             <Settings className="mr-2 h-5 w-5" />
@@ -209,11 +216,11 @@ export default function Home({ session }: { session: Session | null }) {
         </div>
       </div>
 
-      {/* Background Elements */}
+      {/* Background Elements - Updated with design colors */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-10 left-10 w-20 h-20 bg-red-200 rounded-full opacity-20"></div>
-        <div className="absolute bottom-20 right-20 w-32 h-12 bg-blue-200 rounded-full opacity-20 transform rotate-45"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 border-4 border-yellow-300 rounded-full opacity-20"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-[#E63946] rounded-full opacity-10"></div>
+        <div className="absolute bottom-20 right-20 w-32 h-12 bg-[#F3E260] rounded-full opacity-10 transform rotate-45"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 border-4 border-[#9E9E9E] rounded-full opacity-10"></div>
       </div>
     </div>
   );

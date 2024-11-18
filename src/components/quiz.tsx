@@ -140,32 +140,32 @@ export default function Quiz({ session }: { session: Session | null }) {
 
   const progress = ((currentQuestion + 1) / quizData.length) * 100;
 
-  // Add loading state
+  // Loading state
   if (isLoading || isQuizAttemptPending) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p className="text-lg font-semibold">Loading...</p>
+      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+        <div className="text-center font-['Raleway']">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#E63946]" />
+          <p className="text-[16px] font-medium">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // Add error state
+  // Error state
   if (isError || isQuizAttemptError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-6 text-center">
-            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Error</h2>
-            <p className="text-gray-600 mb-4">
+      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+        <Card className="w-full max-w-md rounded-[15px]">
+          <CardContent className="p-6 text-center font-['Raleway']">
+            <AlertCircle className="h-12 w-12 text-[#E63946] mx-auto mb-4" />
+            <h2 className="text-[22px] font-medium mb-2">Error</h2>
+            <p className="text-[#9E9E9E] mb-4">
               {error?.message || quizAttemptError?.message}
             </p>
             <Button
               onClick={() => window.location.reload()}
-              className="bg-blue-500 hover:bg-blue-600"
+              className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
             >
               Try Again
             </Button>
@@ -176,40 +176,44 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-center p-8">
-      <Card className="w-full max-w-2xl">
-        <CardContent className="p-6">
-          <h1 className="text-3xl font-bold text-center mb-6 font-['Poppins']">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
+      <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
+        <CardContent className="p-8">
+          <h1 className="text-[44px] font-bold text-center mb-8 font-['Poppins']">
             Drug or Pokémon?
           </h1>
 
-          <Progress value={progress} className="mb-6" />
+          <Progress
+            value={progress}
+            className="mb-8 h-3 rounded-full bg-[#9E9E9E]/20"
+            indicatorClassName="bg-[#E63946]"
+          />
 
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold mb-4">
+          <div className="text-center mb-12">
+            <h2 className="text-[32px] font-bold mb-4 font-['Poppins']">
               {quizData[currentQuestion]?.name}
             </h2>
             {showFeedback && (
-              <p className="text-gray-600 mb-4">
+              <p className="text-[16px] text-[#9E9E9E] mb-4 font-['Raleway']">
                 {quizData[currentQuestion]?.description}
               </p>
             )}
-            <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full mb-4 flex items-center justify-center">
-              <span className="text-4xl">?</span>
+            <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full mb-6 flex items-center justify-center">
+              <span className="text-[44px] text-[#9E9E9E]">?</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-6">
             <Button
               onClick={() => handleAnswer("Drug")}
-              className="py-8 text-xl font-semibold bg-blue-500 hover:bg-blue-600"
+              className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
               disabled={showFeedback}
             >
               Drug
             </Button>
             <Button
               onClick={() => handleAnswer("Pokemon")}
-              className="py-8 text-xl font-semibold bg-red-500 hover:bg-red-600"
+              className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
               disabled={showFeedback}
             >
               Pokémon
@@ -220,9 +224,7 @@ export default function Quiz({ session }: { session: Session | null }) {
             <div className="mt-6 text-center">
               <Card className="mt-4">
                 <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Additional Information
-                  </h3>
+                  <h3 className="text-lg font-semibold">{currentFact}</h3>
                   <p className="text-gray-600">{currentFact}</p>
                   <Button
                     onClick={handleNextQuestion}

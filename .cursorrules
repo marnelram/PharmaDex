@@ -2,77 +2,150 @@
 
 This document outlines the design specifications for the "Drug or Pokémon?" app. The app is intended to combine playful visual elements with practical usability to create an engaging, educational, and entertaining experience for users.
 
----
-
 ## 1. Overall Theme
 
-### Mood and Style
+**Mood and Style**
+The game theme is centered around a playful, recognizable Pokéball-inspired design that incorporates elements of pharmaceuticals for a cohesive and interactive user experience.
 
-- **Color Palette**: A bright, engaging palette with:
-  - **Primary Colors**: Pastel blues (#A8D5E2), yellows (#FDE68A), and greens (#A7F3D0).
-  - **Accent Colors**: Vibrant reds (#FB7185) and purples (#C084FC) to draw attention to CTAs or animations.
-  - **Neutral Tones**: Soft grays for backgrounds and dividers.
-- **Typography**:
-  - **Headers**: Whimsical fonts like Poppins or Fredoka One for a playful tone.
-  - **Body Text**: Sans-serif fonts like Roboto or Open Sans for readability.
-  - Font sizes vary: Large (32px) for headlines, Medium (18px) for body text, and Small (14px) for labels.
-- **Shapes**:
-  - Rounded corners for buttons, cards, and modals for a soft, approachable look.
-- **Imagery**:
-  - Cartoonish, colorful Pokémon icons (customized or silhouette-style).
-  - Detailed, colorful pill designs (minimalistic representations of capsules and tablets).
-- **Animations**:
-  - Subtle and fun, like a sliding pill or bouncing Pokéball for screen transitions or button hovers.
+- **Color Palette**:
+  - **Primary (60% of palette)**: Off-white (#F5F5F5)
+  - **Secondary (30% of palette)**: Gray (#9E9E9E)
+  - **Accent (10% of palette)**:
+    - Red (#E63946) – Used for CTA buttons, highlights, and quiz states
+    - Muted Yellow (#F3E260) – Used for text highlights and progress indicators
+  - **Neutral Tones**: Soft grays for backgrounds and dividers
 
----
+**Color Contrast Note**:
+High contrast ensures sufficient difference in brightness for legibility:
 
-## 2. Home Screen
+- Text contrast adheres to WCAG 2.1 standards:
+  - 4.5:1 ratio for normal text.
+  - 3:1 ratio for large text (e.g., H1).
 
-### Layout and Navigation
+## 2. Visual Design
+
+### 2.1 Typography
+
+- **Header Font**: Poppins
+- **Body Font**: Raleway
+
+**Font Sizes and Weights**:
+The typographic hierarchy is based on a 1.4 modular scale:
+
+- H1: 44px, **Bold (700)**
+- H2: 32px, **Bold (700)**
+- H3: 22px, **Medium (500)**
+- H4: 16px, **Medium (500)**
+- H5: 12px, **Regular (400)**
+- Body Text: 16px, **Regular (400)**
+- Labels/Text on Buttons: 14px, **Medium (500)**
+
+**Legibility Guidelines**:
+
+- Avoid overly thin weights for small text to improve readability.
+- Maintain padding between headers and body text for clarity.
+
+### 2.2 Shapes and Layout
+
+- **Buttons**: Capsule-shaped with rounded corners (border-radius: 25px).
+  - States: Hover (darker accent color), Active (slight shadow inset), Disabled (grayed out with lower opacity).
+- **Cards**: Soft rounded edges (border-radius: 15px).
+- **Modals**: Centered, with rounded corners matching the theme.
+
+### 2.4 Imagery
+
+- **Pokémon Elements**:
+  - Cartoonish, colorful Pokémon icons (customized or silhouette-style)
+  - Subtle Pokéball motifs in backgrounds
+- **Pharmaceutical Elements**:
+  - Detailed, colorful pill designs (minimalistic representations)
+  - Medical symbols integrated into UI elements
+
+## 3. Interaction Design
+
+### 3.1 Animations (Microinteractions)
+
+- **Button Hover**: Slight bounce or grow animation (scale: 1.05).
+- **Answer Feedback**:
+  - Correct: A pokéball bounces and opens briefly.
+  - Incorrect: A pill breaks apart and disappears.
+- **Screen Transitions**: Subtle sliding transitions for quizzes.
+
+### 3.2 Sound Effects
+
+(Optional, toggle-able for accessibility):
+
+- **Correct Answer**: Pokéball “click” sound.
+- **Incorrect Answer**: A subtle pill “pop.”
+- **Button Clicks**: Light tap sound for user feedback.
+
+## 4. Accessibility Guidelines
+
+- **Color Contrast**:
+
+  - Ensure all text and interactive elements meet contrast ratios:
+    - Text (e.g., labels, headers): Off-white (#F5F5F5) on red (#E63946) should use slightly darker shades of red if needed.
+  - Avoid pure white (#FFFFFF) for text to reduce eye strain.
+
+- **Touch Target Size**:
+
+  - Buttons and interactive elements must be at least 48px in height/width for usability.
+
+- **Keyboard Navigation**:
+  - Ensure all buttons, links, and input fields are navigable via keyboard (tab and arrow keys).
+
+## 5. Gamification Features
+
+- **Progress Indicators**:
+
+  - Pokéball progress bar with sections filling as the quiz progresses.
+  - Achievement badges styled as Pokémon trainer icons or pill-themed awards.
+
+- **Leaderboard**:
+
+  - Global leaderboard displaying ranks.
+
+- **Streak Tracking**:
+  - Bonus points for streaks, visually represented by a glowing effect on streak numbers.
+
+## 6. Technical Considerations
+
+- Use scalable vector graphics (SVGs) for Pokéball and pill icons for consistent rendering.
+- Optimize animations to avoid performance lags on slower devices.
+
+## 7. Screen-Specific Designs
+
+### 7.1 Home Screen
 
 - **Primary Elements**:
-  - **Main Call to Action (CTA)**:
-    - A large “Start Quiz” button at the center, featuring gradient colors and subtle shadowing for depth.
-  - **Leaderboard Preview**:
-    - A compact widget showing the top 3 players with avatar placeholders (Pokémon trainers or pharmacist icons).
-  - **Quick Facts Carousel**:
-    - Horizontal scroll with cards presenting random Pokémon trivia or drug facts, each card featuring an image and short text blurb.
-- **Navigation Buttons**:
-  - Quizzes: Access to Default and Custom Modes.
-  - Leaderboard: A button leading to the leaderboard screen.
-  - My Achievements: Links to the badge gallery.
-  - Settings: Includes options for sound, notifications, and theme toggles.
-- **Background Design**:
-  - Subtle gradient blending Pokémon motifs (e.g., faint Pokéballs) with pill graphics.
+  - Large "Start Quiz" button with gradient colors and subtle shadowing
+  - Leaderboard Preview widget showing top 3 players
+  - Quick Facts Carousel with Pokémon trivia and drug facts
+- **Navigation**:
+  - Quizzes (Default/Custom Modes)
+  - Leaderboard
+  - Achievements
+  - Settings (sound, notifications, theme)
+- **Background**: Subtle gradient with Pokémon motifs and pill graphics
 
----
+### 7.2 Quiz Interface
 
-## 3. Quiz Interface
-
-### Question Area
-
-- **Card Layout**:
+- **Question Area**:
   - The quiz name to guess is displayed in bold, large text.
   - A rotating visual aid (e.g., Pokémon silhouette or pill design) displayed above or next to the question.
 - **Answer Buttons**:
   - Two prominent buttons labeled “Drug” and “Pokémon” in contrasting colors (e.g., green and blue).
   - Buttons grow slightly on hover or tap and include hover effects like color shifts or a glowing border.
+- **Feedback System**:
+  - **Correct Answer**:
+    - Confetti animation, a congratulatory message, and a small badge-like icon appear temporarily.
+    - A short educational tidbit (e.g., drug function or Pokémon lore) pops up in a speech bubble or card.
+  - **Incorrect Answer**:
+    - A playful animation (e.g., shaking head emoji or a “wah-wah” sound effect) appears with a humorous message.
 
-### Feedback System
+### 7.3 Leaderboard and Scoring
 
-- **Correct Answer**:
-  - Confetti animation, a congratulatory message, and a small badge-like icon appear temporarily.
-  - A short educational tidbit (e.g., drug function or Pokémon lore) pops up in a speech bubble or card.
-- **Incorrect Answer**:
-  - A playful animation (e.g., shaking head emoji or a “wah-wah” sound effect) appears with a humorous message.
-
----
-
-## 4. Leaderboard and Scoring
-
-### Leaderboard Screen
-
-- **Layout**:
+- **Leaderboard Screen**:
   - Top 3 players displayed with podium-style graphics and prominent avatars.
   - A scrollable list below for additional rankings.
 - **Icons**:
@@ -80,79 +153,41 @@ This document outlines the design specifications for the "Drug or Pokémon?" app
 - **Score Highlights**:
   - Player’s current score and rank displayed at the top with a bright accent color to draw attention.
 
----
+### 7.4 Achievements and Badges
 
-## 5. Achievements and Badges
-
-### Badge Gallery
-
-- **Design**:
+- **Badge Gallery**:
   - Achievements styled as colorful, high-resolution badges resembling Pokémon gym badges or pharmaceutical seals.
   - Example Titles:
     - "Pokémon Professor" for 50 correct Pokémon answers.
     - "Pharmacist in Training" for 25 correct drug-related answers.
   - Clicking on a badge reveals how it was earned and progress toward the next milestone.
 
----
+### 7.5 Shareability and Custom Inputs
 
-## 6. Shareability and Custom Inputs
-
-### Social Media Share
-
-- **Share Screen**:
+- **Social Media Share**:
   - Customizable share cards with vibrant backgrounds and a fun title (e.g., “Wannabe Pharmacist” or “Elite Pokémon Trainer”).
   - Includes a preview of the player’s score and ranking.
-
-### Custom Input Mode
-
-- **Input Design**:
+- **Custom Input Mode**:
   - A modal popup with:
     - A simple input field for adding fake names.
     - A live preview box that displays how the name will appear in quizzes.
   - Buttons for “Submit” and “Cancel,” with colorful hover effects.
 
----
+### 7.6 Iconography and Visual Aids
 
-## 7. Accessibility
+- **Visual Icons**:
+  - **Drugs**: Colorful pill capsules, liquid droppers, or minimalist medical symbols.
+  - **Pokémon**: Popular Pokémon silhouettes (e.g., Pikachu, Jigglypuff) or their iconic features.
+- **Animations**:
+  - Visual aids (like pills or Pokémon images) spin or bounce slightly when displayed.
 
-### General Guidelines
+### 7.7 Gamification Details
 
-- Use high-contrast text for readability against both light and dark themes.
-- Include text labels for all interactive elements.
-- Ensure touch targets are at least 48x48px for mobile usability.
-- Avoid clues that rely solely on color differences.
+- **Progress Bar**:
+  - A simple, colorful bar at the top of the quiz interface showing progress through the quiz session.
+- **Achievement Popups**:
+  - Appear with sound effects when users unlock milestones, featuring vibrant animation and a preview of the earned badge.
 
----
-
-## 8. Iconography and Visual Aids
-
-### Visual Icons
-
-- **Drugs**: Colorful pill capsules, liquid droppers, or minimalist medical symbols.
-- **Pokémon**: Popular Pokémon silhouettes (e.g., Pikachu, Jigglypuff) or their iconic features.
-
-### Animations
-
-- Visual aids (like pills or Pokémon images) spin or bounce slightly when displayed.
+This document ensures a playful, polished, and user-friendly experience for all players while maintaining a strong focus on accessibility and inclusivity.
 
 ---
-
-## 9. Gamification Details
-
-### Progress Bar
-
-- A simple, colorful bar at the top of the quiz interface showing progress through the quiz session.
-
-### Achievement Popups
-
-- Appear with sound effects when users unlock milestones, featuring vibrant animation and a preview of the earned badge.
-
----
-
-## Wireframing Suggestions
-
-- Low-fidelity sketches to include:
-  - Home screen layout with key elements (CTA, Leaderboard, Menu).
-  - Quiz interface focusing on question presentation, answer buttons, and feedback.
-  - Leaderboard screen with ranking styles.
-  - Achievement gallery showcasing unlocked badges.
