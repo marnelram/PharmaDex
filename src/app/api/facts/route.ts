@@ -1,11 +1,17 @@
-import { prisma } from "@/lib/db";
+import prisma from "@/lib/db/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    const sortDirection = Math.random() < 0.5 ? "asc" : "desc";
+    const randomStart = Math.floor(
+      (Math.random() / 5) * (await prisma.fact.count())
+    );
     const facts = await prisma.fact.findMany({
-      include: {
-        drug: true,
+      take: 5,
+      skip: randomStart,
+      orderBy: {
+        id: sortDirection as "asc" | "desc",
       },
     });
     return NextResponse.json(facts);

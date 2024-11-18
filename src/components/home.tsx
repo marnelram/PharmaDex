@@ -12,16 +12,21 @@ import {
   ChevronRight,
   ChevronLeft,
   Loader2,
+  LogIn,
+  LogOut,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { Fact } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
+import { Fact } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
-interface HomeProps {
-  children?: React.ReactNode;
-}
-
-export default function Home({}: HomeProps) {
+export default function Home({ session }: { session: Session }) {
   const router = useRouter();
   const [currentFact, setCurrentFact] = useState(0);
 
@@ -47,9 +52,51 @@ export default function Home({}: HomeProps) {
   const prevFact = () => {
     setCurrentFact((prev) => (prev - 1 + facts.length) % facts.length);
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-between p-8">
-      <div className="w-full max-w-4xl">
+      {/* Header */}
+      <header className="w-full max-w-5xl flex justify-between items-center p-4 bg-white shadow-md">
+        <h1 className="text-2xl font-bold">Drug or Pokémon?</h1>
+        <div className="relative">
+          {session.user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="w-10 h-10 cursor-pointer">
+                  <AvatarImage
+                    src={session.user.image || "/default-avatar.png"}
+                  />
+                  <AvatarFallback>
+                    {session.user.name?.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 -translate-x-7">
+                <DropdownMenuItem onClick={() => router.push("/profile")}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => router.push("/api/auth/signout")}
+                >
+                  <LogOut className="mr-2 h-5 w-5" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              variant="outline"
+              onClick={() => router.push("/api/auth/signin")}
+            >
+              <LogIn className="mr-2 h-5 w-5" />
+              Login
+            </Button>
+          )}
+        </div>
+      </header>
+
+      <div className="w-full max-w-4xl mt-8">
+        {/* Title */}
         <h1 className="text-4xl font-bold text-center mb-8 font-['Poppins']">
           Drug or Pokémon?
         </h1>
@@ -65,7 +112,7 @@ export default function Home({}: HomeProps) {
         {/* Leaderboard Preview */}
         <Card className="mt-8 p-4">
           <h2 className="text-xl font-semibold mb-4">Top Players</h2>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-center items-center gap-12 md:gap-24 lg:gap-36">
             {[1, 2, 3].map((rank) => (
               <div key={rank} className="flex flex-col items-center">
                 <Avatar className="w-16 h-16">
@@ -82,8 +129,8 @@ export default function Home({}: HomeProps) {
         </Card>
 
         {/* Quick Facts Carousel */}
-        <Card className="mt-8">
-          <CardContent className="p-6">
+        <Card className="mt-8 h-32">
+          <CardContent className="p-6 h-full">
             {isLoading ? (
               <div className="flex justify-center items-center py-8">
                 <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
@@ -103,7 +150,7 @@ export default function Home({}: HomeProps) {
                 <p className="text-gray-600">No facts available</p>
               </div>
             ) : (
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between h-full">
                 <Button
                   variant="ghost"
                   size="icon"
