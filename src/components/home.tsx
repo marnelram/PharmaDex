@@ -25,8 +25,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { signOut } from "@/auth";
 
-export default function Home({ session }: { session: Session }) {
+export default function Home({ session }: { session: Session | null }) {
   const router = useRouter();
   const [currentFact, setCurrentFact] = useState(0);
 
@@ -54,12 +55,12 @@ export default function Home({ session }: { session: Session }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-between p-8">
+    <div className="sm:max-h-screen h-full bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-between p-8">
       {/* Header */}
       <header className="w-full max-w-5xl flex justify-between items-center p-4 bg-white shadow-md">
         <h1 className="text-2xl font-bold">Drug or Pokémon?</h1>
         <div className="relative">
-          {session.user ? (
+          {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="w-10 h-10 cursor-pointer">
@@ -75,9 +76,7 @@ export default function Home({ session }: { session: Session }) {
                 <DropdownMenuItem onClick={() => router.push("/profile")}>
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => router.push("/api/auth/signout")}
-                >
+                <DropdownMenuItem onClick={() => signOut({ redirectTo: "/" })}>
                   <LogOut className="mr-2 h-5 w-5" />
                   Logout
                 </DropdownMenuItem>
@@ -85,8 +84,8 @@ export default function Home({ session }: { session: Session }) {
             </DropdownMenu>
           ) : (
             <Button
-              variant="outline"
-              onClick={() => router.push("/api/auth/signin")}
+              onClick={() => router.push("/auth/signin")}
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-md"
             >
               <LogIn className="mr-2 h-5 w-5" />
               Login
@@ -110,7 +109,7 @@ export default function Home({ session }: { session: Session }) {
         </Button>
 
         {/* Leaderboard Preview */}
-        <Card className="mt-8 p-4">
+        <Card className="mt-4 p-4">
           <h2 className="text-xl font-semibold mb-4">Top Players</h2>
           <div className="flex justify-center items-center gap-12 md:gap-24 lg:gap-36">
             {[1, 2, 3].map((rank) => (
@@ -174,7 +173,7 @@ export default function Home({ session }: { session: Session }) {
         </Card>
 
         {/* Navigation Buttons */}
-        <div className="grid grid-cols-2 gap-4 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center"
