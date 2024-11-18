@@ -16,8 +16,12 @@ export default function Quiz({ session }: { session: Session | null }) {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
   const [showFeedback, setShowFeedback] = React.useState(false);
-  const [currentFact, setCurrentFact] = React.useState<string>("");
+  const [currentFact, setCurrentFact] = React.useState<{
+    title: string;
+    content: string;
+  }>({ title: "", content: "" });
   const { toast } = useToast();
+  const [isQuizComplete, setIsQuizComplete] = React.useState(false);
 
   const {
     data: quizData = [],
@@ -57,12 +61,15 @@ export default function Quiz({ session }: { session: Session | null }) {
 
   const {
     mutate: saveQuizAttempt,
-    data: quizAttempt,
     isPending: isQuizAttemptPending,
     error: quizAttemptError,
     isError: isQuizAttemptError,
   } = useMutation({
-    mutationFn: async (data: { userId: string; finalScore: number }) => {
+    mutationFn: async (data: {
+      userId?: string;
+      finalScore: number;
+      isAnonymous?: boolean;
+    }) => {
       const response = await fetch("/api/quiz/complete", {
         method: "POST",
         body: JSON.stringify(data),
@@ -81,15 +88,13 @@ export default function Quiz({ session }: { session: Session | null }) {
     // Set a random fact for feedback
     const facts = quizData[currentQuestion].facts;
     const randomFact =
-      facts.length > 0
-        ? facts[Math.floor(Math.random() * facts.length)].content
-        : null;
+      facts.length > 0 ? facts[Math.floor(Math.random() * facts.length)] : null;
 
     // Show toast with feedback
     toast({
       title: correct ? "Correct! 🎉" : "Incorrect! 😅",
       variant: correct ? "success" : "destructive",
-      duration: 2000,
+      duration: 1000,
     });
 
     if (correct) {
@@ -113,28 +118,46 @@ export default function Quiz({ session }: { session: Session | null }) {
     }
 
     // Show additional information card
-    setCurrentFact(randomFact || "No additional information available.");
+    setCurrentFact(randomFact || { title: "", content: "" });
   };
 
   const handleNextQuestion = () => {
     setShowFeedback(false);
-    setCurrentFact("");
+    setCurrentFact({ title: "", content: "" });
     if (currentQuestion < quizData.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      handleQuizComplete();
+      setIsQuizComplete(true);
     }
   };
 
   const handleQuizComplete = async () => {
     if (session?.user) {
-      saveQuizAttempt({
-        userId: session.user.id,
-        finalScore: score,
-      });
-    }
-    if (!isQuizAttemptError) {
-      router.push(`/results/${quizAttempt?.id}`);
+      // Existing logged-in user flow
+      saveQuizAttempt(
+        {
+          userId: session.user.id,
+          finalScore: score,
+        },
+        {
+          onSuccess: (data) => {
+            router.push(`/results/${data.id}`);
+          },
+        }
+      );
+    } else {
+      // Anonymous user flow
+      saveQuizAttempt(
+        {
+          isAnonymous: true,
+          finalScore: score,
+        },
+        {
+          onSuccess: (data) => {
+            router.push(`/results/${data.id}?temp=true`);
+          },
+        }
+      );
     }
   };
 
@@ -144,8 +167,8 @@ export default function Quiz({ session }: { session: Session | null }) {
   if (isLoading || isQuizAttemptPending) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
-        <div className="text-center font-['Raleway']">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#E63946]" />
+        <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
           <p className="text-[16px] font-medium">Loading...</p>
         </div>
       </div>
@@ -157,10 +180,10 @@ export default function Quiz({ session }: { session: Session | null }) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
-          <CardContent className="p-6 text-center font-['Raleway']">
-            <AlertCircle className="h-12 w-12 text-[#E63946] mx-auto mb-4" />
-            <h2 className="text-[22px] font-medium mb-2">Error</h2>
-            <p className="text-[#9E9E9E] mb-4">
+          <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
+            <AlertCircle className="h-12 w-12 text-[#E63946]" />
+            <h2 className="text-[22px] font-medium">Error</h2>
+            <p className="text-[#9E9E9E]">
               {error?.message || quizAttemptError?.message}
             </p>
             <Button
@@ -176,65 +199,88 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
-      <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
-        <CardContent className="p-8">
-          <h1 className="text-[44px] font-bold text-center mb-8 font-['Poppins']">
+    <div className="min-h-screen h-[80dvh] bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
+      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+        <CardContent className="p-8 flex flex-col gap-4 sm:gap-8">
+          <h1 className="text-[44px] font-bold text-center font-['Poppins']">
             Drug or Pokémon?
           </h1>
 
           <Progress
             value={progress}
-            className="mb-8 h-3 rounded-full bg-[#9E9E9E]/20"
+            className="h-3 rounded-full bg-[#9E9E9E]/20"
             indicatorClassName="bg-[#E63946]"
           />
 
-          <div className="text-center mb-12">
-            <h2 className="text-[32px] font-bold mb-4 font-['Poppins']">
-              {quizData[currentQuestion]?.name}
-            </h2>
-            {showFeedback && (
-              <p className="text-[16px] text-[#9E9E9E] mb-4 font-['Raleway']">
-                {quizData[currentQuestion]?.description}
+          {isQuizComplete ? (
+            <div className="text-center flex flex-col gap-6">
+              <h2 className="text-[32px] font-bold font-['Poppins']">
+                Quiz Complete!
+              </h2>
+              <p className="text-[22px] font-medium font-['Raleway']">
+                Final Score: {score} / {quizData.length}
               </p>
-            )}
-            <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full mb-6 flex items-center justify-center">
-              <span className="text-[44px] text-[#9E9E9E]">?</span>
+              <Button
+                onClick={handleQuizComplete}
+                className="bg-[#E63946] hover:bg-[#d32d3a] py-8 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
+              >
+                See Results
+              </Button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="text-center flex flex-col gap-4">
+                <h2 className="text-[32px] font-bold font-['Poppins']">
+                  {quizData[currentQuestion]?.name}
+                </h2>
+                {showFeedback && (
+                  <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
+                    {quizData[currentQuestion]?.description}
+                  </p>
+                )}
+                <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full flex items-center justify-center">
+                  <span className="text-[44px] text-[#9E9E9E]">?</span>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <Button
-              onClick={() => handleAnswer("Drug")}
-              className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-              disabled={showFeedback}
-            >
-              Drug
-            </Button>
-            <Button
-              onClick={() => handleAnswer("Pokemon")}
-              className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-              disabled={showFeedback}
-            >
-              Pokémon
-            </Button>
-          </div>
-
-          {showFeedback && (
-            <div className="mt-6 text-center">
-              <Card className="mt-4">
-                <CardContent className="p-4">
-                  <h3 className="text-lg font-semibold">{currentFact}</h3>
-                  <p className="text-gray-600">{currentFact}</p>
+              {!showFeedback && (
+                <div className="grid grid-cols-2 gap-6">
                   <Button
-                    onClick={handleNextQuestion}
-                    className="mt-4 bg-green-500 hover:bg-green-600"
+                    onClick={() => handleAnswer("Drug")}
+                    className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                    disabled={showFeedback}
                   >
-                    Next Question
+                    Drug
                   </Button>
-                </CardContent>
-              </Card>
-            </div>
+                  <Button
+                    onClick={() => handleAnswer("Pokemon")}
+                    className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                    disabled={showFeedback}
+                  >
+                    Pokémon
+                  </Button>
+                </div>
+              )}
+
+              {showFeedback && (
+                <div className="text-center">
+                  <Card>
+                    <CardContent className="p-4 flex flex-col gap-4">
+                      <h3 className="text-lg font-semibold">
+                        {currentFact.title}
+                      </h3>
+                      <p className="text-gray-600">{currentFact.content}</p>
+                      <Button
+                        onClick={handleNextQuestion}
+                        className="bg-[#E63946] hover:bg-[#d32d3a] mx-4 rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                      >
+                        Next Question
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+            </>
           )}
 
           <div className="mt-6 text-center">

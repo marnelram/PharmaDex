@@ -11,8 +11,14 @@ export async function GET() {
         description: true,
         class: true,
         generation: true,
-        facts: true,
+        facts: {
+          select: {
+            title: true,
+            content: true,
+          },
+        },
       },
+      take: 5,
     });
 
     const pokemon = await prisma.pokemon.findMany({
@@ -23,8 +29,14 @@ export async function GET() {
         type1: true,
         type2: true,
         generation: true,
-        facts: true,
+        facts: {
+          select: {
+            title: true,
+            content: true,
+          },
+        },
       },
+      take: 5,
     });
 
     // Combine and transform the data

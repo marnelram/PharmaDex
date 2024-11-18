@@ -12,22 +12,12 @@ import {
   ChevronRight,
   ChevronLeft,
   Loader2,
-  LogIn,
-  LogOut,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 import { Fact } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { signOut } from "@/auth";
 
-export default function Home({ session }: { session: Session | null }) {
+export default function Home() {
   const router = useRouter();
   const [currentFact, setCurrentFact] = useState(0);
 
@@ -55,64 +45,24 @@ export default function Home({ session }: { session: Session | null }) {
   };
 
   return (
-    <div className="sm:max-h-screen h-full bg-[#F5F5F5] flex flex-col items-center justify-between p-8">
-      {/* Header */}
-      <header className="w-full max-w-5xl flex justify-between items-center p-4 bg-white rounded-[15px] shadow-md">
-        <h1 className="text-[32px] font-bold font-['Poppins']">
-          Drug or Pokémon?
-        </h1>
-        <div className="relative">
-          {session?.user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="w-10 h-10 cursor-pointer">
-                  <AvatarImage
-                    src={session.user.image || "/default-avatar.png"}
-                  />
-                  <AvatarFallback>
-                    {session.user.name?.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48 -translate-x-7">
-                <DropdownMenuItem onClick={() => router.push("/profile")}>
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => signOut({ redirectTo: "/" })}>
-                  <LogOut className="mr-2 h-5 w-5" />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button
-              onClick={() => router.push("/auth/signin")}
-              className="bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 shadow-md rounded-[25px] text-[14px] font-medium"
-            >
-              <LogIn className="mr-2 h-5 w-5" />
-              Login
-            </Button>
-          )}
-        </div>
-      </header>
-
-      <div className="w-full max-w-4xl mt-8">
+    <main className="size-full flex flex-col items-center justify-between p-8">
+      <div className="w-full max-w-4xl flex flex-col gap-4">
         {/* Title */}
-        <h1 className="text-[44px] font-bold text-center mb-8 font-['Poppins']">
+        <h1 className="text-[44px] font-bold text-center font-['Poppins']">
           Drug or Pokémon?
         </h1>
 
         {/* Main CTA */}
         <Button
-          className="w-full py-8 text-[22px] font-bold rounded-[25px] bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 shadow-lg font-['Poppins']"
+          className="w-full py-8 text-[22px] font-bold rounded-[25px] bg-[#E63946] hover:bg-[#d32d3a] transition-all hover:scale-105 duration-300 shadow-lg font-['Poppins']"
           onClick={() => router.push("/quiz")}
         >
           Start Quiz
         </Button>
 
         {/* Leaderboard Preview */}
-        <Card className="mt-4 p-4 rounded-[15px]">
-          <h2 className="text-[32px] font-bold mb-4 font-['Poppins']">
+        <Card className="p-4 rounded-[15px]">
+          <h2 className="text-[32px] font-bold pb-2 font-['Poppins']">
             Top Players
           </h2>
           <div className="flex justify-center items-center gap-12 md:gap-24 lg:gap-36">
@@ -132,7 +82,7 @@ export default function Home({ session }: { session: Session | null }) {
         </Card>
 
         {/* Quick Facts Carousel */}
-        <Card className="mt-8 h-32 rounded-[15px]">
+        <Card className="h-32 rounded-[15px]">
           <CardContent className="p-6 h-full">
             {isLoading ? (
               <div className="flex justify-center items-center py-8">
@@ -180,7 +130,7 @@ export default function Home({ session }: { session: Session | null }) {
         </Card>
 
         {/* Navigation Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
@@ -217,11 +167,19 @@ export default function Home({ session }: { session: Session | null }) {
       </div>
 
       {/* Background Elements - Updated with design colors */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-10 left-10 w-20 h-20 bg-[#E63946] rounded-full opacity-10"></div>
-        <div className="absolute bottom-20 right-20 w-32 h-12 bg-[#F3E260] rounded-full opacity-10 transform rotate-45"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 border-4 border-[#9E9E9E] rounded-full opacity-10"></div>
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        {/* Pokéball background element */}
+        <div className="absolute -rotate-45 top-5 left-5 sm:size-20 bg-[#E63946] rounded-full opacity-10 overflow-hidden">
+          <div className="absolute top-[45%] w-full h-[10%] bg-[#9E9E9E]"></div>
+          <div className="absolute top-[50%] w-full h-[50%] bg-white"></div>
+          <div className="absolute top-[40%] left-[40%] w-[20%] h-[20%] bg-[#9E9E9E] rounded-full"></div>
+        </div>
+        {/* Pill background element */}
+        <div className="absolute rotate-45 bottom-20 right-2 w-20 h-12 sm:w-32 sm:h-12 opacity-10">
+          <div className="absolute inset-0 bg-[#F3E260] rounded-full"></div>
+          <div className="absolute left-[45%] w-[10%] h-full bg-[#9E9E9E]"></div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
