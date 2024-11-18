@@ -1,14 +1,12 @@
-import { handlers } from "@/auth"; // Referring to the auth.ts we just created
-export const { GET, POST } = handlers;
-
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import prisma from "@/lib/prisma";
+import prisma from "@/app/lib/db/prisma";
+import { Adapter } from "next-auth/adapters";
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -29,5 +27,4 @@ export const authOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export default NextAuth(authOptions);
