@@ -1,8 +1,9 @@
 import Home from "@/components/home";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default function HomePage() {
-  const { data: session } = useSession();
-  console.log(session);
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
   return <Home />;
 }

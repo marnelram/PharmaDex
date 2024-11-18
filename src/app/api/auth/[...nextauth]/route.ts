@@ -18,13 +18,20 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    session: async ({ session, user }) => {
-      if (session?.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id,
+        isAdmin: user.email === process.env.ADMIN_EMAIL, // Add admin check
+      },
+    }),
+  },
+  pages: {
+    signIn: "/auth/signin",
+    // signOut: '/auth/signout',
+    // error: '/auth/error',
   },
 };
 
-export default NextAuth(authOptions);
+export const POST = NextAuth(authOptions);

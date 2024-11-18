@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,40 +11,34 @@ import {
   Settings,
   ChevronRight,
   ChevronLeft,
+  Loader2,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Fact } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface HomeProps {
   children?: React.ReactNode;
 }
 
-const facts = [
-    {
-      title: "Did you know?",
-      content: "Pikachu was originally going to be named 'Gorochu'.",
-    },
-    {
-      title: "Fun Fact",
-      content: "Aspirin was originally derived from the bark of willow trees.",
-    },
-    {
-      title: "Pokémon Trivia",
-      content: "There are over 900 Pokémon species as of 2023.",
-    },
-  ];
-
 export default function Home({}: HomeProps) {
-  const [facts, setFacts] = useState([]);
+  const router = useRouter();
   const [currentFact, setCurrentFact] = useState(0);
 
-  useEffect(() => {
-    const fetchFacts = async () => {
-      const response = await fetch('/api/facts');
-      const data = await response.json();
-      setFacts(data);
-    };
-    
-    fetchFacts();
-  }, []);
+  const {
+    data: facts = [] as Fact[],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["facts"],
+    queryFn: async () => {
+      const response = await fetch("/api/facts");
+      if (!response.ok) {
+        throw new Error("Failed to fetch facts");
+      }
+      return response.json();
+    },
+  });
 
   const nextFact = () => {
     setCurrentFact((prev) => (prev + 1) % facts.length);
@@ -61,7 +55,10 @@ export default function Home({}: HomeProps) {
         </h1>
 
         {/* Main CTA */}
-        <Button className="w-full py-8 text-2xl font-bold rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
+        <Button
+          className="w-full py-8 text-2xl font-bold rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+          onClick={() => router.push("/quiz")}
+        >
           Start Quiz
         </Button>
 
@@ -87,20 +84,45 @@ export default function Home({}: HomeProps) {
         {/* Quick Facts Carousel */}
         <Card className="mt-8">
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <Button variant="ghost" size="icon" onClick={prevFact}>
-                <ChevronLeft className="h-6 w-6" />
-              </Button>
-              <div className="text-center">
-                <h3 className="text-lg font-semibold">
-                  {facts[currentFact]?.title}
-                </h3>
-                <p className="mt-2">{facts[currentFact]?.content}</p>
+            {isLoading ? (
+              <div className="flex justify-center items-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+                <span className="ml-2 text-gray-600">Loading facts...</span>
               </div>
-              <Button variant="ghost" size="icon" onClick={nextFact}>
-                <ChevronRight className="h-6 w-6" />
-              </Button>
-            </div>
+            ) : error ? (
+              <div className="text-center py-8">
+                <p className="text-red-500 font-semibold">
+                  Oops! Something went wrong
+                </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Unable to load fun facts right now
+                </p>
+              </div>
+            ) : facts.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-600">No facts available</p>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={prevFact}
+                  disabled={facts.length <= 1}
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold">
+                    {facts[currentFact]?.title}
+                  </h3>
+                  <p className="mt-2">{facts[currentFact]?.content}</p>
+                </div>
+                <Button variant="ghost" size="icon" onClick={nextFact}>
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -109,6 +131,7 @@ export default function Home({}: HomeProps) {
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center"
+            onClick={() => router.push("/quizHistory")}
           >
             <Trophy className="mr-2 h-5 w-5" />
             Quizzes
@@ -116,6 +139,7 @@ export default function Home({}: HomeProps) {
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center"
+            onClick={() => router.push("/leaderboard")}
           >
             <Users className="mr-2 h-5 w-5" />
             Leaderboard
@@ -123,6 +147,7 @@ export default function Home({}: HomeProps) {
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center"
+            onClick={() => router.push("/achievements")}
           >
             <Award className="mr-2 h-5 w-5" />
             My Achievements
@@ -130,6 +155,7 @@ export default function Home({}: HomeProps) {
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center"
+            onClick={() => router.push("/settings")}
           >
             <Settings className="mr-2 h-5 w-5" />
             Settings
