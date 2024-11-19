@@ -7,12 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Define the enum type
-enum Subscription {
-  FREE
-  PREMIUM
-  ENTERPRISE
-}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -47,7 +41,6 @@ model User {
   name          String?
   passHash      String?
   isAdmin       Boolean   @default(false)
-  subscription  Subscription @default(FREE)
   email         String?   @unique
   emailVerified DateTime?
   image         String?

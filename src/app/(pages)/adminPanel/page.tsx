@@ -1,6 +1,5 @@
 "use client";
 
-// import { useSession } from "next-auth/react";
 import { useState } from "react";
 import PokemonForm from "@/components/forms/pokemonForm";
 import DrugForm from "@/components/forms/drugForm";
@@ -8,17 +7,7 @@ import BadgeForm from "@/components/forms/badgeForm";
 // import { redirect } from "next/navigation";
 
 export default function AdminPanel() {
-  // const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState("pokemon");
-
-  // if (!session?.user) {
-  //   redirect("/auth/signin");
-  // }
-
-  // // Protect the route
-  // if (!session?.user?.isAdmin) {
-  //   return <div>Access Denied</div>;
-  // }
 
   return (
     <div className="p-6">

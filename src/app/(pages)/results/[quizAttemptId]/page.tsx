@@ -1,16 +1,11 @@
 import React from "react";
-import { auth } from "@/auth";
 import Results from "@/components/results";
 import prisma from "@/lib/db/prisma";
 
-export default async function ResultsPage({
-  params,
-}: {
+export default async function ResultsPage(context: {
   params: { quizAttemptId: string };
 }) {
-  const session = await auth();
-
-  console.log(params);
+  const { params } = await context;
 
   const quizAttempt = await prisma.quizAttempt.findUnique({
     where: {

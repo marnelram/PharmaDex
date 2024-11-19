@@ -12,12 +12,16 @@ import {
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 export function Header({ session }: { session: Session | null }) {
   return (
-    <header className="sticky top-0 w-full z-50 max-w-5xl flex justify-between items-center p-4 bg-white rounded-[15px] shadow-md">
-      <h1 className="text-[32px] font-bold font-['Poppins']">
-        Drug or Pokémon?
+    <header className="sticky top-0 w-full z-50 max-w-5xl flex justify-between items-center p-4 px-12 sm:px-8 bg-white rounded-[15px] shadow-md">
+      <div className="flex items-center w-24">
+        <Image src="/logo.png" alt="logo" width={40} height={40} />
+      </div>
+      <h1 className="hidden sm:flex text-[32px] font-bold font-['Poppins']">
+        PharmaDex
       </h1>
       <div className="relative">
         {session?.user ? (
@@ -43,7 +47,7 @@ export function Header({ session }: { session: Session | null }) {
         ) : (
           <Button
             onClick={() => redirect("/auth/signin")}
-            className="bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 shadow-md rounded-[25px] text-[14px] font-medium"
+            className="bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 w-24 shadow-md rounded-[25px] text-[14px] font-medium"
           >
             <LogIn className="mr-2 h-5 w-5" />
             Login

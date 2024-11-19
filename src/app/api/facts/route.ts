@@ -7,7 +7,6 @@ export async function GET() {
     const randomStart = Math.floor(
       (Math.random() / 5) * (await prisma.fact.count())
     );
-    console.log(randomStart);
     const facts = await prisma.fact.findMany({
       take: 5,
       skip: randomStart,

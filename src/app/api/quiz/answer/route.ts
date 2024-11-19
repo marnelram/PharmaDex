@@ -22,7 +22,6 @@ export async function POST(request: Request) {
           ...(userId && { userId }),
           score,
           totalQuestions: 10,
-          ...(userId && { user: { connect: { id: userId } } }),
           answers: {
             create: {
               questionName,

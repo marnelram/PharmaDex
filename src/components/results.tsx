@@ -45,16 +45,16 @@ export default function Results({
               : "📚 Time to study up!"}
           </p>
 
-          <div className="flex justify-center gap-6">
+          <div className="flex flex-row items-center justify-center gap-6">
             <Button
               onClick={() => router.push("/")}
-              className="h-12 px-8 rounded-[25px] bg-[#9E9E9E] hover:bg-[#757575] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
+              className="h-12 w-32 rounded-[25px] bg-[#9E9E9E] hover:bg-[#757575] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
             >
               Back to Home
             </Button>
             <Button
               onClick={() => router.push("/quiz")}
-              className="h-12 px-8 rounded-[25px] bg-[#E63946] hover:bg-[#c4303b] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
+              className="h-12 w-32 rounded-[25px] hover:scale-105 bg-[#E63946] hover:bg-[#E63946] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
             >
               Play Again
             </Button>

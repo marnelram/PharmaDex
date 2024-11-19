@@ -1,25 +1,24 @@
 "use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Trophy,
-  Users,
-  Award,
-  Settings,
-  ChevronRight,
-  ChevronLeft,
-  Loader2,
-} from "lucide-react";
+import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fact } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import React from "react";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
   const router = useRouter();
-  const [currentFact, setCurrentFact] = useState(0);
 
   const {
     data: facts = [] as Fact[],
@@ -35,14 +34,6 @@ export default function Home() {
       return response.json();
     },
   });
-
-  const nextFact = () => {
-    setCurrentFact((prev) => (prev + 1) % facts.length);
-  };
-
-  const prevFact = () => {
-    setCurrentFact((prev) => (prev - 1 + facts.length) % facts.length);
-  };
 
   return (
     <main className="size-full flex flex-col items-center justify-between p-8">
@@ -82,7 +73,7 @@ export default function Home() {
         </Card>
 
         {/* Quick Facts Carousel */}
-        <Card className="h-32 rounded-[15px]">
+        <Card>
           <CardContent className="p-6 h-full">
             {isLoading ? (
               <div className="flex justify-center items-center py-8">
@@ -103,40 +94,43 @@ export default function Home() {
                 <p className="text-gray-600">No facts available</p>
               </div>
             ) : (
-              <div className="flex items-center justify-between h-full">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={prevFact}
-                  disabled={facts.length <= 1}
-                  className="rounded-[25px]"
-                >
-                  <ChevronLeft className="h-6 w-6" />
-                </Button>
-                <div className="text-center">
-                  <h3 className="text-[22px] font-medium font-['Poppins']">
-                    {facts[currentFact]?.title}
-                  </h3>
-                  <p className="mt-2 text-[16px] font-['Raleway']">
-                    {facts[currentFact]?.content}
-                  </p>
-                </div>
-                <Button variant="ghost" size="icon" onClick={nextFact}>
-                  <ChevronRight className="h-6 w-6" />
-                </Button>
-              </div>
+              <Carousel
+                plugins={[
+                  Autoplay({
+                    delay: 5000,
+                    stopOnInteraction: true,
+                  }),
+                ]}
+              >
+                <CarouselContent>
+                  {facts.map((fact: Fact, index: number) => (
+                    <CarouselItem key={index}>
+                      <div className="text-center px-2">
+                        <h3 className="text-[22px] font-medium font-['Poppins']">
+                          {fact.title}
+                        </h3>
+                        <p className="mt-2 text-[16px] font-['Raleway']">
+                          {fact.content}
+                        </p>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             )}
           </CardContent>
         </Card>
 
         {/* Navigation Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className=" grid-cols-1 sm:grid-cols-2 gap-4 hidden sm:grid">
           <Button
             variant="outline"
             className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/10"
             onClick={() => router.push("/quizHistory")}
           >
-            <Trophy className="mr-2 h-5 w-5" />
+            <Book className="mr-2 h-5 w-5" />
             Quizzes
           </Button>
           <Button
@@ -165,6 +159,34 @@ export default function Home() {
           </Button>
         </div>
       </div>
+
+      {/* Bottom Navbar for Mobile */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-around items-center h-16 sm:hidden">
+        <Link
+          href="/quiz"
+          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <Book className="size-6" />
+        </Link>
+        <Link
+          href="/leaderboard"
+          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <Users className="size-6" />
+        </Link>
+        <Link
+          href="/achievements"
+          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <Award className="size-6" />
+        </Link>
+        <Link
+          href="/settings"
+          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <Settings className="size-6" />
+        </Link>
+      </nav>
 
       {/* Background Elements - Updated with design colors */}
       <div className="fixed inset-0 pointer-events-none -z-10">

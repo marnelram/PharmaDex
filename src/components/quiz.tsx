@@ -119,7 +119,6 @@ export default function Quiz({ session }: { session: Session | null }) {
       },
       {
         onSuccess: (data) => {
-          console.log(data);
           setQuizId(data.id);
         },
       }
@@ -209,7 +208,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="min-h-screen h-[80dvh] bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
+    <div className="h-full bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
       <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
         <CardContent className="p-8 flex flex-col gap-4 sm:gap-8">
           <h1 className="text-[44px] font-bold text-center font-['Poppins']">
@@ -227,9 +226,6 @@ export default function Quiz({ session }: { session: Session | null }) {
               <h2 className="text-[32px] font-bold font-['Poppins']">
                 Quiz Complete!
               </h2>
-              <p className="text-[22px] font-medium font-['Raleway']">
-                Final Score: {score} / {quizData.length}
-              </p>
               <Button
                 onClick={handleQuizComplete}
                 className="bg-[#E63946] hover:bg-[#d32d3a] py-8 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
@@ -292,12 +288,6 @@ export default function Quiz({ session }: { session: Session | null }) {
               )}
             </>
           )}
-
-          <div className="mt-6 text-center">
-            <p className="text-lg font-semibold">
-              Score: {score} / {quizData.length}
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>

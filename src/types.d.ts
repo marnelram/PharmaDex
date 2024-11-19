@@ -10,14 +10,12 @@ declare module "next-auth" {
     user?: DefaultUser & {
       id: string;
       isAdmin: boolean;
-      subscription: "free" | "basic" | "enterprise";
     };
   }
 
   interface User extends DefaultUser {
     id: string;
     isAdmin: boolean;
-    subscription: "free" | "basic" | "enterprise";
   }
 }
 
@@ -25,6 +23,5 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     isAdmin: boolean;
-    subscription: "free" | "basic" | "enterprise";
   }
 }

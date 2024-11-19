@@ -17,11 +17,8 @@ export async function POST(req: Request) {
     if (!parsedResult.success) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
-    console.log(parsedResult.data);
     const { name, description, type1, type2, generation, facts } =
       parsedResult.data;
-
-    console.log(facts);
 
     const pokemon = await prisma.pokemon.create({
       data: {
@@ -39,8 +36,6 @@ export async function POST(req: Request) {
         },
       },
     });
-
-    console.log(pokemon);
 
     return NextResponse.json(pokemon);
   } catch (error) {
