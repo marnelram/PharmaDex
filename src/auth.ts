@@ -24,7 +24,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ token, user }) => {
       if (user) {
         token.isAdmin = user.isAdmin;
-        token.subscription = user.subscription;
         return token;
       }
       return token;
@@ -33,10 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub as string;
-        session.user.subscription = token.subscription as
-          | "free"
-          | "basic"
-          | "enterprise";
         session.user.isAdmin = token.isAdmin as boolean;
       }
       return session;
