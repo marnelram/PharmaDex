@@ -6,14 +6,15 @@ import prisma from "@/lib/db/prisma";
 export default async function ResultsPage({
   params,
 }: {
-  params: { id: string };
+  params: { quizAttemptId: string };
 }) {
   const session = await auth();
 
+  console.log(params);
+
   const quizAttempt = await prisma.quizAttempt.findUnique({
     where: {
-      id: params.id,
-      userId: session?.user.id,
+      id: params.quizAttemptId,
     },
     include: {
       answers: true,

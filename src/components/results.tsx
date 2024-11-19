@@ -13,33 +13,48 @@ export default function Results({
   totalQuestions: number;
 }) {
   const router = useRouter();
+  const percentage = Math.round((score / totalQuestions) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-center p-8">
-      <Card className="w-full max-w-2xl">
-        <CardContent className="p-6">
-          <h1 className="text-3xl font-bold text-center mb-6 font-['Poppins']">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
+      <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
+        <CardContent className="p-8">
+          <h1 className="text-[44px] font-bold text-center mb-8 font-['Poppins']">
             Quiz Results
           </h1>
 
-          <p className="text-xl font-semibold mb-4">
-            You scored {score} out of {totalQuestions}!
-          </p>
-
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Thanks for playing!</h2>
+          <div className="relative w-48 h-48 mx-auto mb-8">
+            <div className="absolute inset-0 rounded-full border-8 border-[#E63946] overflow-hidden">
+              <div
+                className="absolute bottom-0 w-full bg-[#E63946] transition-all duration-1000"
+                style={{ height: `${percentage}%` }}
+              />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-[32px] font-['Poppins'] font-bold">
+                {score}/{totalQuestions}
+              </p>
+            </div>
           </div>
 
-          <div className="flex justify-center gap-4">
+          <p className="text-[22px] font-['Raleway'] text-center mb-8">
+            {percentage >= 80
+              ? "🏆 Pokémon Professor in the making!"
+              : percentage >= 50
+              ? "🎯 Getting there! Keep training!"
+              : "📚 Time to study up!"}
+          </p>
+
+          <div className="flex justify-center gap-6">
             <Button
               onClick={() => router.push("/")}
-              className="bg-blue-500 hover:bg-blue-600"
+              className="h-12 px-8 rounded-[25px] bg-[#9E9E9E] hover:bg-[#757575] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
             >
               Back to Home
             </Button>
             <Button
               onClick={() => router.push("/quiz")}
-              className="bg-green-500 hover:bg-green-600"
+              className="h-12 px-8 rounded-[25px] bg-[#E63946] hover:bg-[#c4303b] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
             >
               Play Again
             </Button>

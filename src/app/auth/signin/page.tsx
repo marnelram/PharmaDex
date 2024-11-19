@@ -2,34 +2,37 @@
 
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
+  const router = useRouter();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#A8D5E2] to-[#A7F3D0] flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center px-4">
+      <div className="bg-white rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
         {/* Logo/Header Section */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FB7185] to-[#C084FC] bg-clip-text text-transparent">
+          <h1 className="text-[44px] font-bold text-[#E63946]">
             Drug or Pokémon?
           </h1>
-          <p className="text-gray-600">
+          <p className="font-['Raleway'] text-[16px] text-[#9E9E9E]">
             Test your knowledge of medicines and monsters!
           </p>
         </div>
 
         {/* Sign In Options */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <button
             onClick={() =>
               signIn("google", { callbackUrl: "/", redirect: true })
             }
-            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-200 rounded-xl py-3 px-4 text-gray-700 hover:bg-gray-50 hover:border-[#FDE68A] transition-all duration-200 font-medium"
+            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-[#9E9E9E] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
           >
             <Image
-              src="/google-icon.png" // Make sure to add this image to your public folder
+              src="/google-icon.webp"
               alt="Google"
-              width={20}
-              height={20}
+              width={24}
+              height={24}
+              className="min-w-[24px]"
             />
             Continue with Google
           </button>
@@ -37,25 +40,25 @@ export default function SignIn() {
           {/* Decorative Elements */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+              <div className="w-full border-t border-[#9E9E9E]"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
+            <div className="relative flex justify-center">
+              <span className="px-4 bg-white text-[14px] font-['Raleway'] text-[#9E9E9E]">
                 or try as guest
               </span>
             </div>
           </div>
 
           <button
-            onClick={() => signIn(undefined, { callbackUrl: "/" })}
-            className="w-full bg-gradient-to-r from-[#A8D5E2] to-[#A7F3D0] text-gray-700 rounded-xl py-3 px-4 font-medium hover:opacity-90 transition-opacity duration-200"
+            onClick={() => router.push("/quiz")}
+            className="w-full bg-[#E63946] text-[#F5F5F5] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
           >
             Play as Guest
           </button>
         </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center font-['Raleway'] text-[12px] text-[#9E9E9E]">
           <p>Start your journey as a Pharmacist Trainer today!</p>
         </div>
       </div>

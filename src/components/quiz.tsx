@@ -20,8 +20,9 @@ export default function Quiz({ session }: { session: Session | null }) {
     title: string;
     content: string;
   }>({ title: "", content: "" });
-  const { toast } = useToast();
+  const [quizId, setQuizId] = React.useState<string | null>(null);
   const [isQuizComplete, setIsQuizComplete] = React.useState(false);
+  const { toast } = useToast();
 
   const {
     data: quizData = [],
@@ -40,9 +41,14 @@ export default function Quiz({ session }: { session: Session | null }) {
   });
 
   // Add mutations for answer and completion
-  const answerMutation = useMutation({
+  const {
+    mutate: submitAnswer,
+    error: answerError,
+    isError: isAnswerError,
+  } = useMutation({
     mutationFn: async (data: {
-      userId: string;
+      userId?: string;
+      quizId?: string;
       questionName: string;
       userGuess: string;
       isCorrect: boolean;
@@ -65,17 +71,13 @@ export default function Quiz({ session }: { session: Session | null }) {
     error: quizAttemptError,
     isError: isQuizAttemptError,
   } = useMutation({
-    mutationFn: async (data: {
-      userId?: string;
-      finalScore: number;
-      isAnonymous?: boolean;
-    }) => {
+    mutationFn: async (data: { quizId: string; finalScore: number }) => {
       const response = await fetch("/api/quiz/complete", {
         method: "POST",
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("Failed to complete quiz");
+        throw new Error("Failed to complete quiz: " + response.statusText);
       }
       return response.json();
     },
@@ -106,14 +108,29 @@ export default function Quiz({ session }: { session: Session | null }) {
       });
     }
 
-    // Updated save answer logic
-    if (session?.user) {
-      answerMutation.mutate({
-        userId: session.user.id,
+    submitAnswer(
+      {
+        userId: session?.user.id,
+        quizId: quizId ?? undefined,
         questionName: quizData[currentQuestion].name,
         userGuess: answer,
         isCorrect: correct,
         score: score + (correct ? 1 : 0),
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          setQuizId(data.id);
+        },
+      }
+    );
+
+    // Handle loading and error states
+    if (isAnswerError) {
+      toast({
+        title: "Error saving answer",
+        description: answerError?.message,
+        variant: "destructive",
       });
     }
 
@@ -132,33 +149,26 @@ export default function Quiz({ session }: { session: Session | null }) {
   };
 
   const handleQuizComplete = async () => {
-    if (session?.user) {
-      // Existing logged-in user flow
-      saveQuizAttempt(
-        {
-          userId: session.user.id,
-          finalScore: score,
-        },
-        {
-          onSuccess: (data) => {
-            router.push(`/results/${data.id}`);
-          },
-        }
-      );
-    } else {
-      // Anonymous user flow
-      saveQuizAttempt(
-        {
-          isAnonymous: true,
-          finalScore: score,
-        },
-        {
-          onSuccess: (data) => {
-            router.push(`/results/${data.id}?temp=true`);
-          },
-        }
-      );
+    if (!quizId) {
+      toast({
+        title: "Error",
+        description: "Quiz ID not found. Please try again.",
+        variant: "destructive",
+      });
+      return;
     }
+
+    saveQuizAttempt(
+      {
+        quizId,
+        finalScore: score,
+      },
+      {
+        onSuccess: () => {
+          router.push(`/results/${quizId}`);
+        },
+      }
+    );
   };
 
   const progress = ((currentQuestion + 1) / quizData.length) * 100;

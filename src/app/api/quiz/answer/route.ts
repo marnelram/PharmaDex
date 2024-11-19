@@ -2,26 +2,52 @@ import prisma from "@/app/lib/db/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { userId, questionName, userGuess, isCorrect, score } = body;
+  const body = await request.json();
+  const { userId, quizId, questionName, userGuess, isCorrect, score } = body;
 
-    // Create a new quiz attempt if this is the first answer
-    const quizAttempt = await prisma.quizAttempt.create({
-      data: {
-        userId,
-        score,
-        totalQuestions: 10,
-        user: { connect: { id: userId } },
-        answers: {
-          create: {
-            questionName,
-            userGuess,
-            isCorrect,
-          },
-        },
+  try {
+    // Find existing active quiz attempt for this user
+    let quizAttempt = await prisma.quizAttempt.findFirst({
+      where: {
+        id: quizId,
+        ...(userId && { userId }),
+        completed: false,
       },
     });
+
+    if (!quizAttempt) {
+      // Create new quiz attempt if none exists
+      quizAttempt = await prisma.quizAttempt.create({
+        data: {
+          ...(userId && { userId }),
+          score,
+          totalQuestions: 10,
+          ...(userId && { user: { connect: { id: userId } } }),
+          answers: {
+            create: {
+              questionName,
+              userGuess,
+              isCorrect,
+            },
+          },
+        },
+      });
+    } else {
+      // Add answer to existing quiz attempt
+      quizAttempt = await prisma.quizAttempt.update({
+        where: { id: quizAttempt.id },
+        data: {
+          score,
+          answers: {
+            create: {
+              questionName,
+              userGuess,
+              isCorrect,
+            },
+          },
+        },
+      });
+    }
 
     return NextResponse.json(quizAttempt);
   } catch (error) {
