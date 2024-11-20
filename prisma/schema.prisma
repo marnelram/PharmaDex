@@ -67,7 +67,7 @@ model Drug {
   generic     String?
   image       String?
   description String
-  class       String
+  drugClass   String
   generation  Int?
   facts       Fact[]
   createdAt   DateTime @default(now())
