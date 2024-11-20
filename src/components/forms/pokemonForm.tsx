@@ -27,8 +27,6 @@ export default function PokemonForm() {
     defaultValues: {
       name: "",
       description: "",
-      type1: "",
-      type2: "",
       generation: 1,
       facts: [{ title: "", content: "" }],
     },

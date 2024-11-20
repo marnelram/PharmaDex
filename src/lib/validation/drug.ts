@@ -3,10 +3,10 @@ import { z } from "zod";
 
 export const drugFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  generic: z.string().optional(),
+  generic: z.string(),
   dosageForm: z.nativeEnum(DosageForm),
   description: z.string().min(1, "Description is required"),
-  class: z.string().min(1, "Class is required"),
+  drugClass: z.string().min(1, "Class is required"),
   generation: z.number().optional(),
   facts: z.array(
     z.object({

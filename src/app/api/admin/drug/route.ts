@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       generic,
       dosageForm,
       description,
-      class: drugClass,
+      drugClass,
       generation,
       facts,
     } = parsedResult.data;
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         generic,
         dosageForm,
         description,
-        class: drugClass,
+        drugClass,
         generation,
         facts: {
           create: facts.map((fact: { title: string; content: string }) => ({

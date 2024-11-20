@@ -35,7 +35,7 @@ export default function DrugForm() {
     defaultValues: {
       name: "",
       description: "",
-      class: "",
+      drugClass: "",
       generation: undefined,
       facts: [{ title: "", content: "" }],
       dosageForm: undefined,
@@ -138,7 +138,7 @@ export default function DrugForm() {
 
             <FormField
               control={form.control}
-              name="class"
+              name="drugClass"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Class</FormLabel>
