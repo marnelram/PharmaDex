@@ -9,7 +9,7 @@ export async function GET() {
         id: true,
         name: true,
         description: true,
-        class: true,
+        drugClass: true,
         generation: true,
         facts: {
           select: {
