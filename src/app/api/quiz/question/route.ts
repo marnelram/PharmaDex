@@ -1,5 +1,36 @@
 import prisma from "@/app/lib/db/prisma";
+import { DosageForm } from "@prisma/client";
 import { NextResponse } from "next/server";
+
+type QuizItems = Array<
+  | {
+      id: string;
+      name: string;
+      dosageForm: DosageForm;
+      description: string;
+      drugClass: string;
+      generation: number | null;
+      facts: Array<{
+        title: string;
+        content: string;
+      }>;
+      type: "Drug";
+    }
+  | {
+      id: string;
+      name: string;
+      image: string | null;
+      description: string;
+      type1: string;
+      type2: string | null;
+      generation: number;
+      facts: Array<{
+        title: string;
+        content: string;
+      }>;
+      type: "Pokemon";
+    }
+>;
 
 export async function GET() {
   try {
@@ -8,6 +39,7 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        dosageForm: true,
         description: true,
         drugClass: true,
         generation: true,
@@ -41,7 +73,7 @@ export async function GET() {
     });
 
     // Combine and transform the data
-    const quizItems = [
+    const quizItems: QuizItems = [
       ...drugs.map((drug) => ({
         ...drug,
         type: "Drug" as const,

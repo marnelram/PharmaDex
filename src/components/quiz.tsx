@@ -12,6 +12,37 @@ import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { DosageFormIcon } from "@/lib/utils/dosage-form";
+import { DosageForm } from "@prisma/client";
+
+type QuizItems = Array<
+  | {
+      id: string;
+      name: string;
+      dosageForm: DosageForm;
+      description: string;
+      drugClass: string;
+      generation: number | null;
+      facts: Array<{
+        title: string;
+        content: string;
+      }>;
+      type: "Drug";
+    }
+  | {
+      id: string;
+      name: string;
+      image: string | null;
+      description: string;
+      type1: string;
+      type2: string | null;
+      generation: number;
+      facts: Array<{
+        title: string;
+        content: string;
+      }>;
+      type: "Pokemon";
+    }
+>;
 
 export default function Quiz({ session }: { session: Session | null }) {
   const router = useRouter();
@@ -31,7 +62,7 @@ export default function Quiz({ session }: { session: Session | null }) {
     isLoading,
     isError,
     error,
-  } = useQuery({
+  } = useQuery<QuizItems>({
     queryKey: ["quiz-questions"],
     queryFn: async () => {
       const response = await fetch("/api/quiz/question");
@@ -250,7 +281,7 @@ export default function Quiz({ session }: { session: Session | null }) {
                   {quizData[currentQuestion]?.type === "Pokemon" &&
                   showFeedback ? (
                     <Image
-                      src={quizData[currentQuestion]?.imageUrl}
+                      src={quizData[currentQuestion]?.image as string}
                       alt={quizData[currentQuestion]?.name}
                       className="w-full h-full object-contain"
                       width={100}
