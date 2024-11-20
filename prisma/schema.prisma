@@ -10,6 +10,7 @@ generator client {
 enum DosageForm {
   PILL
   POWDER
+  INJECTION
   LIQUID
   DROP
   CREAM

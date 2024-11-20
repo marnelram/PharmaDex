@@ -17,6 +17,7 @@ const drugSchema = z.object({
       .enum([
         "PILL",
         "POWDER",
+        "INJECTION",
         "LIQUID",
         "DROP",
         "CREAM",
@@ -41,7 +42,7 @@ const drugSchema = z.object({
         content: z.string(),
       })
     )
-      .describe(`Interesting facts about the drug in friendly engaging language. Example:
+      .describe(`Interesting facts about the drug in friendly engaging language. Don't include facts about dosing unless it's an odd frequency (e.g. once every 3 months or once every 4 hours). Example:
         Title: "Long-Lasting Control"
         content: "Lantus provides up to 24 hours of stable blood sugar control with just one injection per day."
         `),
