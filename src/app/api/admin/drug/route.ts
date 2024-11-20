@@ -20,6 +20,8 @@ export async function POST(req: Request) {
 
     const {
       name,
+      generic,
+      dosageForm,
       description,
       class: drugClass,
       generation,
@@ -29,6 +31,8 @@ export async function POST(req: Request) {
     const drug = await prisma.drug.create({
       data: {
         name,
+        generic,
+        dosageForm,
         description,
         class: drugClass,
         generation,

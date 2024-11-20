@@ -78,7 +78,7 @@ export default function PokemonForm() {
   };
 
   return (
-    <Card>
+    <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle>Add New Pokémon</CardTitle>
       </CardHeader>
@@ -110,34 +110,6 @@ export default function PokemonForm() {
                       placeholder="Enter Pokémon description"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="type1"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Primary Type</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Electric" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="type2"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Secondary Type (Optional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Flying" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,8 +1,10 @@
+import { DosageForm } from "@prisma/client";
 import { z } from "zod";
 
 export const drugFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   generic: z.string().optional(),
+  dosageForm: z.nativeEnum(DosageForm),
   description: z.string().min(1, "Description is required"),
   class: z.string().min(1, "Class is required"),
   generation: z.number().optional(),

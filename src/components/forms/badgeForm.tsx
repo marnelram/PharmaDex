@@ -22,7 +22,7 @@ import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
-  icon: z.string().optional(), // Optional since it has a ? in the schema
+  icon: z.string().optional(),
   total: z.number().min(1, "Total must be at least 1"),
   color: z.string().min(1, "Color is required"),
 });
@@ -76,7 +76,7 @@ export default function BadgeForm() {
   };
 
   return (
-    <Card>
+    <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle>Add New Badge</CardTitle>
       </CardHeader>

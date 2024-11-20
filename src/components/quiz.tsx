@@ -10,6 +10,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { DosageFormIcon } from "@/lib/utils/dosage-form";
 
 export default function Quiz({ session }: { session: Session | null }) {
   const router = useRouter();
@@ -245,7 +247,26 @@ export default function Quiz({ session }: { session: Session | null }) {
                   </p>
                 )}
                 <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full flex items-center justify-center">
-                  <span className="text-[44px] text-[#9E9E9E]">?</span>
+                  {quizData[currentQuestion]?.type === "Pokemon" &&
+                  showFeedback ? (
+                    <Image
+                      src={quizData[currentQuestion]?.imageUrl}
+                      alt={quizData[currentQuestion]?.name}
+                      className="w-full h-full object-contain"
+                      width={100}
+                      height={100}
+                    />
+                  ) : (
+                    <span className="text-[44px] text-[#9E9E9E]">?</span>
+                  )}
+                  {quizData[currentQuestion]?.type === "Drug" &&
+                  showFeedback ? (
+                    <DosageFormIcon
+                      form={quizData[currentQuestion]?.dosageForm}
+                    />
+                  ) : (
+                    <span className="text-[44px] text-[#9E9E9E]">?</span>
+                  )}
                 </div>
               </div>
 

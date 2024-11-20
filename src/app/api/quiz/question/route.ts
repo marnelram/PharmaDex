@@ -9,7 +9,7 @@ export async function GET() {
         id: true,
         name: true,
         description: true,
-        class: true,
+        drugClass: true,
         generation: true,
         facts: {
           select: {
@@ -25,6 +25,7 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        image: true,
         description: true,
         type1: true,
         type2: true,
@@ -45,8 +46,8 @@ export async function GET() {
         ...drug,
         type: "Drug" as const,
       })),
-      ...pokemon.map((pokemon) => ({
-        ...pokemon,
+      ...pokemon.map((p) => ({
+        ...p,
         type: "Pokemon" as const,
       })),
     ];

@@ -19,6 +19,13 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { drugFormSchema } from "@/lib/validation/drug";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function DrugForm() {
   const { toast } = useToast();
@@ -31,6 +38,7 @@ export default function DrugForm() {
       class: "",
       generation: undefined,
       facts: [{ title: "", content: "" }],
+      dosageForm: undefined,
     },
   });
 
@@ -79,7 +87,7 @@ export default function DrugForm() {
   };
 
   return (
-    <Card>
+    <Card className="w-full max-w-4xl">
       <CardHeader>
         <CardTitle>Add New Drug</CardTitle>
       </CardHeader>
@@ -160,6 +168,38 @@ export default function DrugForm() {
                       }
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="dosageForm"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Dosage Form</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a dosage form" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="PILL">Pill</SelectItem>
+                      <SelectItem value="POWDER">Powder</SelectItem>
+                      <SelectItem value="LIQUID">Liquid</SelectItem>
+                      <SelectItem value="DROP">Drop</SelectItem>
+                      <SelectItem value="CREAM">Cream</SelectItem>
+                      <SelectItem value="INHALER">Inhaler</SelectItem>
+                      <SelectItem value="INSERT">Insert</SelectItem>
+                      <SelectItem value="PATCH">Patch</SelectItem>
+                      <SelectItem value="SPRAY">Spray</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

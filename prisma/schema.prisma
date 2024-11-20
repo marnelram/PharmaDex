@@ -7,6 +7,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum DosageForm {
+  PILL
+  POWDER
+  LIQUID
+  DROP
+  CREAM
+  INHALER
+  INSERT
+  PATCH
+  SPRAY
+}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -64,10 +75,11 @@ model VerificationToken {
 model Drug {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique
-  generic     String?
+  generic     String
+  dosageForm  DosageForm?
   image       String?
   description String
-  class       String
+  drugClass   String
   generation  Int?
   facts       Fact[]
   createdAt   DateTime @default(now())
