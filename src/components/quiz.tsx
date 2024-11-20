@@ -189,7 +189,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   // Add loading state for quiz items
   if (isQuizItemsLoading || isQuizAttemptPending) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+      <div className="min-h-dvh bg-[#F5F5F5] flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
           <p className="text-[16px] font-medium">Loading quiz...</p>
@@ -245,15 +245,21 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="size-full bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
+    <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
+      {/* Title */}
+      <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
+        Drug or Pokémon?
+      </h1>
       <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
         <CardContent className="p-8 flex flex-col gap-4 sm:gap-8 size-full flex-grow">
+          {/* Progress Bar */}
           <Progress
             value={progress}
             className="h-3 rounded-full bg-[#9E9E9E]/20"
             indicatorClassName="bg-[#E63946]"
           />
 
+          {/* Quiz Complete */}
           {isQuizComplete ? (
             <div className="text-center flex flex-col gap-6">
               <h2 className="text-[32px] font-bold font-['Poppins']">
@@ -268,15 +274,18 @@ export default function Quiz({ session }: { session: Session | null }) {
             </div>
           ) : (
             <>
+              {/* Question */}
               <div className="text-center flex flex-col gap-4">
-                <h2 className="text-[32px] font-bold font-['Poppins']">
-                  {quizItems[currentQuestion]?.name}
-                </h2>
-                {showFeedback && (
-                  <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
-                    {quizItems[currentQuestion]?.description}
-                  </p>
-                )}
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-[32px] font-bold font-['Poppins']">
+                    {quizItems[currentQuestion]?.name}
+                  </h2>
+                  {showFeedback && (
+                    <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
+                      {quizItems[currentQuestion]?.description}
+                    </p>
+                  )}
+                </div>
                 <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full flex items-center justify-center">
                   {showFeedback ? (
                     <>
@@ -325,10 +334,12 @@ export default function Quiz({ session }: { session: Session | null }) {
                 <div className="text-center">
                   <Card>
                     <CardContent className="p-4 flex flex-col gap-4">
-                      <h3 className="text-lg font-semibold">
-                        {currentFact.title}
-                      </h3>
-                      <p className="text-gray-600">{currentFact.content}</p>
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-lg font-semibold">
+                          {currentFact.title}
+                        </h3>
+                        <p className="text-gray-600">{currentFact.content}</p>
+                      </div>
                       <Button
                         onClick={handleNextQuestion}
                         className="bg-[#E63946] hover:bg-[#d32d3a] mx-4 rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"

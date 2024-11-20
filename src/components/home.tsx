@@ -36,7 +36,7 @@ export default function Home() {
   });
 
   return (
-    <main className="size-full flex flex-col items-center justify-between p-8">
+    <main className="size-full h-[80dvh] sm:h-[90dvh] overflow-y-auto flex flex-col items-center justify-between p-8">
       <div className="w-full max-w-4xl flex flex-col gap-4">
         {/* Title */}
         <h1 className="text-[44px] font-bold text-center font-['Poppins']">
@@ -105,11 +105,11 @@ export default function Home() {
                 <CarouselContent>
                   {facts.map((fact: Fact, index: number) => (
                     <CarouselItem key={index}>
-                      <div className="text-center px-2">
-                        <h3 className="text-[22px] font-medium font-['Poppins']">
+                      <div className="px-2">
+                        <h3 className="text-[22px] text-center font-medium font-['Poppins']">
                           {fact.title}
                         </h3>
-                        <p className="mt-2 text-[16px] font-['Raleway']">
+                        <p className="mt-2 text-left text-[16px] font-['Raleway']">
                           {fact.content}
                         </p>
                       </div>
