@@ -20,8 +20,10 @@ export async function POST(req: Request) {
 
     const {
       name,
+      generic,
+      dosageForm,
       description,
-      class: drugClass,
+      drugClass,
       generation,
       facts,
     } = parsedResult.data;
@@ -29,8 +31,10 @@ export async function POST(req: Request) {
     const drug = await prisma.drug.create({
       data: {
         name,
+        generic,
+        dosageForm,
         description,
-        class: drugClass,
+        drugClass,
         generation,
         facts: {
           create: facts.map((fact: { title: string; content: string }) => ({

@@ -1,15 +1,10 @@
 import { NextResponse } from "next/server";
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/app/lib/db/prisma";
 import { pokemonFormSchema } from "@/lib/validation/pokemon";
+import { PokemonClient } from "pokenode-ts";
 
 export async function POST(req: Request) {
-  // const session = await getServerSession(authOptions);
-
-  // if (!session?.user.isAdmin) {
-  //   return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  // }
+  const api = new PokemonClient();
 
   try {
     const body = await req.json();
@@ -17,12 +12,17 @@ export async function POST(req: Request) {
     if (!parsedResult.success) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
-    const { name, description, type1, type2, generation, facts } =
-      parsedResult.data;
+    const { name, description, generation, facts } = parsedResult.data;
+
+    const pokemonData = await api.getPokemonByName(name.toLowerCase());
+    const imageUrl = pokemonData.sprites.front_default;
+    const type1 = pokemonData.types[0].type.name;
+    const type2 = pokemonData.types[1]?.type.name;
 
     const pokemon = await prisma.pokemon.create({
       data: {
         name,
+        image: imageUrl,
         description,
         type1,
         type2,

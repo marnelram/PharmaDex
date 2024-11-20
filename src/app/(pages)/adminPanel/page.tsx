@@ -4,13 +4,12 @@ import { useState } from "react";
 import PokemonForm from "@/components/forms/pokemonForm";
 import DrugForm from "@/components/forms/drugForm";
 import BadgeForm from "@/components/forms/badgeForm";
-// import { redirect } from "next/navigation";
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("pokemon");
 
   return (
-    <div className="p-6">
+    <div className="p-6 flex flex-col items-center justify-center">
       <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
 
       <div className="flex gap-4 mb-6">

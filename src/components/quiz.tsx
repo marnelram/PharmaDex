@@ -6,12 +6,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, Loader2 } from "lucide-react";
 import confetti from "canvas-confetti";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { DosageFormIcon } from "@/lib/utils/dosage-form";
+import { Drug, Pokemon, Fact } from "@prisma/client";
 
-export default function Quiz({ session }: { session: Session | null }) {
+interface QuizProps {
+  session: Session | null;
+  quizItems: Array<
+    | (Drug & { type: "Drug"; facts: Fact[] })
+    | (Pokemon & { type: "Pokemon"; facts: Fact[] })
+  >;
+}
+
+export default function Quiz({ session, quizItems }: QuizProps) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -23,22 +34,6 @@ export default function Quiz({ session }: { session: Session | null }) {
   const [quizId, setQuizId] = React.useState<string | null>(null);
   const [isQuizComplete, setIsQuizComplete] = React.useState(false);
   const { toast } = useToast();
-
-  const {
-    data: quizData = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["quiz-questions"],
-    queryFn: async () => {
-      const response = await fetch("/api/quiz/question");
-      if (!response.ok) {
-        throw new Error("Failed to fetch quiz questions");
-      }
-      return response.json();
-    },
-  });
 
   // Add mutations for answer and completion
   const {
@@ -84,11 +79,11 @@ export default function Quiz({ session }: { session: Session | null }) {
   });
 
   const handleAnswer = async (answer: string) => {
-    const correct = answer === quizData[currentQuestion].type;
+    const correct = answer === quizItems[currentQuestion].type;
     setShowFeedback(true);
 
     // Set a random fact for feedback
-    const facts = quizData[currentQuestion].facts;
+    const facts = quizItems[currentQuestion].facts;
     const randomFact =
       facts.length > 0 ? facts[Math.floor(Math.random() * facts.length)] : null;
 
@@ -112,7 +107,7 @@ export default function Quiz({ session }: { session: Session | null }) {
       {
         userId: session?.user.id,
         quizId: quizId ?? undefined,
-        questionName: quizData[currentQuestion].name,
+        questionName: quizItems[currentQuestion].name,
         userGuess: answer,
         isCorrect: correct,
         score: score + (correct ? 1 : 0),
@@ -140,7 +135,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   const handleNextQuestion = () => {
     setShowFeedback(false);
     setCurrentFact({ title: "", content: "" });
-    if (currentQuestion < quizData.length - 1) {
+    if (currentQuestion < quizItems.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setIsQuizComplete(true);
@@ -170,10 +165,10 @@ export default function Quiz({ session }: { session: Session | null }) {
     );
   };
 
-  const progress = ((currentQuestion + 1) / quizData.length) * 100;
+  const progress = ((currentQuestion + 1) / quizItems.length) * 100;
 
   // Loading state
-  if (isLoading || isQuizAttemptPending) {
+  if (isQuizAttemptPending) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
@@ -185,16 +180,14 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   // Error state
-  if (isError || isQuizAttemptError) {
+  if (isQuizAttemptError) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
           <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
             <AlertCircle className="h-12 w-12 text-[#E63946]" />
             <h2 className="text-[22px] font-medium">Error</h2>
-            <p className="text-[#9E9E9E]">
-              {error?.message || quizAttemptError?.message}
-            </p>
+            <p className="text-[#9E9E9E]">{quizAttemptError?.message}</p>
             <Button
               onClick={() => window.location.reload()}
               className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
@@ -237,15 +230,35 @@ export default function Quiz({ session }: { session: Session | null }) {
             <>
               <div className="text-center flex flex-col gap-4">
                 <h2 className="text-[32px] font-bold font-['Poppins']">
-                  {quizData[currentQuestion]?.name}
+                  {quizItems[currentQuestion]?.name}
                 </h2>
                 {showFeedback && (
                   <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
-                    {quizData[currentQuestion]?.description}
+                    {quizItems[currentQuestion]?.description}
                   </p>
                 )}
                 <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/10 rounded-full flex items-center justify-center">
-                  <span className="text-[44px] text-[#9E9E9E]">?</span>
+                  {showFeedback ? (
+                    <>
+                      {quizItems[currentQuestion]?.type === "Pokemon" && (
+                        <Image
+                          src={quizItems[currentQuestion]?.image as string}
+                          alt={quizItems[currentQuestion]?.name}
+                          className="w-full h-full object-contain"
+                          width={100}
+                          height={100}
+                        />
+                      )}
+                      {quizItems[currentQuestion]?.type === "Drug" && (
+                        <DosageFormIcon
+                          className="w-full h-full object-contain p-8"
+                          form={quizItems[currentQuestion]?.dosageForm}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <span className="text-[44px] text-[#9E9E9E]">?</span>
+                  )}
                 </div>
               </div>
 
