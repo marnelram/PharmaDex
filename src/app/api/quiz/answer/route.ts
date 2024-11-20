@@ -3,7 +3,15 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { userId, quizId, questionName, userGuess, isCorrect, score } = body;
+  const {
+    userId,
+    quizId,
+    questionName,
+    userGuess,
+    isCorrect,
+    score,
+    totalQuestions,
+  } = body;
 
   try {
     // Find existing active quiz attempt for this user
@@ -21,7 +29,7 @@ export async function POST(request: Request) {
         data: {
           ...(userId && { userId }),
           score,
-          totalQuestions: 10,
+          totalQuestions,
           answers: {
             create: {
               questionName,

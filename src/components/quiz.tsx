@@ -6,23 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, Loader2 } from "lucide-react";
 import confetti from "canvas-confetti";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { DosageFormIcon } from "@/lib/utils/dosage-form";
-import { Drug, Pokemon, Fact } from "@prisma/client";
+import { Drug, Fact, Pokemon } from "@prisma/client";
 
-interface QuizProps {
-  session: Session | null;
-  quizItems: Array<
-    | (Drug & { type: "Drug"; facts: Fact[] })
-    | (Pokemon & { type: "Pokemon"; facts: Fact[] })
-  >;
-}
+type QuizItems = Array<
+  | (Drug & { type: "Drug"; facts: Fact[] })
+  | (Pokemon & { type: "Pokemon"; facts: Fact[] })
+>;
 
-export default function Quiz({ session, quizItems }: QuizProps) {
+export default function Quiz({ session }: { session: Session | null }) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -48,6 +45,7 @@ export default function Quiz({ session, quizItems }: QuizProps) {
       userGuess: string;
       isCorrect: boolean;
       score: number;
+      totalQuestions: number;
     }) => {
       const response = await fetch("/api/quiz/answer", {
         method: "POST",
@@ -55,6 +53,25 @@ export default function Quiz({ session, quizItems }: QuizProps) {
       });
       if (!response.ok) {
         throw new Error("Failed to save answer");
+      }
+      return response.json();
+    },
+  });
+
+  // Add mutations for answer and completion
+  const {
+    data: quizItems = [],
+    isLoading: isQuizItemsLoading,
+    error: quizItemsError,
+    isError: isQuizItemsError,
+  } = useQuery<QuizItems>({
+    queryKey: ["quizItems"],
+    queryFn: async () => {
+      const response = await fetch("/api/quiz", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch quiz items");
       }
       return response.json();
     },
@@ -111,10 +128,11 @@ export default function Quiz({ session, quizItems }: QuizProps) {
         userGuess: answer,
         isCorrect: correct,
         score: score + (correct ? 1 : 0),
+        totalQuestions: quizItems.length,
       },
       {
         onSuccess: (data) => {
-          setQuizId(data.id);
+          if (!quizId) setQuizId(data.id);
         },
       }
     );
@@ -159,6 +177,7 @@ export default function Quiz({ session, quizItems }: QuizProps) {
       },
       {
         onSuccess: () => {
+          setQuizId(null);
           router.push(`/results/${quizId}`);
         },
       }
@@ -167,27 +186,31 @@ export default function Quiz({ session, quizItems }: QuizProps) {
 
   const progress = ((currentQuestion + 1) / quizItems.length) * 100;
 
-  // Loading state
-  if (isQuizAttemptPending) {
+  // Add loading state for quiz items
+  if (isQuizItemsLoading || isQuizAttemptPending) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
-          <p className="text-[16px] font-medium">Loading...</p>
+          <p className="text-[16px] font-medium">Loading quiz...</p>
         </div>
       </div>
     );
   }
 
-  // Error state
-  if (isQuizAttemptError) {
+  // Add error state for quiz items
+  if (isQuizItemsError || isQuizAttemptError) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
           <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
             <AlertCircle className="h-12 w-12 text-[#E63946]" />
             <h2 className="text-[22px] font-medium">Error</h2>
-            <p className="text-[#9E9E9E]">{quizAttemptError?.message}</p>
+            <p className="text-[#9E9E9E]">
+              {quizItemsError?.message ||
+                quizAttemptError?.message ||
+                "Failed to load quiz"}
+            </p>
             <Button
               onClick={() => window.location.reload()}
               className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
@@ -200,14 +223,31 @@ export default function Quiz({ session, quizItems }: QuizProps) {
     );
   }
 
-  return (
-    <div className="h-full bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
-        <CardContent className="p-8 flex flex-col gap-4 sm:gap-8">
-          <h1 className="text-[44px] font-bold text-center font-['Poppins']">
-            Drug or Pokémon?
-          </h1>
+  // Guard clause for undefined quiz items
+  if (!quizItems || quizItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+        <Card className="w-full max-w-md rounded-[15px]">
+          <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
+            <AlertCircle className="h-12 w-12 text-[#E63946]" />
+            <h2 className="text-[22px] font-medium">No Questions Available</h2>
+            <p className="text-[#9E9E9E]">Please try again later</p>
+            <Button
+              onClick={() => window.location.reload()}
+              className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
+            >
+              Refresh
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
+  return (
+    <div className="size-full bg-[#F5F5F5] flex flex-col items-center justify-center sm:p-8">
+      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+        <CardContent className="p-8 flex flex-col gap-4 sm:gap-8 size-full flex-grow">
           <Progress
             value={progress}
             className="h-3 rounded-full bg-[#9E9E9E]/20"
