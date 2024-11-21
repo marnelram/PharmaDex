@@ -5,20 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, Loader2 } from "lucide-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { DosageFormIcon } from "@/lib/utils/dosage-form";
-import { Drug, Fact, Pokemon } from "@prisma/client";
+import { QuizItems } from "@/app/lib/types/quiz";
 
-type QuizItems = Array<
-  | (Drug & { type: "Drug"; facts: Fact[] })
-  | (Pokemon & { type: "Pokemon"; facts: Fact[] })
->;
-
-export default function Quiz({ session }: { session: Session | null }) {
+export default function Quiz({
+  session,
+  quizItems,
+}: {
+  session: Session | null;
+  quizItems: QuizItems;
+}) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -52,25 +53,6 @@ export default function Quiz({ session }: { session: Session | null }) {
       });
       if (!response.ok) {
         throw new Error("Failed to save answer");
-      }
-      return response.json();
-    },
-  });
-
-  // Add mutations for answer and completion
-  const {
-    data: quizItems = [],
-    isLoading: isQuizItemsLoading,
-    error: quizItemsError,
-    isError: isQuizItemsError,
-  } = useQuery<QuizItems>({
-    queryKey: ["quizItems"],
-    queryFn: async () => {
-      const response = await fetch("/api/quiz", {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch quiz items");
       }
       return response.json();
     },
@@ -181,7 +163,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   const progress = ((currentQuestion + 1) / quizItems.length) * 100;
 
   // Add loading state for quiz items
-  if (isQuizItemsLoading || isQuizAttemptPending) {
+  if (isQuizAttemptPending) {
     return (
       <div className="h-[80dvh] bg-[#F5F5F5] flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
@@ -193,7 +175,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   }
 
   // Add error state for quiz items
-  if (isQuizItemsError || isQuizAttemptError) {
+  if (isQuizAttemptError) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
@@ -201,9 +183,7 @@ export default function Quiz({ session }: { session: Session | null }) {
             <AlertCircle className="h-12 w-12 text-[#E63946]" />
             <h2 className="text-[22px] font-medium">Error</h2>
             <p className="text-[#9E9E9E]">
-              {quizItemsError?.message ||
-                quizAttemptError?.message ||
-                "Failed to load quiz"}
+              {quizAttemptError?.message || "Failed to load quiz"}
             </p>
             <Button
               onClick={() => window.location.reload()}
