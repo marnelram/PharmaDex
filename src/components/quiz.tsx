@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, Loader2 } from "lucide-react";
-import confetti from "canvas-confetti";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Session } from "next-auth";
@@ -113,11 +112,6 @@ export default function Quiz({ session }: { session: Session | null }) {
 
     if (correct) {
       setScore(score + 1);
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
     }
 
     submitAnswer(

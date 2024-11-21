@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import confetti from "canvas-confetti";
 
 export default function Results({
   score,
@@ -14,6 +15,14 @@ export default function Results({
 }) {
   const router = useRouter();
   const percentage = Math.round((score / totalQuestions) * 100);
+
+  if (percentage >= 90) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  }
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
