@@ -28,7 +28,7 @@ const drugSchema = z.object({
       ])
       .describe("The dosage form of the drug"),
     description: z.string().describe(
-      `Brief description of what the drug is used for.
+      `A single sentence brief description of the generic name, and what the drug is used for.
         Example: A brand of celecoxib, used for pain and inflammation relief.`
     ),
     drugClass: z.string().describe("Drug classification/category"),
@@ -38,8 +38,8 @@ const drugSchema = z.object({
       .describe("Generation of the drug, if applicable"),
     facts: z.array(
       z.object({
-        title: z.string(),
-        content: z.string(),
+        title: z.string().describe("a short and catchy title for a drug fact."),
+        content: z.string().describe("a 1-2 sentence fact about the drug."),
       })
     )
       .describe(`Interesting facts about the drug in friendly engaging language. Don't include facts about dosing unless it's an odd frequency (e.g. once every 3 months or once every 4 hours). Example:

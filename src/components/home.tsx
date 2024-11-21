@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/carousel";
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const router = useRouter();
@@ -53,13 +54,19 @@ export default function Home() {
 
         {/* Leaderboard Preview */}
         <Card className="p-4 rounded-[15px]">
-          <h2 className="text-[32px] font-bold pb-2 font-['Poppins']">
+          <h2 className="text-[32px] font-bold pb-2 px-4 font-['Poppins']">
             Top Players
           </h2>
-          <div className="flex justify-center items-center gap-12 md:gap-24 lg:gap-36">
-            {[1, 2, 3].map((rank) => (
+          <div className="flex justify-center items-end gap-12 md:gap-24 lg:gap-36">
+            {[3, 1, 2].map((rank) => (
               <div key={rank} className="flex flex-col items-center">
-                <Avatar className="w-16 h-16">
+                <Avatar
+                  className={cn(
+                    rank == 1 && "size-16",
+                    rank == 2 && "size-14",
+                    rank == 3 && "size-12"
+                  )}
+                >
                   <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
                   <AvatarFallback>{rank}</AvatarFallback>
                 </Avatar>
@@ -109,7 +116,7 @@ export default function Home() {
                         <h3 className="text-[22px] text-center font-medium font-['Poppins']">
                           {fact.title}
                         </h3>
-                        <p className="mt-2 text-left text-[16px] font-['Raleway']">
+                        <p className="mt-2 text-left sm:text-center text-[16px] font-['Raleway']">
                           {fact.content}
                         </p>
                       </div>

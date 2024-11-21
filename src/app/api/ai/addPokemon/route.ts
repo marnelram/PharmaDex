@@ -11,15 +11,19 @@ const pokemonSchema = z.object({
     name: z.string().describe("The name of a real Pokémon from any generation"),
     description: z
       .string()
-      .describe("Brief Pokédex-style description of the Pokémon"),
+      .describe("Brief, 1 sentence, Pokédex-style description of the Pokémon"),
     generation: z
       .number()
       .describe("The generation this Pokémon was introduced in (1-9)"),
     facts: z
       .array(
         z.object({
-          title: z.string(),
-          content: z.string(),
+          title: z
+            .string()
+            .describe("a short and catchy title for a Pokémon fact."),
+          content: z
+            .string()
+            .describe("a 1-2 sentence fact about the Pokémon."),
         })
       )
       .max(2)

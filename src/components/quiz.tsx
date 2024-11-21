@@ -189,7 +189,7 @@ export default function Quiz({ session }: { session: Session | null }) {
   // Add loading state for quiz items
   if (isQuizItemsLoading || isQuizAttemptPending) {
     return (
-      <div className="min-h-dvh bg-[#F5F5F5] flex items-center justify-center">
+      <div className="h-[80dvh] bg-[#F5F5F5] flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
           <p className="text-[16px] font-medium">Loading quiz...</p>
@@ -251,7 +251,7 @@ export default function Quiz({ session }: { session: Session | null }) {
         Drug or Pokémon?
       </h1>
       <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
-        <CardContent className="p-8 flex flex-col gap-4 sm:gap-8 size-full flex-grow">
+        <CardContent className="p-8 flex h-[80dvh] sm:h-auto flex-col justify-between gap-4 sm:gap-8">
           {/* Progress Bar */}
           <Progress
             value={progress}
