@@ -1,16 +1,8 @@
 import { NextResponse } from "next/server";
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from "@/app/lib/db/prisma";
-import { drugFormSchema } from "@/lib/validation/drug";
+import { drugFormSchema } from "@/lib/validation/zod/drug";
+import prisma from "@/lib/db/prisma";
 
 export async function POST(req: Request) {
-  // const session = await getServerSession(authOptions);
-
-  // if (!session?.user.isAdmin) {
-  //   return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  // }
-
   try {
     const body = await req.json();
     const parsedResult = drugFormSchema.safeParse(body);

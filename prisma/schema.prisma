@@ -149,14 +149,10 @@ model QuizAttempt {
   @@index([completed(sort: Desc), createdAt(sort: Asc)])
 }
 
-model Answer {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  quizAttemptId String      @db.ObjectId
-  quizAttempt   QuizAttempt @relation(fields: [quizAttemptId], references: [id])
+type Answer {
   questionName  String      // The name that was guessed
   userGuess     String      // "drug" or "pokemon"
   isCorrect     Boolean
-  createdAt     DateTime    @default(now())
 }
 
 model Badge {
@@ -168,8 +164,6 @@ model Badge {
   color       String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
-  // Relations to track user progress
   userBadges  UserBadge[]
 }
 

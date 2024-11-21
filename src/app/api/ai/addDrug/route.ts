@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/db/prisma";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
+import prisma from "@/lib/db/prisma";
 
 // Define the schema for drug generation
 const drugSchema = z.object({

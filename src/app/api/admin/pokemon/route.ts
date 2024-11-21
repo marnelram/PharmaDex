@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/db/prisma";
-import { pokemonFormSchema } from "@/lib/validation/pokemon";
+import { pokemonFormSchema } from "@/lib/validation/zod/pokemon";
 import { PokemonClient } from "pokenode-ts";
+import prisma from "@/lib/db/prisma";
 
 export async function POST(req: Request) {
   const api = new PokemonClient();

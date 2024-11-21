@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
-import prisma from "./app/lib/db/prisma";
+import prisma from "./lib/db/prisma";
 
 /**
  * @see https://authjs.dev/getting-started/adapters/prisma

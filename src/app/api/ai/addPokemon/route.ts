@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/db/prisma";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import { PokemonClient } from "pokenode-ts";
+import prisma from "@/lib/db/prisma";
 
 // Define the schema for Pokemon generation
 const pokemonSchema = z.object({

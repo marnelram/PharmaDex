@@ -1,65 +1,34 @@
-import prisma from "@/app/lib/db/prisma";
+import prisma from "@/lib/db/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const {
-    userId,
-    quizId,
-    questionName,
-    userGuess,
-    isCorrect,
-    score,
-    totalQuestions,
-  } = body;
+  const { quizId, questionName, userGuess, isCorrect, score } = body;
 
   try {
-    // Find existing active quiz attempt for this user
-    let quizAttempt = await prisma.quizAttempt.findFirst({
-      where: {
-        id: quizId,
-        ...(userId && { userId }),
-        completed: false,
+    // Update existing quiz attempt with new answer
+    const quizAttempt = await prisma.quizAttempt.update({
+      where: { id: quizId },
+      data: {
+        score,
+        answers: {
+          push: {
+            questionName,
+            userGuess,
+            isCorrect,
+          },
+        },
       },
     });
 
-    if (!quizAttempt) {
-      // Create new quiz attempt if none exists
-      quizAttempt = await prisma.quizAttempt.create({
-        data: {
-          ...(userId && { userId }),
-          score,
-          totalQuestions,
-          answers: {
-            create: {
-              questionName,
-              userGuess,
-              isCorrect,
-            },
-          },
-        },
-      });
-    } else {
-      // Add answer to existing quiz attempt
-      quizAttempt = await prisma.quizAttempt.update({
-        where: { id: quizAttempt.id },
-        data: {
-          score,
-          answers: {
-            create: {
-              questionName,
-              userGuess,
-              isCorrect,
-            },
-          },
-        },
-      });
-    }
-
     return NextResponse.json(quizAttempt);
-  } catch (error) {
+  } catch (e) {
+    // Cast error to Error type
+    const error = e as Error;
+    console.error("Quiz answer API error:", error.message);
+
     return NextResponse.json(
-      { error: `Failed to save answer: ${error}` },
+      { error: `Failed to save answer: ${error.message}` },
       { status: 500 }
     );
   }
