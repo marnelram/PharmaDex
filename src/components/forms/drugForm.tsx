@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { drugFormSchema } from "@/lib/validation/drug";
+import { drugFormSchema } from "@/lib/validation/zod/drug";
 import {
   Select,
   SelectContent,

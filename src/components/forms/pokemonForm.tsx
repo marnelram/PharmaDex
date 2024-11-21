@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
-import { pokemonFormSchema } from "@/lib/validation/pokemon";
+import { pokemonFormSchema } from "@/lib/validation/zod/pokemon";
 
 export default function PokemonForm() {
   const { toast } = useToast();

@@ -1,8 +1,8 @@
+import { Quiz } from "@/lib/validation/types/quiz";
 import { auth } from "@/auth";
-import Quiz from "@/components/quiz";
 import { Header } from "@/components/header";
+import QuizComponent from "@/components/quiz";
 import { headers } from "next/headers";
-import { QuizItems } from "@/app/lib/types/quiz";
 
 export default async function QuizPage() {
   const session = await auth();
@@ -12,16 +12,21 @@ export default async function QuizPage() {
   const host = headersList.get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
-  // Method 1: Direct fetch using full URL
   const response = await fetch(`${protocol}://${host}/api/quiz`, {
+    method: "POST",
+    body: JSON.stringify({ userId: session?.user.id }),
     cache: "no-store",
   });
-  const quizItems: QuizItems = await response.json();
+
+  const quiz: Quiz = await response.json();
+
+  console.log("quizId", quiz.quizId);
+  console.log("quizId", quiz.questions);
 
   return (
     <div className="w-full h-dvh flex flex-col items-center mx-auto">
       <Header session={session} />
-      <Quiz session={session} quizItems={quizItems} />
+      <QuizComponent quiz={quiz} />
     </div>
   );
 }

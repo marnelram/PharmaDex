@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_DEV_URL")
 }
 
 generator client {
@@ -149,10 +149,7 @@ model QuizAttempt {
   @@index([completed(sort: Desc), createdAt(sort: Asc)])
 }
 
-model Answer {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  quizAttemptId String      @db.ObjectId
-  quizAttempt   QuizAttempt @relation(fields: [quizAttemptId], references: [id])
+type Answer {
   questionName  String      // The name that was guessed
   userGuess     String      // "drug" or "pokemon"
   isCorrect     Boolean
@@ -168,8 +165,6 @@ model Badge {
   color       String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
-  // Relations to track user progress
   userBadges  UserBadge[]
 }
 

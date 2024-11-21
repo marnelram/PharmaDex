@@ -10,9 +10,6 @@ export default async function ResultsPage(props: { params: tParams }) {
     where: {
       id: quizAttemptId,
     },
-    include: {
-      answers: true,
-    },
   });
 
   if (!quizAttempt) {
