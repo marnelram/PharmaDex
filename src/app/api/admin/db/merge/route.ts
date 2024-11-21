@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
 
 const devClient = new MongoClient(process.env.DATABASE_DEV_URL as string);
-const prodClient = new MongoClient(process.env.DATABASE_URL as string);
+const prodClient = new MongoClient(process.env.DATABASE_PROD_URL as string);
 
 export async function GET() {
   try {
