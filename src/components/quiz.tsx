@@ -342,7 +342,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
             className="h-3 rounded-full bg-[#9E9E9E]/20"
             indicatorClassName="bg-[#E63946]"
           />
-          {!showFeedback ? (
+          {!showFeedback && !isQuizComplete ? (
             <CountdownCircleTimer
               key={showFeedback ? 0 : 1}
               isPlaying={!showFeedback}
