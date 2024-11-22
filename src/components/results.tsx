@@ -34,7 +34,7 @@ export default function Results({
             Quiz Results
           </h1>
 
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-4">
             <p className="text-[32px] font-['Poppins'] font-bold">
               {correctCount}/{totalQuestions}
             </p>
@@ -55,7 +55,7 @@ export default function Results({
               <h2 className="text-[32px] font-['Poppins'] font-bold">
                 Score:{" "}
               </h2>
-              <div className="bg-[#F3E260] px-8 py-3 rounded-full">
+              <div className="bg-[#F3E260] px-6 py-2 rounded-full">
                 <p className="text-[28px] font-['Poppins'] font-bold">
                   {totalScore.toLocaleString()}
                 </p>
@@ -65,20 +65,20 @@ export default function Results({
 
           <div className="flex items-center gap-2 text-[22px] font-['Raleway']">
             <span role="img" aria-label="achievement icon">
-              {percentage > 90
+              {percentage >= 95
                 ? "💊"
                 : percentage >= 80
                 ? "🏆"
-                : percentage >= 50
+                : percentage <= 60
                 ? "❓"
                 : "📚"}
             </span>
             <p className="text-center">
-              {percentage > 90
+              {percentage >= 95
                 ? "Drug and Pokemon Master!"
                 : percentage >= 80
                 ? "Pokémon Professor in the making!"
-                : percentage >= 50
+                : percentage <= 60
                 ? "Were you just guessing?"
                 : "Time to study up!"}
             </p>

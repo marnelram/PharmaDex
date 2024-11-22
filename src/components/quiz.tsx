@@ -19,15 +19,14 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [isCorrect, setIsCorrect] = React.useState(false);
   const [score, setScore] = React.useState(-1);
-  const [baseScore, setBaseScore] = React.useState(0);
   const [totalScore, setTotalScore] = React.useState(0);
   const [showFeedback, setShowFeedback] = React.useState(false);
   const [isQuizComplete, setIsQuizComplete] = React.useState(false);
   const { toast } = useToast();
   const startTimeRef = React.useRef<number>(0);
-  const remainingTimeRef = React.useRef(5);
   const [streak, setStreak] = React.useState(0);
   const [multiplier, setMultiplier] = React.useState(1);
+  const [isGameStarted, setIsGameStarted] = React.useState(false);
 
   const { questions, quizId } = quiz;
 
@@ -37,12 +36,6 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
         questions[currentQuestion].type === "Pokemon" ? "Drug" : "Pokemon"
       );
     }
-  };
-
-  const handleTimeUpdate = () => {
-    const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
-    const preciseRemaining = Math.max(0, 5 - elapsedTime);
-    remainingTimeRef.current = preciseRemaining;
   };
 
   // Add mutations for answer and completion
@@ -88,30 +81,24 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     },
   });
 
-  const calculateScore = () => {
+  const calculateScore = (elapsedTime: number) => {
     let baseScore;
     // If remaining time is between 4.95 and 5 seconds (answered within first 0.05s)
-    if (remainingTimeRef.current >= 4.95) {
+    if (elapsedTime <= 0.1) {
       baseScore = 1000;
-    } else if (remainingTimeRef.current <= 1) {
+    } else if (elapsedTime >= 4.9) {
       baseScore = 100;
     } else {
-      // Exponential decay formula: a + (b-a)e^(-k(x-x1)/(x2-x1))
-      // where a=100, b=1000, x1=1, x2=4.95
-      const k = 3; // Controls how steep the curve is
-      const x = remainingTimeRef.current;
-      baseScore = Math.round(
-        100 + (1000 - 100) * Math.exp((-k * (4.95 - x)) / (4.95 - 1))
-      );
+      const x = elapsedTime;
+      baseScore = Math.round(25 + 1000 * Math.exp(-0.5 * (x - 0.05)));
     }
-    setBaseScore(baseScore);
 
     // Apply streak multiplier
     return Math.round(baseScore * multiplier);
   };
 
   const handleAnswer = async (answer: string) => {
-    console.log("Remaining time:", remainingTimeRef.current);
+    const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
     const correct = answer === questions[currentQuestion].type;
 
     if (correct) {
@@ -123,7 +110,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       const newMultiplier = calculateMultiplier(newStreak);
       setMultiplier(newMultiplier);
 
-      const currentScore = calculateScore();
+      const currentScore = calculateScore(elapsedTime);
       setScore(currentScore);
       setTotalScore((prev) => prev + currentScore);
     } else {
@@ -262,6 +249,85 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     return 1; // Base multiplier
   };
 
+  // Early return for start card if game hasn't started
+  if (!isGameStarted) {
+    return (
+      <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
+        <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
+          Drug or Pokémon?
+        </h1>
+        <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+          <CardContent className="p-6 flex flex-col items-center gap-6 sm:gap-8">
+            <h2 className="sm:text-[32px] text-[22px] font-bold font-['Poppins']">
+              How to Play:
+            </h2>
+
+            <div className="space-y-4 sm:space-y-6 text-[16px] font-['Raleway']">
+              <p className="text-center">
+                You&apos;ll be shown a name and have 5 seconds to decide if
+                it&apos;s a Drug or a Pokémon!
+              </p>
+
+              <div className="space-y-6 sm:space-y-8">
+                <ul className="list-disc list-inside space-y-1 sm:space-y-2">
+                  <li>
+                    Quick answers earn more points (up to 1000 per question)
+                  </li>
+                  <li>Build streaks to multiply your score:</li>
+                  <li>
+                    Balance speed with accuracy - wrong answers reset your
+                    streak!
+                  </li>
+                </ul>
+                <div className="w-full flex justify-center">
+                  <table className="w-full max-w-sm table-fixed border-none">
+                    <thead className="border-b">
+                      <tr className="text-left">
+                        <th># Correct</th>
+                        <th>Multiplier</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="h-12">3</td>
+                        <td className="text-[#eeda44] font-bold flex items-center h-12">
+                          1.5x multiplier{" "}
+                          <span className="text-[16px]">🔥</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="h-12">5</td>
+                        <td className="text-[#e69b39] flex items-center font-bold h-12">
+                          2x multiplier <span className="text-[22px]">🔥</span>
+                        </td>
+                      </tr>
+                      <tr className="h-12">
+                        <td className="h-12">10</td>
+                        <td className="text-[#E63946] font-bold flex items-center h-12">
+                          3x multiplier <span className="text-[32px]">🔥</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <Button
+              onClick={() => {
+                setIsGameStarted(true);
+                startTimeRef.current = Date.now();
+              }}
+              className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-8 px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
+            >
+              Start Quiz
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
       {/* Title */}
@@ -287,8 +353,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
               strokeWidth={6}
               trailColor="#9E9E9E20"
               onComplete={handleTimeComplete}
-              onUpdate={handleTimeUpdate}
-              updateInterval={0.01}
+              updateInterval={0.05}
             />
           ) : (
             <div className="flex items-center gap-4">
@@ -297,25 +362,24 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
                   className={cn(
                     "text-[22px] font-bold font-['Poppins']",
                     isCorrect && "text-[#54d548]",
-                    !isCorrect && "text-[#E63946]"
+                    !isCorrect && "text-gray-300",
+                    streak >= 3 && "text-[#eeda44]",
+                    streak >= 5 && "text-[#e69b39]",
+                    streak >= 10 && "text-[#E63946]"
                   )}
                 >
-                  + {isCorrect ? baseScore : 0} points
+                  + {isCorrect ? score : 0} points
                 </p>
-                {multiplier > 1 && (
-                  <p className="flex items-center text-[32px] gap-2 font-bold text-[#54d548] font-['Poppins']">
-                    <span className="text-[22px]">x </span>
-                    {" " + multiplier}
-                  </p>
-                )}
               </div>
-              {streak >= 3 && (
-                <div className="flex items-center bg-[#F3E260]/20 rounded-full px-2 py-2">
-                  <p className="text-[16px] font-bold font-['Poppins']">
-                    {streak}🔥
-                  </p>
-                </div>
-              )}
+              <div className="flex items-center">
+                {streak >= 3 && streak < 5 && (
+                  <p className="text-[16px] font-bold">🔥</p>
+                )}
+                {streak >= 5 && streak < 10 && (
+                  <p className="text-[22px] font-bold">🔥</p>
+                )}
+                {streak >= 10 && <p className="text-[32px] font-bold">🔥</p>}
+              </div>
             </div>
           )}
           {isQuizComplete ? (
