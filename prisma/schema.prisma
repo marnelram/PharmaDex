@@ -140,8 +140,9 @@ model QuizAttempt {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   userId         String?   @db.ObjectId
   user           User?     @relation(fields: [userId], references: [id])
-  score          Int
+  totalScore     Int
   completed      Boolean   @default(false)
+  correctCount   Int       @default(0)
   totalQuestions Int
   answers        Answer[]
   createdAt      DateTime  @default(now())
@@ -152,6 +153,7 @@ model QuizAttempt {
 type Answer {
   questionName  String      // The name that was guessed
   userGuess     String      // "drug" or "pokemon"
+  score         Int
   isCorrect     Boolean
 }
 

@@ -3,18 +3,23 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { quizId, questionName, userGuess, isCorrect, score } = body;
+  const { quizId, questionName, totalScore, score, userGuess, isCorrect } =
+    body;
 
   try {
     // Update existing quiz attempt with new answer
     const quizAttempt = await prisma.quizAttempt.update({
       where: { id: quizId },
       data: {
-        score,
+        totalScore,
+        correctCount: {
+          increment: isCorrect ? 1 : 0,
+        },
         answers: {
           push: {
             questionName,
             userGuess,
+            score,
             isCorrect,
           },
         },

@@ -17,12 +17,10 @@ import Image from "next/image";
 export function Header({ session }: { session: Session | null }) {
   return (
     <header className="sticky top-0 w-full z-50 max-w-5xl flex justify-between items-center p-2 sm:p-4 px-12 sm:px-8 bg-white rounded-[15px] shadow-md">
-      <div className="flex items-center w-24">
+      <div className="hidden sm:flex items-center w-24">
         <Image src="/logo.png" alt="logo" width={40} height={40} />
       </div>
-      <h1 className="hidden sm:flex text-[32px] font-bold font-['Poppins']">
-        PharmaDex
-      </h1>
+      <h1 className=" text-[32px] font-bold font-['Poppins']">PharmaDex</h1>
       <div className="relative">
         {session?.user ? (
           <DropdownMenu>

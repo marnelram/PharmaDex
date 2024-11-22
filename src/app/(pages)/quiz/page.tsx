@@ -20,9 +20,6 @@ export default async function QuizPage() {
 
   const quiz: Quiz = await response.json();
 
-  console.log("quizId", quiz.quizId);
-  console.log("quizId", quiz.questions);
-
   return (
     <div className="w-full h-dvh flex flex-col items-center mx-auto">
       <Header session={session} />
