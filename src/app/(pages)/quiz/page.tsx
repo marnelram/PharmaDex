@@ -15,10 +15,11 @@ export default async function QuizPage() {
 
   const response = await fetch(`${protocol}://${host}/api/quiz`, {
     method: "POST",
-    body: JSON.stringify({ userId: session?.user.id }),
+    body: JSON.stringify({ userId: session?.user.id ?? null }),
     cache: "no-store",
   });
 
+  console.log(response);
   const quiz: Quiz = await response.json();
 
   return (
