@@ -5,6 +5,7 @@ import QuizComponent from "@/components/quiz";
 import { headers } from "next/headers";
 
 export default async function QuizPage() {
+  // Get the session
   const session = await auth();
 
   // Get the host from headers
