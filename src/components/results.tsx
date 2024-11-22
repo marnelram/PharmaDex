@@ -34,31 +34,32 @@ export default function Results({
             Quiz Results
           </h1>
 
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col items-center gap-2">
             <p className="text-[32px] font-['Poppins'] font-bold">
               {correctCount}/{totalQuestions}
             </p>
-            <div className="relative w-48 h-48">
-              <div
-                className="absolute inset-0 rounded-full bg-[#E63946]"
-                style={{
-                  clipPath: `circle(${percentage}% at 50% 50%)`,
-                }}
-              />
+            <div className="relative w-48 h-48 mx-auto">
+              <div className="absolute inset-0 rounded-full border-8 border-[#E63946] overflow-hidden">
+                <div
+                  className="absolute bottom-0 w-full bg-[#E63946] transition-all duration-1000"
+                  style={{ height: `${percentage}%` }}
+                />
+              </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-[28px] font-['Poppins'] text-white">
+                <p className="text-[32px] font-['Poppins'] font-bold">
                   {percentage}%
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <h2 className="text-[32px] font-['Poppins'] font-bold">Score: </h2>
-            <div className="bg-[#F3E260] px-8 py-3 rounded-full">
-              <p className="text-[28px] font-['Poppins'] font-bold">
-                {totalScore.toLocaleString()}
-              </p>
+            <div className="flex items-center gap-4">
+              <h2 className="text-[32px] font-['Poppins'] font-bold">
+                Score:{" "}
+              </h2>
+              <div className="bg-[#F3E260] px-8 py-3 rounded-full">
+                <p className="text-[28px] font-['Poppins'] font-bold">
+                  {totalScore.toLocaleString()}
+                </p>
+              </div>
             </div>
           </div>
 

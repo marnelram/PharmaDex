@@ -19,6 +19,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [isCorrect, setIsCorrect] = React.useState(false);
   const [score, setScore] = React.useState(-1);
+  const [baseScore, setBaseScore] = React.useState(0);
   const [totalScore, setTotalScore] = React.useState(0);
   const [showFeedback, setShowFeedback] = React.useState(false);
   const [isQuizComplete, setIsQuizComplete] = React.useState(false);
@@ -94,13 +95,16 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       baseScore = 1000;
     } else if (remainingTimeRef.current <= 1) {
       baseScore = 100;
-    } else if (remainingTimeRef.current <= 2) {
-      const t = (remainingTimeRef.current - 1) / 1;
-      baseScore = Math.round(100 + (250 - 100) * t);
     } else {
-      const t = (remainingTimeRef.current - 2) / 3;
-      baseScore = Math.round(250 + (1000 - 250) * t);
+      // Exponential decay formula: a + (b-a)e^(-k(x-x1)/(x2-x1))
+      // where a=100, b=1000, x1=1, x2=4.95
+      const k = 3; // Controls how steep the curve is
+      const x = remainingTimeRef.current;
+      baseScore = Math.round(
+        100 + (1000 - 100) * Math.exp((-k * (4.95 - x)) / (4.95 - 1))
+      );
     }
+    setBaseScore(baseScore);
 
     // Apply streak multiplier
     return Math.round(baseScore * multiplier);
@@ -287,23 +291,31 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
               updateInterval={0.01}
             />
           ) : (
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <p
+                  className={cn(
+                    "text-[22px] font-bold font-['Poppins']",
+                    isCorrect && "text-[#54d548]",
+                    !isCorrect && "text-[#E63946]"
+                  )}
+                >
+                  + {isCorrect ? baseScore : 0} points
+                </p>
+                {multiplier > 1 && (
+                  <p className="flex items-center text-[32px] gap-2 font-bold text-[#54d548] font-['Poppins']">
+                    <span className="text-[22px]">x </span>
+                    {" " + multiplier}
+                  </p>
+                )}
+              </div>
               {streak >= 3 && (
-                <div className="flex items-center bg-[#F3E260]/20 rounded-full px-4 py-2">
-                  <p className="text-[16px] font-['Raleway']">
-                    🔥 {streak} streak ({multiplier}x)
+                <div className="flex items-center bg-[#F3E260]/20 rounded-full px-2 py-2">
+                  <p className="text-[16px] font-bold font-['Poppins']">
+                    {streak}🔥
                   </p>
                 </div>
               )}
-              <p
-                className={cn(
-                  "text-[22px] font-bold font-['Raleway']",
-                  isCorrect && "text-[#54d548]",
-                  !isCorrect && "text-[#E63946]"
-                )}
-              >
-                + {score} points
-              </p>
             </div>
           )}
           {isQuizComplete ? (
