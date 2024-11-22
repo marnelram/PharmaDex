@@ -11,7 +11,8 @@ export default async function QuizPage() {
   // Get the host from headers
   const headersList = await headers();
   const host = headersList.get("host");
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  // const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const protocol = "http";
 
   const response = await fetch(`${protocol}://${host}/api/quiz`, {
     method: "POST",
