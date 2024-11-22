@@ -7,13 +7,9 @@ export async function POST(request: Request) {
 
   try {
     // Get all quiz items
-    const drugs = await prisma.drug.findMany({
-      include: { facts: true },
-    });
+    const drugs = await prisma.drug.findMany();
 
-    const pokemon = await prisma.pokemon.findMany({
-      include: { facts: true },
-    });
+    const pokemon = await prisma.pokemon.findMany();
 
     // Create shuffled quiz items
     const questions: Questions = [
@@ -32,7 +28,8 @@ export async function POST(request: Request) {
     // Create new quiz attempt
     const quizAttempt = await prisma.quizAttempt.create({
       data: {
-        score: 0,
+        correctCount: 0,
+        totalScore: 0,
         totalQuestions: questions.length,
         userId: userId ?? undefined,
         answers: [],

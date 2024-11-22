@@ -16,10 +16,15 @@ export default async function ResultsPage(props: { params: tParams }) {
     return <div>No quiz attempt found</div>;
   }
 
+  const { totalScore, correctCount, totalQuestions } = quizAttempt;
+
+  console.log("correctCount", correctCount);
+
   return (
     <Results
-      score={quizAttempt.score}
-      totalQuestions={quizAttempt.totalQuestions}
+      totalScore={totalScore ?? 0}
+      correctCount={correctCount ?? 0}
+      totalQuestions={totalQuestions}
     />
   );
 }

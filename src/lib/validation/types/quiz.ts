@@ -1,8 +1,7 @@
-import { Drug, Fact, Pokemon } from "@prisma/client";
+import { Drug, Pokemon } from "@prisma/client";
 
 export type Questions = Array<
-  | (Drug & { type: "Drug"; facts: Fact[] })
-  | (Pokemon & { type: "Pokemon"; facts: Fact[] })
+  (Drug & { type: "Drug" }) | (Pokemon & { type: "Pokemon" })
 >;
 
 export type Quiz = {
