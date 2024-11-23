@@ -1,7 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DrugWithFacts } from "./schema";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import {
@@ -12,8 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PokemonWithFacts } from "./schemas";
 
-export const columns: ColumnDef<DrugWithFacts>[] = [
+export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -47,40 +47,49 @@ export const columns: ColumnDef<DrugWithFacts>[] = [
       );
     },
     cell: ({ row }) => {
-      const drug = row.original;
+      const pokemon = row.original;
       return (
         <div className="flex items-center">
-          {drug.image && (
+          {pokemon.image && (
             <img
-              src={drug.image}
-              alt={drug.name}
+              src={pokemon.image}
+              alt={pokemon.name}
               className="h-8 w-8 mr-3 rounded-full"
             />
           )}
-          <span>{drug.name}</span>
+          <span>{pokemon.name}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "generic",
+    accessorKey: "type1",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Generic Name
+        Primary Type
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
   },
   {
-    accessorKey: "drugClass",
-    header: "Drug Class",
+    accessorKey: "type2",
+    header: "Secondary Type",
+    cell: ({ row }) => row.original.type2 || "-",
   },
   {
-    accessorKey: "dosageForm",
-    header: "Dosage Form",
+    accessorKey: "generation",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Generation
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
   },
   {
     accessorKey: "facts",
@@ -101,7 +110,7 @@ export const columns: ColumnDef<DrugWithFacts>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const drug = row.original;
+      const pokemon = row.original;
 
       return (
         <DropdownMenu>
@@ -114,12 +123,12 @@ export const columns: ColumnDef<DrugWithFacts>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(drug.id)}
+              onClick={() => navigator.clipboard.writeText(pokemon.id)}
             >
-              Copy drug ID
+              Copy Pokemon ID
             </DropdownMenuItem>
             <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Edit drug</DropdownMenuItem>
+            <DropdownMenuItem>Edit Pokemon</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
