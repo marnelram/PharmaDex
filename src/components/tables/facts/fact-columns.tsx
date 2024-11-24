@@ -11,10 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import { PokemonWithFacts } from "./schemas";
-import { Input } from "@/components/ui/input";
+import { TFact } from "./schema";
 
-export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
+export const factColumns: ColumnDef<TFact>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -35,99 +34,49 @@ export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "title",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Title
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "content",
+    header: "Content",
     cell: ({ row }) => {
-      const pokemon = row.original;
-      return (
-        <div className="flex items-center">
-          {pokemon.image && (
-            <img
-              src={pokemon.image}
-              alt={pokemon.name}
-              className="h-8 w-8 mr-3 rounded-full"
-            />
-          )}
-          <span>{pokemon.name}</span>
-        </div>
-      );
+      const content = row.original.content;
+      return <div className="max-w-md truncate">{content}</div>;
     },
   },
   {
-    accessorKey: "type1",
+    accessorKey: "category",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Primary Type
+        Category
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
   },
   {
-    accessorKey: "type2",
-    header: "Secondary Type",
-    cell: ({ row }) => row.original.type2 || "-",
-  },
-  {
-    accessorKey: "generation",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Generation
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-  },
-  {
-    accessorKey: "facts",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Facts
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    id: "relatedItem",
+    header: "Related To",
     cell: ({ row }) => {
-      const facts = row.original.facts;
-      return facts.length;
+      const fact = row.original;
+      return fact.drugId || fact.pokemonId || "N/A";
     },
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <div className="flex flex-col gap-2">
-          <Input
-            placeholder="Search ID..."
-            value={(column.getFilterValue() as string) ?? ""}
-            onChange={(event) => column.setFilterValue(event.target.value)}
-            className="max-w-sm"
-          />
-        </div>
-      );
-    },
-    filterFn: "includesString",
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const pokemon = row.original;
+      const fact = row.original;
 
       return (
         <DropdownMenu>
@@ -140,12 +89,12 @@ export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(pokemon.id)}
+              onClick={() => navigator.clipboard.writeText(fact.id)}
             >
-              Copy Pokemon ID
+              Copy fact ID
             </DropdownMenuItem>
             <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Edit Pokemon</DropdownMenuItem>
+            <DropdownMenuItem>Edit fact</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

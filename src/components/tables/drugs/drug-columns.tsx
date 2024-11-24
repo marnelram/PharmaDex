@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 
 export const drugColumns: ColumnDef<DrugWithFacts>[] = [
   {
@@ -97,6 +98,22 @@ export const drugColumns: ColumnDef<DrugWithFacts>[] = [
       const facts = row.original.facts;
       return facts.length;
     },
+  },
+  {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <div className="flex flex-col gap-2">
+          <Input
+            placeholder="Search ID..."
+            value={(column.getFilterValue() as string) ?? ""}
+            onChange={(event) => column.setFilterValue(event.target.value)}
+            className="max-w-sm"
+          />
+        </div>
+      );
+    },
+    filterFn: "includesString",
   },
   {
     id: "actions",
