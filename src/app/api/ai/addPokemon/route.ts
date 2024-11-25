@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateObject } from "ai";
+import { generateObject, generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import { PokemonClient } from "pokenode-ts";
@@ -48,19 +48,29 @@ export async function GET() {
     const createdPokemon = [];
 
     for (let i = 0; i < numberOfPokemon; i++) {
-      const prompt: string = `Generate information for a real Pokémon. Include accurate Pokédex details and interesting facts. Do not include any names that are already in the database: ${[
+      const prompt: string = `You are a Pokemon Master that knows all of the Pokémon names in all generations. Choose a Pokémon name that sounds suspiciously like a drug name. Output a Pokémon name that is not already in the database: Zygarde, Thundurus, ${[
         ...pokemon.map((p) => p.name),
         ...createdPokemon.map((p) => p.name),
-      ].join(", ")}.`;
+      ].join(
+        ", "
+      )}. Choose names that sound as close to a drug name as you can, and avoid easily recognizable pokemon names.`;
 
-      // Generate a Pokemon using AI
+      // Generate a Pokémon name
+      const pokemonName = await generateText({
+        model: openai("gpt-4o-2024-08-06"),
+        prompt: prompt,
+      });
+
+      // Generate a Pokémon using AI
       const result = await generateObject({
         model: openai("gpt-4o-2024-08-06"),
         schema: pokemonSchema,
         system:
-          "You are an enthusiastic Pokémon Professor adding fun and interactive Pokémon information to the Pokédex. Generate realistic and accurate Pokémon information designed to be fun and engaging. Choose names that sound as close to a drug name as you can, and avoid easily recognizable pokemon names.",
-        prompt: prompt,
+          "You are an enthusiastic Pokémon Professor adding fun and interactive Pokémon information to the Pokédex. Generate realistic and accurate Pokémon information designed to be fun and engaging. ",
+        prompt: `Name: ${pokemonName.text}`,
       });
+
+      console.log(result.object.pokemon);
 
       // Extract the generated Pokemon data
       const { name, description, generation, facts } = result.object.pokemon;

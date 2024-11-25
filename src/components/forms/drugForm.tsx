@@ -27,12 +27,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function DrugForm() {
+interface DrugFormProps {
+  initialData?: z.infer<typeof drugFormSchema>;
+  drugId?: string;
+}
+
+export default function DrugForm({ initialData, drugId }: DrugFormProps) {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof drugFormSchema>>({
     resolver: zodResolver(drugFormSchema),
-    defaultValues: {
+    defaultValues: initialData || {
       name: "",
       description: "",
       drugClass: "",
@@ -43,29 +48,27 @@ export default function DrugForm() {
   });
 
   const {
-    mutate: addDrug,
+    mutate: updateDrug,
     isPending,
     isError,
     error,
   } = useMutation({
     mutationFn: async (values: z.infer<typeof drugFormSchema>) => {
-      const res = await fetch("/api/admin/drug", {
-        method: "POST",
+      const res = await fetch(`/api/admin/drug/${drugId}`, {
+        method: drugId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to add drug");
-      }
-
+      if (!res.ok) throw new Error("Failed to save drug");
       return res.json();
     },
     onSuccess: () => {
-      form.reset();
       toast({
         title: "Success",
-        description: "Drug added successfully!",
+        description: drugId
+          ? "Drug updated successfully!"
+          : "Drug added successfully!",
       });
     },
     onError: (error) => {
@@ -83,7 +86,7 @@ export default function DrugForm() {
   };
 
   const onSubmit = (values: z.infer<typeof drugFormSchema>) => {
-    addDrug(values);
+    updateDrug(values);
   };
 
   return (
