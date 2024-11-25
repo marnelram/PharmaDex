@@ -13,6 +13,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { PokemonWithFacts } from "./schemas";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
   {
@@ -52,10 +53,12 @@ export const pokemonColumns: ColumnDef<PokemonWithFacts>[] = [
       return (
         <div className="flex items-center">
           {pokemon.image && (
-            <img
+            <Image
               src={pokemon.image}
               alt={pokemon.name}
               className="h-8 w-8 mr-3 rounded-full"
+              width={32}
+              height={32}
             />
           )}
           <span>{pokemon.name}</span>

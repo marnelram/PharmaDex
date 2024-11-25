@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export const drugColumns: ColumnDef<DrugWithFacts>[] = [
   {
@@ -52,10 +53,12 @@ export const drugColumns: ColumnDef<DrugWithFacts>[] = [
       return (
         <div className="flex items-center">
           {drug.image && (
-            <img
+            <Image
               src={drug.image}
               alt={drug.name}
               className="h-8 w-8 mr-3 rounded-full"
+              width={32}
+              height={32}
             />
           )}
           <span>{drug.name}</span>
