@@ -3,6 +3,7 @@ import { Poppins, Raleway } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react";
 
 const poppinsFont = Poppins({
   weight: ["100", "400", "900"],
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <Providers>{children}</Providers>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );

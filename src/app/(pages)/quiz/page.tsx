@@ -5,6 +5,7 @@ import QuizComponent from "@/components/quiz";
 import { headers } from "next/headers";
 
 export default async function QuizPage() {
+  // Get the session
   const session = await auth();
 
   // Get the host from headers
@@ -12,12 +13,19 @@ export default async function QuizPage() {
   const host = headersList.get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
+  // Forward the authentication cookies/headers
   const response = await fetch(`${protocol}://${host}/api/quiz`, {
     method: "POST",
-    body: JSON.stringify({ userId: session?.user.id }),
+    headers: {
+      "Content-Type": "application/json",
+      // Forward the cookie header from the incoming request
+      cookie: headersList.get("cookie") ?? "",
+    },
+    body: JSON.stringify({ userId: session?.user.id ?? null }),
     cache: "no-store",
   });
 
+  console.log(response);
   const quiz: Quiz = await response.json();
 
   return (
