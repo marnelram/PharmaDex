@@ -12,6 +12,7 @@ export async function GET() {
   const sourceDb = "DrugOrPokemon";
   const targetDb = "Dev";
   const mongoUri = process.env.DATABASE_PROD_URL;
+  console.log(mongoUri);
 
   if (!mongoUri) {
     return NextResponse.json(

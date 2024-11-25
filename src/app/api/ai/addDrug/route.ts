@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateObject } from "ai";
+import { generateObject, generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import prisma from "@/lib/db/prisma";
@@ -61,20 +61,23 @@ export async function GET() {
     const createdDrugs = [];
 
     for (let i = 0; i < numberOfDrugs; i++) {
-      const prompt: string = `Generate information for a real prescription drug. Include accurate medical details and interesting facts. Do not include any names that are already in the database: ${[
+      const prompt: string = `You are a trained pharmacist that knows all of the drug brand names currently available in the American drug market. Output a drug name that is not already in the database: ${[
         ...drugs.map((drug) => drug.name),
         ...createdDrugs.map((drug) => drug.name),
-      ].join(", ")}.`;
+      ].join(", ")}. You MUST output a real drug name.`;
 
-      console.log(prompt);
+      // Generate a drug name
+      const drugName = await generateText({
+        model: openai("gpt-4o-2024-08-06"),
+        prompt: prompt,
+      });
 
       // Generate a drug using AI
       const result = await generateObject({
         model: openai("gpt-4o-2024-08-06"),
         schema: drugSchema,
-        system:
-          "You are an enthusiastic Pharmacist that is adding fun and interactive drug information. Choose a real brand drug name that sounds as close to a pokemon as you can, and then generate realistic and accurate drug information designed to be fun and engaging.",
-        prompt: prompt,
+        system: `You are an enthusiastic Pharmacist that is adding fun and interactive drug information. Fill in the drug information based on the name provided.`,
+        prompt: `Name: ${drugName.text}`,
       });
 
       console.log(
