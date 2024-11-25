@@ -58,7 +58,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  score         Int       @default(0)
+  topScore      Int       @default(0)
   achievements  UserAchievement[]
   quizAttempts  QuizAttempt[]
   badges        UserBadge[]
@@ -140,6 +140,7 @@ model QuizAttempt {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   userId         String?   @db.ObjectId
   user           User?     @relation(fields: [userId], references: [id])
+  displayName    String? // optional name for leaderboard
   totalScore     Int
   completed      Boolean   @default(false)
   correctCount   Int       @default(0)
