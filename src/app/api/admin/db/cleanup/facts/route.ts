@@ -37,8 +37,6 @@ export async function GET() {
       return true; // If fact.type is neither drug nor pokemon, consider it orphaned
     });
 
-    console.log(orphanedFacts);
-
     // Delete orphaned facts
     const deleteResult = await db.collection("Fact").deleteMany({
       _id: { $in: orphanedFacts.map((fact) => fact._id) },

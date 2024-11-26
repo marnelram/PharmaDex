@@ -25,7 +25,6 @@ export default async function QuizPage() {
     cache: "no-store",
   });
 
-  console.log(response);
   const quiz: Quiz = await response.json();
 
   return (

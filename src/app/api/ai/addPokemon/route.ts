@@ -70,8 +70,6 @@ export async function GET() {
         prompt: `Name: ${pokemonName.text}`,
       });
 
-      console.log(result.object.pokemon);
-
       // Extract the generated Pokemon data
       const { name, description, generation, facts } = result.object.pokemon;
 

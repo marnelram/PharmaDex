@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Fact } from "@prisma/client";
+import { Fact, QuizAttempt } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import {
@@ -18,7 +18,7 @@ import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
 
-export default function Home() {
+export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
   const router = useRouter();
 
   const {
@@ -57,22 +57,22 @@ export default function Home() {
           <h2 className="text-[32px] font-bold pb-2 px-4 font-['Poppins']">
             Top Players
           </h2>
-          <div className="flex justify-center items-end gap-12 md:gap-24 lg:gap-36">
-            {[3, 1, 2].map((rank) => (
+          <div className="flex justify-center items-end gap-6 md:gap-12 lg:gap-24">
+            {[2, 0, 1].map((rank) => (
               <div key={rank} className="flex flex-col items-center">
                 <Avatar
                   className={cn(
-                    rank == 1 && "size-16",
-                    rank == 2 && "size-14",
-                    rank == 3 && "size-12"
+                    rank == 0 && "size-16",
+                    rank == 1 && "size-14",
+                    rank == 2 && "size-12"
                   )}
                 >
                   <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
-                  <AvatarFallback>{rank}</AvatarFallback>
+                  <AvatarFallback>{rank + 1}</AvatarFallback>
                 </Avatar>
-                <span className="mt-2 font-semibold">Player {rank}</span>
+                <span className="mt-2 font-semibold">player {rank + 1}</span>
                 <span className="text-sm text-gray-600">
-                  {1000 - (rank - 1) * 100} pts
+                  {topScores[rank].totalScore.toLocaleString()} pts
                 </span>
               </div>
             ))}

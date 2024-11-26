@@ -33,8 +33,6 @@ export async function POST(request: Request) {
 
     questions = questions.slice(0, 25);
 
-    console.log("questions", questions);
-
     // Create new quiz attempt
     const quizAttempt = await prisma.quizAttempt.create({
       data: {

@@ -3,10 +3,17 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const leaderboard = await prisma.user.findMany({
-      orderBy: {
-        score: "desc",
+    const leaderboard = await prisma.quizAttempt.findMany({
+      where: {
+        completed: true,
       },
+      orderBy: {
+        totalScore: "desc",
+      },
+      include: {
+        user: true,
+      },
+      take: 50,
     });
 
     return NextResponse.json(leaderboard);

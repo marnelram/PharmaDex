@@ -80,11 +80,6 @@ export async function GET() {
         prompt: `Name: ${drugName.text}`,
       });
 
-      console.log(
-        `Drug ${i + 1}:`,
-        JSON.stringify(result.object.drug, null, 2)
-      );
-
       // Extract the generated drug data
       const {
         name,

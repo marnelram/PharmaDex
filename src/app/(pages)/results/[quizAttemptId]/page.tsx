@@ -1,10 +1,14 @@
 import React from "react";
 import Results from "@/components/results";
 import prisma from "@/lib/db/prisma";
+import { auth } from "@/auth";
 
 type tParams = Promise<{ quizAttemptId: string }>;
 
 export default async function ResultsPage(props: { params: tParams }) {
+  const session = await auth();
+  const username = session?.user.name;
+
   const { quizAttemptId } = await props.params;
   const quizAttempt = await prisma.quizAttempt.findUnique({
     where: {
@@ -55,14 +59,14 @@ export default async function ResultsPage(props: { params: tParams }) {
         })) + 1
       : currentRank;
 
-  console.log("actual rank", actualRank);
-
   const { totalScore, correctCount, totalQuestions, answers } = quizAttempt;
 
   const wrongAnswers = answers.filter((answer) => answer.isCorrect === false);
 
   return (
     <Results
+      quizAttempt={quizAttempt}
+      username={username ?? null}
       totalScore={totalScore ?? 0}
       correctCount={correctCount ?? 0}
       totalQuestions={totalQuestions}
