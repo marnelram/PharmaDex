@@ -12,7 +12,15 @@ export async function POST(request: Request) {
     const pokemon = await prisma.pokemon.findMany();
 
     // Create shuffled quiz items
-    const questions: Questions = [
+    const shuffleArray = <T>(array: T[]): T[] => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    let questions: Questions = shuffleArray([
       ...drugs.map((drug) => ({
         ...drug,
         type: "Drug" as const,
@@ -21,7 +29,9 @@ export async function POST(request: Request) {
         ...p,
         type: "Pokemon" as const,
       })),
-    ].sort(() => Math.random() - 0.5);
+    ]);
+
+    questions = questions.slice(0, 25);
 
     console.log("questions", questions);
 
