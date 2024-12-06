@@ -2,6 +2,7 @@ import React from "react";
 import Leaderboard from "@/components/leaderboard";
 import { auth } from "@/auth";
 import prisma from "@/lib/db/prisma";
+import { Header } from "@/components/header";
 
 export default async function LeaderboardPage() {
   const session = await auth();
@@ -27,5 +28,10 @@ export default async function LeaderboardPage() {
 
   const userRank = quizzes.findIndex((quiz) => quiz.userId === userId) + 1;
 
-  return <Leaderboard user={user} quizzes={quizzes} userRank={userRank} />;
+  return (
+    <div className="w-full h-dvh flex flex-col items-center mx-auto">
+      <Header session={session} />
+      <Leaderboard user={user} quizzes={quizzes} userRank={userRank} />
+    </div>
+  );
 }
