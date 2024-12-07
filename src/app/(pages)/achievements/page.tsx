@@ -25,7 +25,9 @@ import {
   Microscope,
   HeartPulse,
   Pipette,
+  ChevronLeft,
 } from "lucide-react";
+import Link from "next/link";
 
 const badges = [
   {
@@ -35,7 +37,7 @@ const badges = [
     description: "Correctly identify 50 Pokémon",
     progress: 30,
     total: 50,
-    color: "bg-blue-500",
+    color: "bg-[#E63946]",
   },
   {
     id: 2,
@@ -119,36 +121,44 @@ const badges = [
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-yellow-100 to-green-100 flex flex-col items-center justify-start p-8">
-      <Card className="w-full max-w-4xl">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center font-['Poppins']">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-start p-8">
+      <Card className="w-full max-w-4xl bg-[#e6e6e6]">
+        <CardHeader className="relative p-4 border-b w-full">
+          <Link href="/">
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+          </Link>
+          <CardTitle className="text-[44px] font-bold text-center font-['Poppins']">
             Achievements & Badges
           </CardTitle>
-          <CardDescription className="text-center">
-            Collect them all to become a true Drug or Pokémon master!
+          <CardDescription className="text-[16px] font-['Raleway'] text-center">
+            Coming Soon!
           </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <ScrollArea className="h-[70vh] rounded-md">
+          <ScrollArea className="h-[70vh] rounded-[15px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
               {badges.map((badge) => (
                 <TooltipProvider key={badge.id}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Card
-                        className={`${badge.color} text-white hover:scale-105 transition-transform duration-200`}
+                        className={`${
+                          badge.color
+                        } text-[#F5F5F5] hover:scale-105 transition-transform duration-200 rounded-[15px] ${
+                          badge.progress >= badge.total ? "animate-bounce" : ""
+                        }`}
                       >
                         <CardContent className="p-6 flex flex-col items-center">
                           {badge.icon && (
                             <badge.icon className="w-16 h-16 mb-4" />
                           )}
-                          <h3 className="text-lg font-semibold text-center mb-2">
+                          <h3 className="text-[22px] font-medium font-['Poppins'] text-center mb-2">
                             {badge.name}
                           </h3>
                           <Badge
                             variant="outline"
-                            className="bg-white/20 text-white mb-4"
+                            className="bg-white/20 text-[#F5F5F5] mb-4 text-[14px] font-medium font-['Raleway']"
                           >
                             {badge.progress >= badge.total
                               ? "Completed"
@@ -158,13 +168,13 @@ export default function AchievementsPage() {
                             value={(badge.progress / badge.total) * 100}
                             className="w-full bg-white/30"
                           />
-                          <p className="text-sm mt-2">
+                          <p className="text-[14px] mt-2 font-['Raleway']">
                             {badge.progress} / {badge.total}
                           </p>
                         </CardContent>
                       </Card>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent className="font-['Raleway'] text-[14px]">
                       <p>{badge.description}</p>
                     </TooltipContent>
                   </Tooltip>
