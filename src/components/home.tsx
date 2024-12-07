@@ -69,7 +69,9 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
                   <AvatarFallback>{rank + 1}</AvatarFallback>
                 </Avatar>
-                <span className="mt-2 font-semibold">player {rank + 1}</span>
+                <span className="mt-2 font-semibold">
+                  {topScores[rank]?.displayName ?? "---"}
+                </span>
                 <span className="text-sm text-gray-600">
                   {topScores[rank]?.totalScore.toLocaleString() ?? 0} pts
                 </span>
