@@ -66,7 +66,7 @@ export default function Results({
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-2 sm:p-8">
+    <div className="bg-[#F5F5F5] flex flex-col items-center justify-center p-2 sm:p-8">
       <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
         <CardContent className="p-4 sm:p-8 flex flex-col items-center justify-center gap-4 sm:gap-8">
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-4">
@@ -99,7 +99,7 @@ export default function Results({
           {/* Score Section */}
           <div className="flex items-center gap-8 sm:gap-16">
             {/* Circle percentage */}
-            <div className="relative w-48 h-48">
+            <div className="relative size-44 sm:size-56">
               {/* Grade percentage */}
               <div className="absolute z-20 top-0 right-0 bg-white rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
                 <span className="text-[18px] font-['Poppins'] font-bold text-[#E63946]">

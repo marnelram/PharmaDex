@@ -289,21 +289,21 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="h-12">3</td>
-                        <td className="text-[#eeda44] font-bold flex items-center h-12">
+                        <td className="h-10">3</td>
+                        <td className="text-[#eeda44] font-bold flex items-center h-10">
                           1.5x multiplier{" "}
                           <span className="text-[16px]">🔥</span>
                         </td>
                       </tr>
                       <tr>
-                        <td className="h-12">5</td>
-                        <td className="text-[#e69b39] flex items-center font-bold h-12">
+                        <td className="h-10">5</td>
+                        <td className="text-[#e69b39] flex items-center font-bold h-10">
                           2x multiplier <span className="text-[22px]">🔥</span>
                         </td>
                       </tr>
-                      <tr className="h-12">
-                        <td className="h-12">10</td>
-                        <td className="text-[#E63946] font-bold flex items-center h-12">
+                      <tr>
+                        <td className="h-10">10</td>
+                        <td className="text-[#E63946] font-bold flex items-center h-10">
                           3x multiplier <span className="text-[32px]">🔥</span>
                         </td>
                       </tr>
@@ -318,7 +318,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
                 setIsGameStarted(true);
                 startTimeRef.current = Date.now();
               }}
-              className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-8 px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
+              className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
             >
               Start Quiz
             </Button>

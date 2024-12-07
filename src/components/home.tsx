@@ -6,7 +6,6 @@ import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fact, QuizAttempt } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import {
   Carousel,
   CarouselContent,
@@ -166,34 +165,6 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
           </Button>
         </div>
       </div>
-
-      {/* Bottom Navbar for Mobile */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-around items-center h-16 sm:hidden">
-        <Link
-          href="/quiz"
-          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <Book className="size-6" />
-        </Link>
-        <Link
-          href="/leaderboard"
-          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <Users className="size-6" />
-        </Link>
-        <Link
-          href="/achievements"
-          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <Award className="size-6" />
-        </Link>
-        <Link
-          href="/settings"
-          className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <Settings className="size-6" />
-        </Link>
-      </nav>
 
       {/* Background Elements - Updated with design colors */}
       <div className="fixed inset-0 pointer-events-none -z-10">

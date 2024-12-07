@@ -19,9 +19,9 @@ export default function Leaderboard({
   userRank,
 }: LeaderboardProps) {
   return (
-    <div className="h-[90dvh] w-full bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
+    <div className="size-full bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
       <Card className="w-full h-fit max-w-3xl bg-white shadow-lg">
-        <CardHeader className="relative p-4 border-b">
+        <CardHeader className="relative sm:p-4 p-2 border-b">
           <Link href="/">
             <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
           </Link>
@@ -111,7 +111,7 @@ export default function Leaderboard({
           {/* Scrollable Leaderboard */}
           <ScrollArea
             type="always"
-            className="h-[28dvh] sm:h-[30dvh] w-full rounded-[15px] border"
+            className="h-[20dvh] sm:h-[30dvh] w-full rounded-[15px] border"
           >
             {quizzes.slice(3).map((quiz, index) => (
               <div

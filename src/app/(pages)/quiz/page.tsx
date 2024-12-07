@@ -1,6 +1,5 @@
 import { Quiz } from "@/lib/validation/types/quiz";
 import { auth } from "@/auth";
-import { Header } from "@/components/header";
 import QuizComponent from "@/components/quiz";
 import { headers } from "next/headers";
 
@@ -28,8 +27,7 @@ export default async function QuizPage() {
   const quiz: Quiz = await response.json();
 
   return (
-    <div className="w-full h-dvh flex flex-col items-center mx-auto">
-      <Header session={session} />
+    <div className="w-full flex flex-col items-center mx-auto">
       <QuizComponent quiz={quiz} />
     </div>
   );
