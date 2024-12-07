@@ -36,7 +36,7 @@ export default function Leaderboard({
               const quizAttempt = quizzes[rank - 1];
               return (
                 <div
-                  key={quizAttempt.id}
+                  key={quizAttempt?.id}
                   className={`flex flex-col justify-between bg-white gap-4 rounded-[15px] items-center ${
                     rank === 1 ? "order-2" : rank === 2 ? "order-1" : "order-3"
                   }`}
@@ -51,8 +51,8 @@ export default function Leaderboard({
                     }`}
                   >
                     <AvatarImage
-                      src={quizAttempt.user?.image ?? ""}
-                      alt={quizAttempt.displayName ?? ""}
+                      src={quizAttempt?.user?.image ?? ""}
+                      alt={quizAttempt?.displayName ?? ""}
                     />
                     <AvatarFallback className="font-['Raleway'] text-sm sm:text-base">
                       <UserIcon className="size-6 sm:size-8 text-gray-600" />
@@ -75,10 +75,10 @@ export default function Leaderboard({
                   </div>
                   <div className="flex flex-col items-center gap-1">
                     <span className="font-['Raleway'] font-semibold text-gray-800 text-[14px] sm:text-[16px] mt-1">
-                      {quizAttempt.displayName ?? "Anonymous"}
+                      {quizAttempt?.displayName ?? "Anonymous"}
                     </span>
                     <span className="font-['Raleway'] text-[12px] sm:text-[14px] text-gray-600">
-                      {quizAttempt.totalScore.toLocaleString()} pts
+                      {quizAttempt?.totalScore.toLocaleString() ?? 0} pts
                     </span>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ export default function Leaderboard({
               <CardContent className="flex items-center justify-between p-3 sm:p-4">
                 <div className="flex items-center">
                   <span className="text-[18px] sm:text-[22px] font-medium font-['Raleway'] mr-2 sm:mr-4">
-                    {userRank}
+                    {userRank ?? "?"}
                   </span>
                   <Avatar className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-4 border-2 border-white">
                     <AvatarFallback className="font-['Raleway'] text-sm">
@@ -98,11 +98,11 @@ export default function Leaderboard({
                     </AvatarFallback>
                   </Avatar>
                   <span className="font-['Raleway'] font-medium text-[14px] sm:text-[16px]">
-                    {user.name ?? "Anonymous"}
+                    {user?.name ?? "Anonymous"}
                   </span>
                 </div>
                 <span className="font-['Raleway'] font-bold text-[14px] sm:text-[16px]">
-                  {user.topScore.toLocaleString()} pts
+                  {user?.topScore.toLocaleString()} pts
                 </span>
               </CardContent>
             </Card>
