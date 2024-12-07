@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSettings } from "@/context/SettingsContext";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
@@ -15,10 +15,32 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function Settings() {
   const { settings, updateSettings } = useSettings();
   const router = useRouter();
+
+  return (
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
+      <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
+        <CardHeader className="relative p-4 border-b w-full">
+          <Link href="/">
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+          </Link>
+          <h1 className="text-[44px] text-center font-bold font-['Poppins']">
+            Settings
+          </h1>
+        </CardHeader>
+        <CardContent className="p-8">
+          <h2 className="text-[32px] font-bold text-center mb-8 font-['Poppins']">
+            Coming Soon!
+          </h2>
+        </CardContent>
+      </Card>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">

@@ -13,12 +13,15 @@ import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Header({ session }: { session: Session | null }) {
   return (
-    <header className="sticky top-0 w-full z-50 max-w-5xl flex justify-between items-center p-2 sm:p-4 px-12 sm:px-8 bg-white rounded-[15px] shadow-md">
+    <header className="sticky top-0 w-full z-50 max-w-5xl flex justify-between gap-2 items-center p-2 sm:p-4 px-6 sm:px-8 bg-white rounded-[15px] shadow-md">
       <div className="hidden sm:flex items-center w-24">
-        <Image src="/logo.png" alt="logo" width={40} height={40} />
+        <Link href="/">
+          <Image src="/logo.png" alt="logo" width={40} height={40} />
+        </Link>
       </div>
       <h1 className=" text-[32px] font-bold font-['Poppins']">PharmaDex</h1>
       <div className="relative">

@@ -2,20 +2,10 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Trophy, Medal, UserIcon } from "lucide-react";
+import { Trophy, Medal, UserIcon, ChevronLeft } from "lucide-react";
 import { User } from "@prisma/client";
 import { QuizAttempt } from "@prisma/client";
-
-// Add this test data array before the LeaderboardProps interface
-const TEST_QUIZZES = Array.from({ length: 50 }, (_, i) => ({
-  id: `test-${i}`,
-  displayName: `Player ${i + 1}`,
-  totalScore: Math.floor(Math.random() * 10000),
-  user: {
-    name: `Player ${i + 1}`,
-    image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${i}`, // Optional: generates random avatars
-  },
-}));
+import Link from "next/link";
 
 interface LeaderboardProps {
   user: User | null;
@@ -29,9 +19,12 @@ export default function Leaderboard({
   userRank,
 }: LeaderboardProps) {
   return (
-    <div className="size-full max-h-[90dvh] bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
-      <Card className="size-full max-w-3xl bg-white shadow-lg">
-        <CardHeader className="p-4 sm:pb-0">
+    <div className="h-[90dvh] w-full bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
+      <Card className="w-full h-fit max-w-3xl bg-white shadow-lg">
+        <CardHeader className="relative p-4 border-b">
+          <Link href="/">
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+          </Link>
           <CardTitle className="text-[32px] sm:text-[44px] font-bold text-center font-['Poppins']">
             Leaderboard
           </CardTitle>
@@ -116,8 +109,11 @@ export default function Leaderboard({
           )}
 
           {/* Scrollable Leaderboard */}
-          <ScrollArea className="size-full rounded-[15px] border">
-            {TEST_QUIZZES.slice(3).map((quiz, index) => (
+          <ScrollArea
+            type="always"
+            className="h-[28dvh] sm:h-[30dvh] w-full rounded-[15px] border"
+          >
+            {quizzes.slice(3).map((quiz, index) => (
               <div
                 key={quiz.id}
                 className="flex items-center justify-between py-2 border-b last:border-b-0 hover:bg-[#F5F5F5] transition-colors px-4 sm:px-8"
