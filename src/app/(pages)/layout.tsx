@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Header } from "@/components/header";
+import Header from "@/components/Header";
 import Nav from "@/components/Nav";
 
 export default async function Layout({
