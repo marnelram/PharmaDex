@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import Header from "@/components/Header";
-import Nav from "@/components/Nav";
+import AppHeader from "@/components/appHeader";
+import AppNav from "@/components/appNav";
 
 export default async function Layout({
   children,
@@ -11,9 +11,9 @@ export default async function Layout({
 
   return (
     <>
-      <Header session={session} />
+      <AppHeader session={session} />
       <main className="w-full h-[calc(100dvh-8rem)]">{children}</main>
-      <Nav />
+      <AppNav />
     </>
   );
 }

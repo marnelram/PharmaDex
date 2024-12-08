@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Book, Users, Award, Settings } from "lucide-react";
 
-export default function Nav() {
+export default function AppNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-around items-center h-16 sm:hidden">
       <Link
