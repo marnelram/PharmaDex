@@ -16,6 +16,7 @@ export default async function ResultsPage(props: { params: tParams }) {
     },
     include: {
       user: true, // Include user data if they're logged in
+      answers: true,
     },
   });
 

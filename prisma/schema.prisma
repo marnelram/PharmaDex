@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,18 +21,18 @@ enum DosageForm {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.String
-  access_token       String? @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.String
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -41,15 +41,15 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String   @db.ObjectId
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(cuid())
   name          String?
   passHash      String?
   isAdmin       Boolean   @default(false)
@@ -65,7 +65,7 @@ model User {
 }
 
 model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(cuid())
   identifier String
   token      String   @unique
   expires    DateTime
@@ -74,7 +74,7 @@ model VerificationToken {
 }
 
 model Drug {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid())
   name        String   @unique
   generic     String
   dosageForm  DosageForm
@@ -88,7 +88,7 @@ model Drug {
 }
 
 model Pokemon {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid())
   name        String   @unique
   image       String?
   description String
@@ -101,20 +101,20 @@ model Pokemon {
 }
 
 model Fact {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid())
   title     String
   content   String
   category  String    // e.g., "drug", "pokemon"
-  drugId    String?   @db.ObjectId
+  drugId    String?
   drug      Drug?     @relation(fields: [drugId], references: [id])
-  pokemonId String?   @db.ObjectId
+  pokemonId String?
   pokemon   Pokemon?  @relation(fields: [pokemonId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Achievement {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(cuid())
   name        String            @unique
   description String
   icon        String
@@ -126,21 +126,21 @@ model Achievement {
 }
 
 model UserAchievement {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(cuid())
   user          User        @relation(fields: [userId], references: [id])
-  userId        String      @db.ObjectId
+  userId        String
   achievement   Achievement @relation(fields: [achievementId], references: [id])
-  achievementId String      @db.ObjectId
+  achievementId String
   createdAt     DateTime    @default(now())
 
   @@unique([userId, achievementId])
 }
 
 model QuizAttempt {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String?   @db.ObjectId
+  id             String    @id @default(cuid())
+  userId         String?
   user           User?     @relation(fields: [userId], references: [id])
-  displayName    String? // optional name for leaderboard
+  displayName    String?   // optional name for leaderboard
   totalScore     Int
   completed      Boolean   @default(false)
   correctCount   Int       @default(0)
@@ -151,15 +151,20 @@ model QuizAttempt {
   @@index([completed(sort: Desc), createdAt(sort: Asc)])
 }
 
-type Answer {
+model Answer {
+  id            String      @id @default(cuid())
   questionName  String      // The name that was guessed
   userGuess     String      // "drug" or "pokemon"
   score         Int
   isCorrect     Boolean
+  quizAttempt   QuizAttempt @relation(fields: [quizAttemptId], references: [id])
+  quizAttemptId String
+
+  @@index([quizAttemptId])
 }
 
 model Badge {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id          String      @id @default(cuid())
   name        String
   icon        String?     // Store the icon name as a string
   description String
@@ -171,9 +176,9 @@ model Badge {
 }
 
 model UserBadge {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  badgeId   String   @db.ObjectId
+  id        String   @id @default(cuid())
+  userId    String
+  badgeId   String
   progress  Int      @default(0)
   completed Boolean  @default(false)
   createdAt DateTime @default(now())

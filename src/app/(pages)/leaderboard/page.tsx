@@ -27,9 +27,5 @@ export default async function LeaderboardPage() {
 
   const userRank = quizzes.findIndex((quiz) => quiz.userId === userId) + 1;
 
-  return (
-    <div className="w-full h-[calc(100dvh-4rem)] flex flex-col items-center mx-auto">
-      <Leaderboard user={user} quizzes={quizzes} userRank={userRank} />
-    </div>
-  );
+  return <Leaderboard user={user} quizzes={quizzes} userRank={userRank} />;
 }

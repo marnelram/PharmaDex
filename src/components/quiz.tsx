@@ -249,7 +249,6 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     return 1; // Base multiplier
   };
 
-  // Early return for start card if game hasn't started
   if (!isGameStarted) {
     return (
       <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">

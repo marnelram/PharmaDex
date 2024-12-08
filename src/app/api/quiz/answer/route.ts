@@ -16,7 +16,7 @@ export async function POST(request: Request) {
           increment: isCorrect ? 1 : 0,
         },
         answers: {
-          push: {
+          create: {
             questionName,
             userGuess,
             score,

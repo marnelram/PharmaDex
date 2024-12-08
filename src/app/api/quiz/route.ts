@@ -40,7 +40,9 @@ export async function POST(request: Request) {
         totalScore: 0,
         totalQuestions: questions.length,
         userId: userId ?? undefined,
-        answers: [],
+        answers: {
+          create: [],
+        },
       },
     });
 
