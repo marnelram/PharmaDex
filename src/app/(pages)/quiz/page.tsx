@@ -1,6 +1,6 @@
 import { Quiz } from "@/lib/validation/types/quiz";
 import { auth } from "@/auth";
-import QuizComponent from "@/components/quiz";
+import QuizComponent from "@/components/quiz/quiz";
 import { headers } from "next/headers";
 
 export default async function QuizPage() {
