@@ -16,8 +16,6 @@ import PracticeQuiz from "./practice";
 export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  const [isCorrect, setIsCorrect] = React.useState(false);
-  const [score, setScore] = React.useState(-1);
   const [totalScore, setTotalScore] = React.useState(0);
   const [showFeedback, setShowFeedback] = React.useState(false);
   const [isQuizComplete, setIsQuizComplete] = React.useState(false);
@@ -100,6 +98,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const handleAnswer = async (answer: string) => {
     const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
     const correct = answer === questions[currentQuestion].type;
+    let currentScore = 0;
 
     if (correct) {
       // Increment streak and update multiplier
@@ -110,32 +109,41 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       const newMultiplier = calculateMultiplier(newStreak);
       setMultiplier(newMultiplier);
 
-      const currentScore = calculateScore(elapsedTime);
-      setScore(currentScore);
+      currentScore = calculateScore(elapsedTime);
       setTotalScore((prev) => prev + currentScore);
     } else {
       // Reset streak and multiplier on wrong answer
       setStreak(0);
       setMultiplier(1);
-      setScore(0);
     }
 
-    setIsCorrect(correct);
-    setShowFeedback(true);
+    if (isPracticeMode) {
+      setShowFeedback(true);
+    } else {
+      handleNextQuestion();
+    }
 
-    // Show toast with feedback
-    toast({
-      title: correct ? "Correct! 🎉" : "Incorrect! 😅",
-      variant: correct ? "success" : "destructive",
-      duration: 1000,
-    });
+    if (isPracticeMode) {
+      toast({
+        title: correct ? "Correct! 🎉" : "Incorrect! 😅",
+        variant: correct ? "success" : "destructive",
+        duration: 1000,
+      });
+    } else {
+      toast({
+        title: correct ? "Correct! 🎉" : "Incorrect! 😅",
+        points: correct ? currentScore : 0,
+        variant: correct ? "success" : "destructive",
+        duration: 1000,
+      });
+    }
 
     submitAnswer({
       quizId,
       questionName: questions[currentQuestion].name,
       userGuess: answer,
       totalScore,
-      score: correct ? score : 0,
+      score: correct ? currentScore : 0,
       isCorrect: correct,
     });
 
@@ -150,9 +158,9 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   };
 
   const handleNextQuestion = () => {
-    setIsCorrect(false);
     setShowFeedback(false);
     startTimeRef.current = Date.now(); // Reset start time for next question
+    console.log("start time: ", startTimeRef.current);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -261,17 +269,14 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     return (
       <TimedQuiz
         progress={progress}
-        showFeedback={showFeedback}
         isQuizComplete={isQuizComplete}
         handleTimeComplete={handleTimeComplete}
-        isCorrect={isCorrect}
-        score={score}
         streak={streak}
         questions={questions}
         currentQuestion={currentQuestion}
+        startTimeRef={startTimeRef}
         handleQuizComplete={handleQuizComplete}
         handleAnswer={handleAnswer}
-        handleNextQuestion={handleNextQuestion}
       />
     );
   } else {
