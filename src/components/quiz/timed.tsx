@@ -56,14 +56,18 @@ export default function TimedQuiz({
                   onComplete={handleTimeComplete}
                   updateInterval={0.05}
                 />
-                <div className="absolute top-1/2 left-20 -translate-y-1/2 flex items-center">
+                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 flex items-center">
                   {streak >= 3 && streak < 5 && (
-                    <p className="text-[16px] font-bold">🔥</p>
+                    <p className="text-[16px] font-bold animate-glow">🔥</p>
                   )}
                   {streak >= 5 && streak < 10 && (
-                    <p className="text-[22px] font-bold">🔥</p>
+                    <p className="text-[22px] font-bold animate-glow">🔥</p>
                   )}
-                  {streak >= 10 && <p className="text-[32px] font-bold">🔥</p>}
+                  {streak >= 10 && (
+                    <p className="text-[32px] font-bold animate-glow-large">
+                      🔥
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="text-center flex flex-col gap-4">

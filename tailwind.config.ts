@@ -60,6 +60,28 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        glow: {
+          "0%, 100%": {
+            textShadow: "0 0 4px #ff0000, 0 0 11px #ff0000, 0 0 19px #ff0000",
+          },
+          "50%": {
+            textShadow: "0 0 8px #ff0000, 0 0 22px #ff0000, 0 0 38px #ff0000",
+          },
+        },
+        "glow-large": {
+          "0%, 100%": {
+            textShadow: "0 0 8px #ff0000, 0 0 22px #ff0000, 0 0 38px #ff0000",
+          },
+          "50%": {
+            textShadow: "0 0 16px #ff0000, 0 0 44px #ff0000, 0 0 76px #ff0000",
+          },
+        },
+      },
+      animation: {
+        glow: "glow 2s ease-in-out infinite",
+        "glow-large": "glow-large 2s ease-in-out infinite",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

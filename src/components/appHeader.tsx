@@ -24,7 +24,9 @@ export default function AppHeader({ session }: { session: Session | null }) {
             <Image src="/logo.png" alt="logo" width={40} height={40} />
           </Link>
         </div>
-        <h1 className=" text-[32px] font-bold font-['Poppins']">PharmaDex</h1>
+        <Link href="/">
+          <h1 className=" text-[32px] font-bold font-['Poppins']">PharmaDex</h1>
+        </Link>
         <div className="relative">
           {session?.user ? (
             <DropdownMenu>

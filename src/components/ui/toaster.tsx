@@ -30,8 +30,8 @@ export function Toaster() {
               {description && (
                 <ToastDescription>{description}</ToastDescription>
               )}
-              {points && (
-                <div className="text-3xl font-bold">+ ${points} points</div>
+              {points !== undefined && (
+                <p className="text-3xl font-bold">+{points} points</p>
               )}
             </div>
             {action}
