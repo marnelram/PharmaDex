@@ -1,22 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { ChevronDown, ClipboardList } from "lucide-react"; // Import the icon
 import { Answer, QuizAttempt } from "@prisma/client";
 import { cn } from "@/lib/utils"; // Add this import if not already present
-import { DisplayNameDialog } from "@/components/display-name-dialog";
+import { DisplayNameDialog } from "@/components/results/display-name-dialog";
+import { MistakeDialog } from "./mistakes-dialog";
 
-interface ResultsProps {
+interface TimedResultsProps {
   quizAttempt: QuizAttempt;
   username: string | null;
   totalScore: number;
@@ -32,7 +27,7 @@ interface ResultsProps {
   wrongAnswers: Answer[];
 }
 
-export default function Results({
+export default function TimedResults({
   quizAttempt,
   username,
   totalScore,
@@ -41,14 +36,13 @@ export default function Results({
   rank,
   topAttempts,
   wrongAnswers,
-}: ResultsProps) {
+}: TimedResultsProps) {
   const router = useRouter();
   const percentage = Math.round((correctCount / totalQuestions) * 100);
-  const [showModal, setShowModal] = React.useState(false);
-  const [showConfetti, setShowConfetti] = React.useState(false);
-  const [showLeaderboard, setShowLeaderboard] = React.useState(false);
-  const [showDisplayNameDialog, setShowDisplayNameDialog] =
-    React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [showDisplayNameDialog, setShowDisplayNameDialog] = useState(false);
 
   useEffect(() => {
     if (!username && !quizAttempt.displayName) {
@@ -67,7 +61,7 @@ export default function Results({
 
   return (
     <div className="bg-[#F5F5F5] flex flex-col items-center justify-center p-2 sm:p-8">
-      <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
+      <Card className="w-full mb-20 sm:mb-0 max-w-2xl rounded-[15px] shadow-lg">
         <CardContent className="p-4 sm:p-8 flex flex-col items-center justify-center gap-4 sm:gap-8">
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-4">
             <h1 className="text-[32px] sm:text-[44px] font-bold text-center font-['Poppins']">
@@ -264,85 +258,11 @@ export default function Results({
         </CardContent>
       </Card>
 
-      <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="max-w-md max-h-[60vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-[22px] font-['Poppins'] font-bold">
-              Review Mistakes
-            </DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 mt-4">
-            {wrongAnswers.map((answer, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-              >
-                <div className="flex flex-col">
-                  <span className="font-['Poppins'] font-medium">
-                    {answer.questionName}
-                  </span>
-                  <span className="text-sm text-gray-500 font-['Raleway']">
-                    Actually a{" "}
-                    {answer.userGuess === "Drug" ? "Pokémon" : "Drug"}
-                  </span>
-                </div>
-                <div
-                  className={`px-3 py-1 rounded-full text-sm font-['Raleway'] ${
-                    answer.userGuess === "Drug"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  Guessed {answer.userGuess}
-                </div>
-              </div>
-            ))}
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="max-w-md max-h-[60vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-[22px] font-['Poppins'] font-bold">
-              Review Mistakes
-            </DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 mt-4">
-            {wrongAnswers.length < 1 ? (
-              <p className="text-center text-gray-500 text-bold font-['Raleway']">
-                Perfect Score! 🥳🎈🎉
-              </p>
-            ) : (
-              wrongAnswers.map((answer, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-['Poppins'] font-medium">
-                      {answer.questionName}
-                    </span>
-                    <span className="text-sm text-gray-500 font-['Raleway']">
-                      Actually a{" "}
-                      {answer.userGuess === "Drug" ? "Pokémon" : "Drug"}
-                    </span>
-                  </div>
-                  <div
-                    className={`px-3 py-1 rounded-full text-sm font-['Raleway'] ${
-                      answer.userGuess === "Drug"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    Guessed {answer.userGuess}
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      <MistakeDialog
+        showModal={showModal}
+        setShowModal={setShowModal}
+        wrongAnswers={wrongAnswers}
+      />
 
       <DisplayNameDialog
         quizAttemptId={quizAttempt.id}

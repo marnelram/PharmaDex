@@ -1,5 +1,5 @@
 import React from "react";
-import Results from "@/components/results";
+import TimedResults from "@/components/results/timed";
 import prisma from "@/lib/db/prisma";
 import { auth } from "@/auth";
 
@@ -65,7 +65,7 @@ export default async function ResultsPage(props: { params: tParams }) {
   const wrongAnswers = answers.filter((answer) => answer.isCorrect === false);
 
   return (
-    <Results
+    <TimedResults
       quizAttempt={quizAttempt}
       username={username ?? null}
       totalScore={totalScore ?? 0}

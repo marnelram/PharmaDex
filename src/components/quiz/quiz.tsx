@@ -185,7 +185,11 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       },
       {
         onSuccess: () => {
-          router.push(`/results/${quizId}`);
+          if (isPracticeMode) {
+            router.push(`/practice/${quizId}`);
+          } else {
+            router.push(`/results/${quizId}`);
+          }
         },
       }
     );

@@ -34,7 +34,7 @@ export default function TimedQuiz({
         Drug or Pokémon?
       </h1>
       <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
-        <CardContent className="p-8 flex h-[80dvh] sm:h-auto flex-col items-center justify-between gap-4 sm:gap-8">
+        <CardContent className="p-8 pt-20 flex h-[80dvh] sm:h-auto flex-col items-center justify-between gap-4 sm:gap-8">
           {/* Progress Bar */}
           <Progress
             value={progress}
