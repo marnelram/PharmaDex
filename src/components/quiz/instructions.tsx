@@ -13,11 +13,11 @@ export default function Instructions({
   startTimeRef,
 }: InstructionsProps) {
   return (
-    <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
+    <div className="size-full flex flex-col items-center sm:p-4 gap-4">
       <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
         Drug or Pokémon?
       </h1>
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5]/60 shadow-none border-none sm:border sm:shadow-lg">
         <CardContent className="p-6 flex flex-col items-center gap-6 sm:gap-8">
           <h2 className="sm:text-[32px] text-[22px] font-bold font-['Poppins']">
             How to Play:
@@ -50,7 +50,7 @@ export default function Instructions({
                   <tbody>
                     <tr>
                       <td className="h-10">3</td>
-                      <td className="text-[#eeda44] font-bold flex items-center h-10">
+                      <td className="text-[#807730] font-bold flex items-center h-10">
                         1.5x multiplier <span className="text-[16px]">🔥</span>
                       </td>
                     </tr>

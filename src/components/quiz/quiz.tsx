@@ -207,7 +207,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
 
   if (isQuizAttemptPending) {
     return (
-      <div className="h-[80dvh] bg-[#F5F5F5] flex items-center justify-center">
+      <div className="h-[80dvh] bg-[#F5F5F5]/80 backdrop-blur-sm flex items-center justify-center">
         <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
           <p className="text-[16px] font-medium">Loading quiz...</p>
@@ -218,7 +218,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
 
   if (isQuizAttemptError) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F5F5]/80 backdrop-blur-sm flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
           <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
             <AlertCircle className="h-12 w-12 text-[#E63946]" />
@@ -241,7 +241,7 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   // Guard clause for undefined quiz items
   if (!questions || questions.length === 0) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F5F5]/80 backdrop-blur-sm flex items-center justify-center">
         <Card className="w-full max-w-md rounded-[15px]">
           <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
             <AlertCircle className="h-12 w-12 text-[#E63946]" />

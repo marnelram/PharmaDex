@@ -60,8 +60,8 @@ export default function TimedResults({
   }
 
   return (
-    <div className="bg-[#F5F5F5] flex flex-col items-center justify-center p-2 sm:p-8">
-      <Card className="w-full mb-20 sm:mb-0 max-w-2xl rounded-[15px] shadow-lg">
+    <div className="flex flex-col items-center justify-center p-2 sm:p-8">
+      <Card className="w-full mb-20 bg-[#F5F5F5]/60 backdrop-blur-sm sm:mb-0 max-w-2xl rounded-[15px] shadow-lg">
         <CardContent className="p-4 sm:p-8 flex flex-col items-center justify-center gap-4 sm:gap-8">
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-4">
             <h1 className="text-[32px] sm:text-[44px] font-bold text-center font-['Poppins']">
@@ -95,7 +95,7 @@ export default function TimedResults({
             {/* Circle percentage */}
             <div className="relative size-44 sm:size-56">
               {/* Grade percentage */}
-              <div className="absolute z-20 top-0 right-0 bg-white rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
+              <div className="absolute z-20 top-0 right-0 bg-[#F5F5F5]/80 backdrop-blur-sm rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
                 <span className="text-[18px] font-['Poppins'] font-bold text-[#E63946]">
                   {percentage}%
                 </span>
@@ -146,7 +146,7 @@ export default function TimedResults({
             <div className="flex w-full flex-col">
               <div
                 className={cn(
-                  "relative flex w-full justify-center items-center gap-2 border-2 p-2 text-[22px] font-['Poppins'] bg-[#e6e6e6]",
+                  "relative flex w-full justify-center items-center gap-2 border-2 p-2 text-[22px] font-['Poppins'] bg-gray-300/60 border-gray-300",
                   showLeaderboard ? "rounded-t-lg" : "rounded-lg"
                 )}
               >
@@ -163,7 +163,7 @@ export default function TimedResults({
                 </div>
                 <button
                   onClick={() => setShowLeaderboard(!showLeaderboard)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-gray-100 rounded-lg p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-gray-100 transition-colors duration-300 rounded-lg p-1"
                 >
                   <ChevronDown
                     className={cn(
@@ -177,7 +177,7 @@ export default function TimedResults({
               {/* Leaderboard accordion content */}
               <div
                 className={cn(
-                  "grid gap-2 overflow-hidden transition-all duration-200",
+                  "grid gap-2 overflow-hidden transition-all duration-200 ",
                   showLeaderboard
                     ? "grid-rows-[1fr] opacity-100"
                     : "grid-rows-[0fr] opacity-0"
@@ -186,7 +186,7 @@ export default function TimedResults({
                 <div className="overflow-hidden">
                   <div
                     className={cn(
-                      "bg-[#e6e6e6] p-4 shadow-sm",
+                      "bg-gray-300/60 p-4 shadow-sm",
                       showLeaderboard ? "rounded-b-lg" : "rounded-lg"
                     )}
                   >

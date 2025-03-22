@@ -12,7 +12,7 @@ export default function QuizError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+    <div className="min-h-screen bg-F5F5F5/80 backdrop-blur-sm flex items-center justify-center">
       <Card className="w-full max-w-md rounded-[15px]">
         <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
           <AlertCircle className="h-12 w-12 text-[#E63946]" />

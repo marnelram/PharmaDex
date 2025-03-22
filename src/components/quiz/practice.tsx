@@ -28,12 +28,12 @@ export default function PracticeQuiz({
   handleNextQuestion,
 }: PracticeQuizProps) {
   return (
-    <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
+    <div className="size-full bg-[#F5F5F5]/80 backdrop-blur-sm flex flex-col items-center sm:p-4 gap-4">
       {/* Title */}
       <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
         Drug or Pokémon?
       </h1>
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5]/80 backdrop-blur-sm shadow-none border-none sm:border sm:shadow-lg">
         <CardContent className="p-8 flex h-[80dvh] sm:h-auto flex-col items-center justify-between gap-4 sm:gap-8">
           {/* Progress Bar */}
           <Progress

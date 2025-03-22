@@ -3,7 +3,7 @@ import { Book, Users, Award, Settings } from "lucide-react";
 
 export default function AppNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-around items-center h-16 sm:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[#F5F5F5]/60 backdrop-blur-sm shadow-md flex justify-around items-center h-16 sm:hidden">
       <Link
         href="/quiz"
         className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"

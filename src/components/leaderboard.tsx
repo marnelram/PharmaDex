@@ -20,7 +20,7 @@ export default function Leaderboard({
 }: LeaderboardProps) {
   return (
     <div className="size-full bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
-      <Card className="w-full h-fit max-w-3xl bg-white shadow-lg">
+      <Card className="w-full h-fit max-w-3xl bg-[#F5F5F5] shadow-lg">
         <CardHeader className="relative sm:p-4 p-2 border-b">
           <Link href="/">
             <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
@@ -37,7 +37,7 @@ export default function Leaderboard({
               return (
                 <div
                   key={quizAttempt?.id}
-                  className={`flex flex-col justify-between bg-white gap-4 rounded-[15px] items-center ${
+                  className={`flex flex-col justify-between bg-[#F5F5F5] gap-4 rounded-[15px] items-center ${
                     rank === 1 ? "order-2" : rank === 2 ? "order-1" : "order-3"
                   }`}
                 >

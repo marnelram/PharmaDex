@@ -158,7 +158,7 @@ export default function AchievementsPage() {
                           </h3>
                           <Badge
                             variant="outline"
-                            className="bg-white/20 text-[#F5F5F5] mb-4 text-[14px] font-medium font-['Raleway']"
+                            className="bg-F5F5F5/20 text-[#F5F5F5] mb-4 text-[14px] font-medium font-['Raleway']"
                           >
                             {badge.progress >= badge.total
                               ? "Completed"
@@ -166,7 +166,7 @@ export default function AchievementsPage() {
                           </Badge>
                           <Progress
                             value={(badge.progress / badge.total) * 100}
-                            className="w-full bg-white/30"
+                            className="w-full bg-F5F5F5/30"
                           />
                           <p className="text-[14px] mt-2 font-['Raleway']">
                             {badge.progress} / {badge.total}
