@@ -28,7 +28,7 @@ export default function PracticeQuiz({
   handleNextQuestion,
 }: PracticeQuizProps) {
   return (
-    <div className="size-full bg-[#F5F5F5]/80 backdrop-blur-sm flex flex-col items-center sm:p-4 gap-4">
+    <div className="size-full backdrop-blur-sm flex flex-col items-center sm:p-4 gap-4">
       {/* Title */}
       <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
         Drug or Pokémon?
@@ -38,7 +38,7 @@ export default function PracticeQuiz({
           {/* Progress Bar */}
           <Progress
             value={progress}
-            className="h-3 rounded-full bg-[#9E9E9E]/20"
+            className="h-3 rounded-full bg-[#9E9E9E]/40"
             indicatorClassName="bg-[#E63946]"
           />
           {isQuizComplete ? (
@@ -62,7 +62,7 @@ export default function PracticeQuiz({
                     {questions[currentQuestion]?.name}
                   </h2>
                   {showFeedback && (
-                    <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
+                    <p className="text-[16px] text-[#5d5d5d] font-['Raleway']">
                       {questions[currentQuestion]?.description}
                     </p>
                   )}

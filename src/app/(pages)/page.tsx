@@ -13,7 +13,7 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="w-full flex flex-col items-center mx-auto min-h-screen">
+    <div className="w-full flex flex-col items-center mx-auto">
       <Home topScores={topScores} />
     </div>
   );

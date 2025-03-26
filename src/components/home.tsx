@@ -56,7 +56,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
           <h2 className="text-[32px] font-bold pb-2 px-4 font-['Poppins']">
             Top Players
           </h2>
-          <div className="flex justify-center items-end gap-6 md:gap-12 lg:gap-24">
+          <div className="grid grid-cols-3 justify-center items-end gap-4 md:gap-12 lg:gap-24">
             {[2, 0, 1].map((rank) => (
               <div key={rank} className="flex flex-col items-center">
                 <Avatar
@@ -69,7 +69,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
                   <AvatarFallback>{rank + 1}</AvatarFallback>
                 </Avatar>
-                <span className="mt-2 font-semibold">
+                <span className="mt-2 font-semibold line-clamp-1">
                   {topScores[rank]?.displayName ?? "---"}
                 </span>
                 <span className="text-sm text-gray-600">
