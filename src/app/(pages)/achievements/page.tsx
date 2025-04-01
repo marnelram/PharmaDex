@@ -121,7 +121,7 @@ const badges = [
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-start p-8">
+    <div className="min-h-screen flex flex-col items-center justify-start p-8">
       <Card className="w-full max-w-4xl bg-[#e6e6e6]">
         <CardHeader className="relative p-4 border-b w-full">
           <Link href="/">

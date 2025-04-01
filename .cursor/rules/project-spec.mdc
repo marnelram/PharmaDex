@@ -1,0 +1,62 @@
+---
+description: the spec document of the project
+globs: 
+alwaysApply: false
+---
+# 📄 Product Specification: XXX
+
+## 🎯 Product Overview
+
+
+---
+
+## 🧠 Design Philosophy
+
+
+
+---
+
+## 🎨 Visual Identity & Color Palette (60-30-10 Rule)
+
+- **Primary (60%) – :** 
+- **Secondary (30%) –  (#):** Used for headers, buttons, 
+- **Accent (10%) –  (#):** Draws attention to critical outputs 
+
+**Typography:** 
+
+**Layout Inspiration:** 
+
+---
+
+## 🧩 Core Features
+
+
+## 🔄 Project Workflow
+
+### 🧪 Use Case Flow
+
+
+### 🧩 App Lifecycle
+
+
+---
+
+## 🗂️ Project Structure
+
+### 🔧 Functional Modules
+
+| Module             | Responsibility                                           |
+|--------------------|-----------------------------------------------------------|
+
+
+---
+
+## 🔐 Data & Privacy
+
+
+
+---
+
+## ✨ Unique Selling Points (USPs)
+
+

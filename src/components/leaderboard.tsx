@@ -19,7 +19,7 @@ export default function Leaderboard({
   userRank,
 }: LeaderboardProps) {
   return (
-    <div className="size-full bg-[#F5F5F5] flex flex-col items-center justify-start p-4 sm:p-6">
+    <div className="size-full flex flex-col items-center justify-start p-4 sm:p-6">
       <Card className="w-full h-fit max-w-3xl bg-[#F5F5F5] shadow-lg">
         <CardHeader className="relative sm:p-4 p-2 border-b">
           <Link href="/">
