@@ -72,7 +72,7 @@ export default function PracticeResults({
             {/* Circle percentage */}
             <div className="relative size-44 sm:size-56">
               {/* Grade percentage */}
-              <div className="absolute z-20 top-0 right-0 bg-white rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
+              <div className="absolute z-20 top-0 right-0 bg-[#F5F5F5] rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
                 <span className="text-[18px] font-['Poppins'] font-bold text-[#E63946]">
                   {percentage}%
                 </span>

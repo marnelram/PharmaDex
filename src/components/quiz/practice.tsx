@@ -28,17 +28,17 @@ export default function PracticeQuiz({
   handleNextQuestion,
 }: PracticeQuizProps) {
   return (
-    <div className="size-full bg-[#F5F5F5] flex flex-col items-center sm:p-4 gap-4">
+    <div className="size-full backdrop-blur-sm flex flex-col items-center sm:p-4 gap-4">
       {/* Title */}
       <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
         Drug or Pokémon?
       </h1>
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5] sm:bg-white shadow-none border-none sm:border sm:shadow-lg">
+      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5]/80 backdrop-blur-sm shadow-none border-none sm:border sm:shadow-lg">
         <CardContent className="p-8 flex h-[80dvh] sm:h-auto flex-col items-center justify-between gap-4 sm:gap-8">
           {/* Progress Bar */}
           <Progress
             value={progress}
-            className="h-3 rounded-full bg-[#9E9E9E]/20"
+            className="h-3 rounded-full bg-[#9E9E9E]/40"
             indicatorClassName="bg-[#E63946]"
           />
           {isQuizComplete ? (
@@ -62,7 +62,7 @@ export default function PracticeQuiz({
                     {questions[currentQuestion]?.name}
                   </h2>
                   {showFeedback && (
-                    <p className="text-[16px] text-[#9E9E9E] font-['Raleway']">
+                    <p className="text-[16px] text-[#5d5d5d] font-['Raleway']">
                       {questions[currentQuestion]?.description}
                     </p>
                   )}

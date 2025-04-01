@@ -8,7 +8,7 @@ export default function SignIn() {
   const router = useRouter();
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center px-4">
-      <div className="bg-white rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
+      <div className="bg-[#F5F5F5]/60 rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
         {/* Logo/Header Section */}
         <div className="text-center space-y-4">
           <h1 className="text-[44px] font-bold text-[#E63946]">
@@ -25,7 +25,7 @@ export default function SignIn() {
             onClick={() =>
               signIn("google", { callbackUrl: "/", redirect: true })
             }
-            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-[#9E9E9E] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
+            className="w-full flex items-center justify-center gap-3 bg-[#F5F5F5]/60 border-2 border-[#9E9E9E] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
           >
             <Image
               src="/google-icon.webp"
@@ -43,7 +43,7 @@ export default function SignIn() {
               <div className="w-full border-t border-[#9E9E9E]"></div>
             </div>
             <div className="relative flex justify-center">
-              <span className="px-4 bg-white text-[14px] font-['Raleway'] text-[#9E9E9E]">
+              <span className="px-4 bg-[#F5F5F5] text-[14px] font-['Raleway'] text-[#9E9E9E]">
                 or try as guest
               </span>
             </div>

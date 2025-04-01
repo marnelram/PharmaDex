@@ -1,0 +1,115 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: The project's tech stack
+globs:
+---
+## 🔧 Full Tech Stack Summary — *Drug or Pokémon? App*
+
+### 🌐 Frontend Stack
+| Tool/Library       | Role |
+|--------------------|------|
+| **Next.js**        | Core React-based web framework for frontend, routing, and API endpoints. |
+| **Tailwind CSS**   | Utility-first CSS framework for responsive design following the app's visual identity. |
+| **shadcn/ui**      | Component library (built on Radix UI + Tailwind) for accessible UI components like buttons, modals, and inputs. |
+| **TanStack Query** | Data-fetching and state management for quiz data, leaderboards, and user achievements. |
+| **Zod**            | Runtime schema validation for form inputs and API responses. |
+| **Framer Motion**  | Animation library for microinteractions, quiz feedback animations and transitions. |
+| **next-auth**      | Authentication for user accounts, leaderboard tracking, and achievement persistence. |
+| **Vercel KV / Redis** | Leaderboard storage and rate limiting functionality. |
+| **React Hook Form** | Form management for custom inputs and settings. |
+| **howler.js**      | Audio library for handling sound effects with toggle functionality. |
+
+---
+
+### 🧠 Backend Stack
+| Tool/Library        | Role |
+|---------------------|------|
+| **Next.js API Routes** | Serverless functions for handling quiz data, user scores, and custom inputs. |
+| **Prisma ORM**      | Type-safe database access for user data, achievements, and leaderboards. |
+| **PostgreSQL**      | Primary database for storing user data, quiz content, and leaderboard information. |
+| **Node.js**         | JavaScript runtime environment for server-side operations. |
+| **JWT**             | JSON Web Tokens for secure authentication. |
+| **bcrypt**          | Password hashing for secure user authentication. |
+
+---
+
+### 🗄️ Database Schema
+| Entity              | Description |
+|---------------------|-------------|
+| **Users**           | User profiles with authentication details and game statistics. |
+| **Questions**       | Database of drug names and Pokémon names for quiz content. |
+| **Leaderboard**     | Global ranking table with user scores. |
+| **Achievements**    | Predefined achievement templates and user progress tracking. |
+| **CustomInputs**    | User-generated content for custom quiz modes. |
+| **UserStats**       | Detailed statistics for user performance and streak tracking. |
+
+---
+
+### 🛢️ Database Stack
+| Tool / Technology    | Role |
+|----------------------|------|
+| **PostgreSQL**       | Primary relational database (user accounts, subscriptions, API usage logs, audit trail). |
+| **Drizzle ORM**      | Type-safe ORM in the frontend/backend (can be used in server-side Next.js routes). |
+| **Prisma or SQLAlchemy (alt)** | Optional: backend-side ORM if FastAPI also writes to DB (or use Drizzle from frontend only). |
+| **pgvector (optional)** | If implementing vector similarity search later (e.g., pill shape recognition embedding storage). |
+
+---
+
+### ☁️ Cloud Infrastructure
+| Service / Platform   | Role |
+|----------------------|------|
+| **Vercel**          | Primary hosting platform for Next.js application with integrated CI/CD. |
+| **PlanetScale**     | Serverless MySQL platform compatible with Prisma for database hosting. |
+| **Vercel Edge Functions** | Optimized global delivery of dynamic content for leaderboards. |
+| **Vercel KV / Upstash Redis** | Fast key-value storage for leaderboards and temporary data. |
+| **Cloudinary**      | Image hosting for achievement badges, avatars, and visual elements. |
+
+---
+
+### 🛡️ Security & Monitoring
+| Tool/Service         | Role |
+|----------------------|------|
+| **Next-Auth**       | Authentication framework for secure user login. |
+| **JWT (JSON Web Tokens)** | Secure, stateless authentication for user sessions. |
+| **OAuth (Google/GitHub)** | Social login options for quick user onboarding. |
+| **Content Security Policy** | Protection against XSS and data injection attacks. |
+| **Sentry**          | Error tracking and performance monitoring. |
+
+---
+
+### 🧪 Testing Stack
+| Tool                 | Role |
+|----------------------|------|
+| **Jest**            | JavaScript testing framework for unit tests. |
+| **React Testing Library** | Component testing for UI elements. |
+| **Cypress**         | End-to-end testing for user flows and game mechanics. |
+| **Mock Service Worker** | API mocking for isolated component testing. |
+
+---
+
+### ⚙️ DevOps & Deployment
+| Tool/Service         | Role |
+|----------------------|------|
+| **GitHub Actions**   | CI/CD pipeline for automated testing and deployment. |
+| **ESLint**          | Code quality and style consistency. |
+| **Prettier**        | Automated code formatting. |
+| **Husky**           | Git hooks for pre-commit linting and testing. |
+| **Vercel Preview Deployments** | Preview environments for each pull request. |
+| **Dependabot**      | Automated dependency updates for security. |
+
+---
+
+### 📱 Responsive Design & Accessibility
+| Tool/Approach        | Role |
+|----------------------|------|
+| **Tailwind CSS Responsive Utilities** | Breakpoint-based responsive design. |
+| **Radix UI**        | Accessible component primitives. |
+| **ARIA Landmarks**  | Semantic HTML and accessibility attributes. |
+| **Focus Management** | Keyboard navigation support for all interactive elements. |
+| **Contrast Testing** | Tools to ensure WCAG 2.1 compliance for text contrast. |
+
+This tech stack provides a robust foundation for building the "Drug or Pokémon?" app with a focus on performance, accessibility, and engaging user experiences. The combination of Next.js, Tailwind, and modern serverless architecture enables rapid development and scalable deployment.

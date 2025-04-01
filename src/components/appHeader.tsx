@@ -17,8 +17,8 @@ import Link from "next/link";
 
 export default function AppHeader({ session }: { session: Session | null }) {
   return (
-    <header className="sticky top-0 w-full z-50">
-      <div className="flex items-center gap-2 justify-between w-full max-w-5xl mx-auto bg-white rounded-[15px] shadow-md p-2 sm:p-4 px-6 sm:px-8">
+    <header className="sticky top-0 w-full z-50 ">
+      <div className="flex items-center gap-2 justify-between w-full max-w-5xl mx-auto bg-[#F5F5F5]/80 backdrop-blur-sm rounded-[15px] shadow-md p-2 sm:p-4 px-6 sm:px-8">
         <div className="hidden sm:flex items-center w-24">
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={40} height={40} />
