@@ -1,11 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
----
----
-description: The project's tech stack
-globs:
+alwaysApply: true
 ---
 ## 🔧 Full Tech Stack Summary — *Drug or Pokémon? App*
 

@@ -1,8 +1,8 @@
 ---
-description: describes the rules needed to follow when coding
+description: 
 globs: 
+alwaysApply: true
 ---
-
 # Coding pattern preferences
 
 – Always prefer simple solutions  
