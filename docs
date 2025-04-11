@@ -1,0 +1,6 @@
+<script>start("c:\\Users\\Marnel\\Documents\\GitHub\\patient-voice\\docs\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("implementation-guide-voice-ai.md","implementation-guide-voice-ai.md",0,3415,"3.3 kB",1744265707,"4/9/25, 11:15:07 PM");</script>
+<script>addRow("project-spec-voice-ai.md","project-spec-voice-ai.md",0,3384,"3.3 kB",1744265880,"4/9/25, 11:18:00 PM");</script>
+<script>addRow("tech-stack-voice-ai.md","tech-stack-voice-ai.md",0,4112,"4.0 kB",1744265880,"4/9/25, 11:18:00 PM");</script>
+<script>addRow("trpc-consideration.md","trpc-consideration.md",0,1760,"1.7 kB",1744265750,"4/9/25, 11:15:50 PM");</script>

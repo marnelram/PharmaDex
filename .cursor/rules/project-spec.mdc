@@ -1,43 +1,123 @@
 ---
-description: the spec document of the project
+description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
-# 📄 Product Specification: XXX
+# 📄 Product Specification: Drug or Pokémon?
 
 ## 🎯 Product Overview
-
+An engaging, educational, and entertaining quiz app that challenges users to determine whether a name belongs to a pharmaceutical drug or a Pokémon character.
 
 ---
 
 ## 🧠 Design Philosophy
-
-
+The app combines playful visual elements with practical usability to create an engaging, educational, and entertaining experience for users. The game theme is centered around a playful, recognizable Pokéball-inspired design that incorporates elements of pharmaceuticals for a cohesive and interactive user experience.
 
 ---
 
 ## 🎨 Visual Identity & Color Palette (60-30-10 Rule)
 
-- **Primary (60%) – :** 
-- **Secondary (30%) –  (#):** Used for headers, buttons, 
-- **Accent (10%) –  (#):** Draws attention to critical outputs 
+- **Primary (60%) – Off-white (#F5F5F5):** Main background color
+- **Secondary (30%) – Gray (#e6e6e6):** Used for headers, buttons, and secondary elements
+- **Accent (10%):**
+  - **Red (#E63946):** Used for CTA buttons, highlights, and quiz states
+  - **Muted Yellow (#F3E260):** Used for text highlights and progress indicators
+- **Neutral Tones:** Soft grays for backgrounds and dividers
 
-**Typography:** 
+**Color Contrast Note:**
+High contrast ensures sufficient difference in brightness for legibility:
+- Text contrast adheres to WCAG 2.1 standards:
+  - 4.5:1 ratio for normal text
+  - 3:1 ratio for large text (e.g., H1)
 
-**Layout Inspiration:** 
+**Typography:**
+- **Header Font:** Poppins
+- **Body Font:** Raleway
+
+**Font Sizes and Weights:**
+The typographic hierarchy is based on a 1.4 modular scale:
+- H1: 44px, **Bold (700)**
+- H2: 32px, **Bold (700)**
+- H3: 22px, **Medium (500)**
+- H4: 16px, **Medium (500)**
+- H5: 12px, **Regular (400)**
+- Body Text: 16px, **Regular (400)**
+- Labels/Text on Buttons: 14px, **Medium (500)**
+
+**Legibility Guidelines:**
+- Avoid overly thin weights for small text to improve readability
+- Maintain padding between headers and body text for clarity
+
+**Layout Inspiration:**
+- **Buttons:** Capsule-shaped with rounded corners (border-radius: 25px)
+- **Cards:** Soft rounded edges (border-radius: 15px)
+- **Modals:** Centered, with rounded corners matching the theme
 
 ---
 
 ## 🧩 Core Features
 
+### Quiz Gameplay
+- Simple "Drug or Pokémon?" choice for each name presented
+- Educational tidbits about drugs or Pokémon after each answer
+- Scoring system with streaks and achievements
+
+### Visual Elements
+- **Pokémon Elements:**
+  - Cartoonish, colorful Pokémon icons (customized or silhouette-style)
+  - Subtle Pokéball motifs in backgrounds
+- **Pharmaceutical Elements:**
+  - Detailed, colorful pill designs (minimalistic representations)
+  - Medical symbols integrated into UI elements
+
+### Gamification
+- **Progress Indicators:**
+  - Pokéball progress bar with sections filling as the quiz progresses
+  - Achievement badges styled as Pokémon trainer icons or pill-themed awards
+- **Leaderboard:**
+  - Global leaderboard displaying ranks
+- **Streak Tracking:**
+  - Bonus points for streaks, visually represented by a glowing effect on streak numbers
+
+### Interaction Design
+- **Animations (Microinteractions):**
+  - Button Hover: Slight bounce or grow animation (scale: 1.05)
+  - Answer Feedback:
+    - Correct: A pokéball bounces and opens briefly
+    - Incorrect: A pill breaks apart and disappears
+  - Screen Transitions: Subtle sliding transitions for quizzes
+- **Sound Effects (Optional, toggle-able):**
+  - Correct Answer: Pokéball "click" sound
+  - Incorrect Answer: A subtle pill "pop"
+  - Button Clicks: Light tap sound for user feedback
+
+### Accessibility Features
+- **Color Contrast:**
+  - High contrast text and interactive elements
+  - Avoiding pure white (#FFFFFF) for text to reduce eye strain
+- **Touch Target Size:**
+  - Buttons and interactive elements at least 48px in height/width
+- **Keyboard Navigation:**
+  - All elements navigable via keyboard (tab and arrow keys)
 
 ## 🔄 Project Workflow
 
 ### 🧪 Use Case Flow
-
+1. User opens app and sees home screen with "Start Quiz" button
+2. User taps button and begins quiz
+3. Name is presented with "Drug" or "Pokémon" choice buttons
+4. User selects answer and receives immediate feedback
+5. Educational information is displayed about the correct answer
+6. Process repeats until quiz completion
+7. Final score is displayed with option to share or return to home
 
 ### 🧩 App Lifecycle
-
+1. Splash screen with app logo
+2. Home screen with navigation options
+3. Quiz selection (standard or custom)
+4. Quiz gameplay
+5. Results and achievements
+6. Return to home or share results
 
 ---
 
@@ -47,16 +127,69 @@ alwaysApply: false
 
 | Module             | Responsibility                                           |
 |--------------------|-----------------------------------------------------------|
+| Home Screen        | Entry point with navigation to all features              |
+| Quiz Engine        | Core gameplay mechanics and scoring                      |
+| Leaderboard        | Global ranking system and player scores                  |
+| Achievements       | Badge system and progress tracking                       |
+| Settings           | Sound, notifications, and accessibility options          |
+| Custom Input       | Allowing users to add custom names to quiz               |
 
+### Screen-Specific Designs
+
+#### Home Screen
+- **Primary Elements:**
+  - Large "Start Quiz" button with gradient colors and subtle shadowing
+  - Leaderboard Preview widget showing top 3 players
+  - Quick Facts Carousel with Pokémon trivia and drug facts
+- **Navigation:**
+  - Quizzes (Default/Custom Modes)
+  - Leaderboard
+  - Achievements
+  - Settings (sound, notifications, theme)
+- **Background:** Subtle gradient with Pokémon motifs and pill graphics
+
+#### Quiz Interface
+- **Question Area:**
+  - Quiz name displayed in bold, large text
+  - Rotating visual aid (Pokémon silhouette or pill design)
+- **Answer Buttons:**
+  - Two prominent buttons labeled "Drug" and "Pokémon" in contrasting colors
+  - Hover/tap effects with color shifts or glowing borders
+- **Feedback System:**
+  - Correct Answer: Confetti animation, congratulatory message, badge icon
+  - Incorrect Answer: Playful animation with humorous message
+
+#### Leaderboard and Scoring
+- **Leaderboard Screen:**
+  - Top 3 players with podium-style graphics and avatars
+  - Scrollable list for additional rankings
+- **Icons:**
+  - Unique avatars styled as Pokémon Trainers or Pharmacists
+- **Score Highlights:**
+  - Player's current score and rank displayed prominently
+
+#### Achievements and Badges
+- **Badge Gallery:**
+  - Colorful badges resembling Pokémon gym badges or pharmaceutical seals
+  - Example Titles: "Pokémon Professor" (50 correct Pokémon answers), "Pharmacist in Training" (25 correct drug answers)
+  - Interactive details showing how badges were earned
 
 ---
 
 ## 🔐 Data & Privacy
-
-
+- No personal health information collected
+- Optional username for leaderboard participation
+- Local storage of game progress and achievements
 
 ---
 
 ## ✨ Unique Selling Points (USPs)
+- Educational content disguised as engaging gameplay
+- Visually appealing design inspired by both pharmaceutical and Pokémon aesthetics
+- Accessible to players of all ages and backgrounds
+- Combination of education and entertainment in a simple, addictive format
 
-
+## 🛠️ Technical Considerations
+- Use scalable vector graphics (SVGs) for Pokéball and pill icons for consistent rendering
+- Optimize animations to avoid performance lags on slower devices
+- Cross-platform compatibility for web and mobile experiences
