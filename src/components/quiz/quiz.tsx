@@ -3,7 +3,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-
 import { AlertCircle, Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -12,19 +11,50 @@ import { Quiz } from "@/lib/validation/types/quiz";
 import TimedQuiz from "./timed";
 import Instructions from "./instructions";
 import PracticeQuiz from "./practice";
+import { AchievementToastManager } from "@/components/achievements/achievement-toast";
+import { useQuizStore } from "@/store/quiz-store";
 
-export default function QuizComponent({ quiz }: { quiz: Quiz }) {
+export default function QuizComponent({
+  quiz,
+  userId,
+}: {
+  quiz: Quiz;
+  userId: string | undefined;
+}) {
   const router = useRouter();
-  const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  const [totalScore, setTotalScore] = React.useState(0);
-  const [showFeedback, setShowFeedback] = React.useState(false);
-  const [isQuizComplete, setIsQuizComplete] = React.useState(false);
   const { toast } = useToast();
-  const startTimeRef = React.useRef<number>(0);
-  const [streak, setStreak] = React.useState(0);
-  const [multiplier, setMultiplier] = React.useState(1);
-  const [isGameStarted, setIsGameStarted] = React.useState(false);
-  const [isPracticeMode, setIsPracticeMode] = React.useState(false);
+  // Create a ref to pass to TimedQuiz
+  const startTimeRefObj = React.useRef<number>(
+    useQuizStore.getState().startTimeRef
+  );
+
+  // Extract quiz state and actions from Zustand store
+  const {
+    currentQuestion,
+    totalScore,
+    showFeedback,
+    isQuizComplete,
+    streak,
+    isGameStarted,
+    isPracticeMode,
+    startTimeRef,
+    correctAnswers,
+    newAchievements,
+    showAchievements,
+
+    // Actions
+    startGame,
+    answerQuestion,
+    nextQuestion,
+    completeQuiz,
+    hideAchievements,
+    setNewAchievements,
+  } = useQuizStore();
+
+  // Keep the ref in sync with the store
+  React.useEffect(() => {
+    startTimeRefObj.current = startTimeRef;
+  }, [startTimeRef]);
 
   const { questions, quizId } = quiz;
 
@@ -79,49 +109,21 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     },
   });
 
-  const calculateScore = (elapsedTime: number) => {
-    let baseScore;
-    // If remaining time is between 4.95 and 5 seconds (answered within first 0.05s)
-    if (elapsedTime <= 0.1) {
-      baseScore = 1000;
-    } else if (elapsedTime >= 4.9) {
-      baseScore = 100;
-    } else {
-      const x = elapsedTime;
-      baseScore = Math.round(25 + 1000 * Math.exp(-0.5 * (x - 0.05)));
-    }
+  const handleGameStart = () => {
+    startGame(false); // Default to regular mode
+  };
 
-    // Apply streak multiplier
-    return Math.round(baseScore * multiplier);
+  const setPracticeMode = (isPractice: boolean) => {
+    // Will be passed to the startGame action when we actually start
+    useQuizStore.setState({ isPracticeMode: isPractice });
   };
 
   const handleAnswer = async (answer: string) => {
-    const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
-    const correct = answer === questions[currentQuestion].type;
-    let currentScore = 0;
-
-    if (correct) {
-      // Increment streak and update multiplier
-      const newStreak = streak + 1;
-      setStreak(newStreak);
-
-      // Update multiplier based on streak
-      const newMultiplier = calculateMultiplier(newStreak);
-      setMultiplier(newMultiplier);
-
-      currentScore = calculateScore(elapsedTime);
-      setTotalScore((prev) => prev + currentScore);
-    } else {
-      // Reset streak and multiplier on wrong answer
-      setStreak(0);
-      setMultiplier(1);
-    }
-
-    if (isPracticeMode) {
-      setShowFeedback(true);
-    } else {
-      handleNextQuestion();
-    }
+    const { correct, currentScore } = await answerQuestion(
+      answer,
+      questions[currentQuestion].type,
+      userId
+    );
 
     if (isPracticeMode) {
       toast({
@@ -155,17 +157,15 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
         variant: "destructive",
       });
     }
+
+    // Move to next question automatically if not in practice mode
+    if (!isPracticeMode) {
+      handleNextQuestion();
+    }
   };
 
   const handleNextQuestion = () => {
-    setShowFeedback(false);
-    startTimeRef.current = Date.now(); // Reset start time for next question
-    console.log("start time: ", startTimeRef.current);
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setIsQuizComplete(true);
-    }
+    nextQuestion(questions.length);
   };
 
   const handleQuizComplete = async () => {
@@ -178,13 +178,47 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       return;
     }
 
+    completeQuiz();
+
     saveQuizAttempt(
       {
         quizId,
         totalScore,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          // Check for achievements if user is logged in
+          if (userId) {
+            try {
+              const achievementsResult = await fetch("/api/achievements", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userId,
+                  quizData: {
+                    totalQuestions: questions.length,
+                    correctAnswers,
+                    duration: useQuizStore.getState().quizDuration,
+                    isPerfect: correctAnswers === questions.length,
+                  },
+                }),
+              });
+
+              if (achievementsResult.ok) {
+                const data = await achievementsResult.json();
+                if (data.newlyUnlocked && data.newlyUnlocked.length > 0) {
+                  setNewAchievements(data.newlyUnlocked);
+                  return; // Don't navigate yet, wait for achievements to be shown
+                }
+              }
+            } catch (error) {
+              console.error("Error checking achievements:", error);
+            }
+          }
+
+          // If no achievements or error, navigate directly
           if (isPracticeMode) {
             router.push(`/practice/${quizId}`);
           } else {
@@ -195,15 +229,17 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     );
   };
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
-
-  // needed to calculate the streak multiplier
-  const calculateMultiplier = (currentStreak: number) => {
-    if (currentStreak >= 10) return 3; // 3x for 10+ streak
-    if (currentStreak >= 5) return 2; // 2x for 5-9 streak
-    if (currentStreak >= 3) return 1.5; // 1.5x for 3-4 streak
-    return 1; // Base multiplier
+  // Handle completion of achievements display
+  const handleAchievementsComplete = () => {
+    hideAchievements();
+    if (isPracticeMode) {
+      router.push(`/practice/${quizId}`);
+    } else {
+      router.push(`/results/${quizId}`);
+    }
   };
+
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   if (isQuizAttemptPending) {
     return (
@@ -259,42 +295,81 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     );
   }
 
-  if (!isGameStarted) {
-    return (
-      <Instructions
-        setIsGameStarted={setIsGameStarted}
-        setIsPracticeMode={setIsPracticeMode}
-        startTimeRef={startTimeRef}
-      />
-    );
-  }
+  return (
+    <>
+      {!isGameStarted ? (
+        <Instructions
+          setIsPracticeMode={setPracticeMode}
+          handleGameStart={handleGameStart}
+        />
+      ) : !isQuizComplete ? (
+        isPracticeMode ? (
+          <PracticeQuiz
+            progress={progress}
+            showFeedback={showFeedback}
+            isQuizComplete={isQuizComplete}
+            questions={questions}
+            currentQuestion={currentQuestion}
+            handleQuizComplete={handleQuizComplete}
+            handleAnswer={handleAnswer}
+            handleNextQuestion={handleNextQuestion}
+          />
+        ) : (
+          <TimedQuiz
+            progress={progress}
+            isQuizComplete={isQuizComplete}
+            handleTimeComplete={handleTimeComplete}
+            streak={streak}
+            questions={questions}
+            currentQuestion={currentQuestion}
+            startTimeRef={startTimeRefObj}
+            handleQuizComplete={handleQuizComplete}
+            handleAnswer={handleAnswer}
+          />
+        )
+      ) : (
+        <Card className="w-full max-w-md bg-white p-6 shadow-xl rounded-xl">
+          <CardContent className="flex flex-col items-center justify-center gap-4">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold">Quiz Completed!</h2>
+              <p className="text-gray-600">
+                Your score: <span className="font-bold">{totalScore}</span>
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                You answered {correctAnswers} out of {questions.length}{" "}
+                questions correctly.
+              </p>
+            </div>
+            <Button
+              onClick={handleQuizComplete}
+              disabled={isQuizAttemptPending}
+              className="w-full mt-2"
+            >
+              {isQuizAttemptPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+                </>
+              ) : (
+                "See Results"
+              )}
+            </Button>
+            {isQuizAttemptError && (
+              <div className="flex items-center text-red-500 mt-2">
+                <AlertCircle className="mr-2 h-4 w-4" />
+                <p className="text-sm">{quizAttemptError}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
-  if (!isPracticeMode) {
-    return (
-      <TimedQuiz
-        progress={progress}
-        isQuizComplete={isQuizComplete}
-        handleTimeComplete={handleTimeComplete}
-        streak={streak}
-        questions={questions}
-        currentQuestion={currentQuestion}
-        startTimeRef={startTimeRef}
-        handleQuizComplete={handleQuizComplete}
-        handleAnswer={handleAnswer}
-      />
-    );
-  } else {
-    return (
-      <PracticeQuiz
-        progress={progress}
-        showFeedback={showFeedback}
-        isQuizComplete={isQuizComplete}
-        questions={questions}
-        currentQuestion={currentQuestion}
-        handleQuizComplete={handleQuizComplete}
-        handleAnswer={handleAnswer}
-        handleNextQuestion={handleNextQuestion}
-      />
-    );
-  }
+      {/* Achievement toast manager */}
+      {showAchievements && newAchievements.length > 0 && (
+        <AchievementToastManager
+          achievements={newAchievements}
+          onComplete={handleAchievementsComplete}
+        />
+      )}
+    </>
+  );
 }

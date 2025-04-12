@@ -20,7 +20,7 @@ export default async function QuizPage() {
       // Forward the cookie header from the incoming request
       cookie: headersList.get("cookie") ?? "",
     },
-    body: JSON.stringify({ userId: session?.user.id ?? null }),
+    body: JSON.stringify({ userId: session?.user?.id ?? null }),
     cache: "no-store",
   });
 
@@ -28,7 +28,7 @@ export default async function QuizPage() {
 
   return (
     <div className="w-full flex flex-col items-center mx-auto">
-      <QuizComponent quiz={quiz} />
+      <QuizComponent quiz={quiz} userId={session?.user?.id} />
     </div>
   );
 }

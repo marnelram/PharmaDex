@@ -131,7 +131,6 @@ model Achievement {
   name        String            @unique
   description String
   icon        String
-  threshold   Int
   category    String
   users       UserAchievement[]
   createdAt   DateTime          @default(now())

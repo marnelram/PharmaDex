@@ -2,15 +2,13 @@ import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
 interface InstructionsProps {
-  setIsGameStarted: (value: boolean) => void;
   setIsPracticeMode: (value: boolean) => void;
-  startTimeRef: React.MutableRefObject<number>;
+  handleGameStart: () => void;
 }
 
 export default function Instructions({
-  setIsGameStarted,
   setIsPracticeMode,
-  startTimeRef,
+  handleGameStart,
 }: InstructionsProps) {
   return (
     <div className="size-full flex flex-col items-center sm:p-4 gap-4">
@@ -74,10 +72,7 @@ export default function Instructions({
 
           <div className="flex gap-4">
             <Button
-              onClick={() => {
-                setIsGameStarted(true);
-                startTimeRef.current = Date.now();
-              }}
+              onClick={handleGameStart}
               className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
             >
               Start Quiz
@@ -85,8 +80,7 @@ export default function Instructions({
             <Button
               onClick={() => {
                 setIsPracticeMode(true);
-                setIsGameStarted(true);
-                startTimeRef.current = Date.now();
+                handleGameStart();
               }}
               className="bg-gray-500 mt-2 hover:bg-gray-600 py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
             >
