@@ -328,39 +328,41 @@ export default function QuizComponent({
           />
         )
       ) : (
-        <Card className="w-full max-w-md bg-white p-6 shadow-xl rounded-xl">
-          <CardContent className="flex flex-col items-center justify-center gap-4">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">Quiz Completed!</h2>
-              <p className="text-gray-600">
-                Your score: <span className="font-bold">{totalScore}</span>
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                You answered {correctAnswers} out of {questions.length}{" "}
-                questions correctly.
-              </p>
-            </div>
-            <Button
-              onClick={handleQuizComplete}
-              disabled={isQuizAttemptPending}
-              className="w-full mt-2"
-            >
-              {isQuizAttemptPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
-                </>
-              ) : (
-                "See Results"
-              )}
-            </Button>
-            {isQuizAttemptError && (
-              <div className="flex items-center text-red-500 mt-2">
-                <AlertCircle className="mr-2 h-4 w-4" />
-                <p className="text-sm">{quizAttemptError}</p>
+        <div className="size-full h-[90dvh] flex items-center justify-center">
+          <Card className="w-full max-w-md bg-[#F5F5F5]/75 p-6 shadow-xl rounded-xl">
+            <CardContent className="flex flex-col items-center justify-center gap-4">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold">Quiz Completed!</h2>
+                <p className="text-gray-600">
+                  Your score: <span className="font-bold">{totalScore}</span>
+                </p>
+                <p className="text-sm text-gray-500 mt-2">
+                  You answered {correctAnswers} out of {questions.length}{" "}
+                  questions correctly.
+                </p>
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <Button
+                onClick={handleQuizComplete}
+                disabled={isQuizAttemptPending}
+                className="w-full mt-2 bg-[#E63946] hover:bg-[#E63946] hover:scale-105 transition-transform duration-300"
+              >
+                {isQuizAttemptPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+                  </>
+                ) : (
+                  "See Results"
+                )}
+              </Button>
+              {isQuizAttemptError && (
+                <div className="flex items-center text-red-500 mt-2">
+                  <AlertCircle className="mr-2 h-4 w-4" />
+                  <p className="text-sm">{quizAttemptError}</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       )}
 
       {/* Achievement toast manager */}

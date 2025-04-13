@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Book, Users, Award, Settings } from "lucide-react";
+import { Book, Users, Award, Settings, Zap } from "lucide-react";
 
 export default function AppNav() {
   return (
@@ -21,6 +21,12 @@ export default function AppNav() {
         className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
       >
         <Award className="size-6" />
+      </Link>
+      <Link
+        href="/pricing"
+        className="flex flex-col items-center p-2 hover:bg-gray-100 rounded-lg"
+      >
+        <Zap className="size-6" />
       </Link>
       <Link
         href="/settings"
