@@ -109,13 +109,8 @@ export default function QuizComponent({
     },
   });
 
-  const handleGameStart = () => {
-    startGame(false); // Default to regular mode
-  };
-
-  const setPracticeMode = (isPractice: boolean) => {
-    // Will be passed to the startGame action when we actually start
-    useQuizStore.setState({ isPracticeMode: isPractice });
+  const handleGameStart = (mode: "practice" | "timed") => {
+    startGame(mode); // Default to regular mode
   };
 
   const handleAnswer = async (answer: string) => {
@@ -241,6 +236,8 @@ export default function QuizComponent({
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
+  console.log("isPracticeMode", isPracticeMode);
+
   if (isQuizAttemptPending) {
     return (
       <div className="h-[80dvh] backdrop-blur-sm flex items-center justify-center">
@@ -298,10 +295,7 @@ export default function QuizComponent({
   return (
     <>
       {!isGameStarted ? (
-        <Instructions
-          setIsPracticeMode={setPracticeMode}
-          handleGameStart={handleGameStart}
-        />
+        <Instructions handleGameStart={handleGameStart} />
       ) : !isQuizComplete ? (
         isPracticeMode ? (
           <PracticeQuiz

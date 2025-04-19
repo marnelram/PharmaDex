@@ -22,7 +22,7 @@ interface QuizState {
   showAchievements: boolean;
 
   // Actions
-  startGame: (isPractice: boolean) => void;
+  startGame: (mode: "timed" | "practice") => void;
   answerQuestion: (
     answer: string,
     questionType: string,
@@ -59,11 +59,11 @@ export const useQuizStore = create<QuizState>((set, get) => ({
   showAchievements: false,
 
   // Actions
-  startGame: (isPractice) => {
+  startGame: (mode) => {
     const now = Date.now();
     set({
       isGameStarted: true,
-      isPracticeMode: isPractice,
+      isPracticeMode: mode === "practice",
       quizStartTime: now,
       startTimeRef: now,
     });

@@ -1,15 +1,9 @@
+import { useQuizStore } from "@/store/quiz-store";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
-interface InstructionsProps {
-  setIsPracticeMode: (value: boolean) => void;
-  handleGameStart: () => void;
-}
-
-export default function Instructions({
-  setIsPracticeMode,
-  handleGameStart,
-}: InstructionsProps) {
+export default function Instructions() {
+  const { startGame } = useQuizStore();
   return (
     <div className="size-full flex flex-col items-center sm:p-4 gap-4">
       <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
@@ -72,16 +66,13 @@ export default function Instructions({
 
           <div className="flex gap-4">
             <Button
-              onClick={handleGameStart}
+              onClick={() => startGame("timed")}
               className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
             >
               Start Quiz
             </Button>
             <Button
-              onClick={() => {
-                setIsPracticeMode(true);
-                handleGameStart();
-              }}
+              onClick={() => startGame("practice")}
               className="bg-gray-500 mt-2 hover:bg-gray-600 py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
             >
               Practice
