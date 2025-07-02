@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/carousel";
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { cn } from "@/lib/utils";
 
 export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
   const router = useRouter();
@@ -36,151 +35,244 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
   });
 
   return (
-    <main className="size-full h-[80dvh] sm:h-[90dvh] overflow-y-auto flex flex-col items-center justify-between p-8">
-      <div className="w-full max-w-4xl flex flex-col gap-4">
-        {/* Title */}
-        <h1 className="text-[44px] font-bold text-center font-['Poppins']">
-          Drug or Pokémon?
-        </h1>
+    <main className="min-h-[80dvh] sm:min-h-[90dvh] w-full flex flex-col items-center p-4 sm:p-6 lg:p-8 animate-pixel-fade">
+      <div className="w-full max-w-4xl mx-auto space-y-8">
+        {/* Title Section */}
+        <div className="text-center space-y-4">
+          <h1 className="text-[#E63946] animate-retro-glow">
+            Drug or Pokémon?
+          </h1>
+          <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto"></div>
+        </div>
 
         {/* Main CTA */}
-        <Button
-          className="w-full py-8 text-[22px] font-bold rounded-[25px] bg-[#E63946] hover:bg-[#d32d3a] transition-all hover:scale-105 duration-300 shadow-lg font-['Poppins']"
-          onClick={() => router.push("/quiz")}
-        >
-          Start Quiz
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            size="wide"
+            className="animate-retro-pulse hover:animate-none transition-all duration-300"
+            onClick={() => router.push("/quiz")}
+          >
+            ▶ Start Quiz ◀
+          </Button>
+        </div>
 
         {/* Leaderboard Preview */}
-        <Card className="p-4 rounded-[15px] bg-[#F5F5F5]/80 backdrop-blur-sm">
-          <h2 className="text-[32px] font-bold pb-2 px-4 font-['Poppins']">
-            Top Players
-          </h2>
-          <div className="grid grid-cols-3 justify-center items-end gap-4 md:gap-12 lg:gap-24">
-            {[2, 0, 1].map((rank) => (
-              <div key={rank} className="flex flex-col items-center">
-                <Avatar
-                  className={cn(
-                    rank == 0 && "size-16",
-                    rank == 1 && "size-14",
-                    rank == 2 && "size-12"
-                  )}
-                >
-                  <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
-                  <AvatarFallback>{rank + 1}</AvatarFallback>
-                </Avatar>
-                <span className="mt-2 font-semibold line-clamp-1">
-                  {topScores[rank]?.displayName ?? "---"}
-                </span>
-                <span className="text-sm text-gray-600">
-                  {topScores[rank]?.totalScore.toLocaleString() ?? 0} pts
-                </span>
+        <Card className="animate-retro-slide">
+          <div className="p-6 space-y-6">
+            <div className="text-center">
+              <h2 className="text-[#E63946] mb-2">🏆 Champions 🏆</h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#F3E260] to-transparent mx-auto"></div>
+            </div>
+
+            {/* Podium Display */}
+            <div className="flex justify-center items-end gap-8 sm:gap-12 lg:gap-16">
+              {/* Second Place - Left */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <Avatar className="size-16 border-4 border-[#9E9E9E] shadow-lg pixel-perfect transition-all duration-300 hover:scale-105">
+                    <AvatarImage
+                      src={`/placeholder-avatar-1.png`}
+                      className="pixel-perfect"
+                    />
+                    <AvatarFallback className="text-white font-bold bg-[#9E9E9E]">
+                      2
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#9E9E9E] rounded-full flex items-center justify-center text-xs font-bold text-white">
+                    2
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <span className="text-[#2D2D2D] block truncate max-w-20">
+                    {topScores[1]?.displayName ?? "---"}
+                  </span>
+                  <span className="text-[#666] block">
+                    {topScores[1]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
+                {/* Podium Base */}
+                <div className="w-16 h-12 bg-gradient-to-t from-[#9E9E9E] to-[#B8B8B8] border-t-4 border-[#9E9E9E] shadow-lg"></div>
               </div>
-            ))}
+
+              {/* First Place - Center */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <Avatar className="size-20 border-4 border-[#F3E260] shadow-xl pixel-perfect transition-all duration-300 hover:scale-105 animate-retro-glow">
+                    <AvatarImage
+                      src={`/placeholder-avatar-0.png`}
+                      className="pixel-perfect"
+                    />
+                    <AvatarFallback className="text-[#2D2D2D] font-bold bg-[#F3E260]">
+                      1
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-3xl animate-retro-bounce">
+                    👑
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#F3E260] rounded-full flex items-center justify-center text-xs font-bold text-[#2D2D2D]">
+                    1
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <span className="text-[#2D2D2D] block truncate max-w-24">
+                    {topScores[0]?.displayName ?? "---"}
+                  </span>
+                  <span className="text-[#666] block">
+                    {topScores[0]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
+                {/* Podium Base */}
+                <div className="w-20 h-16 bg-gradient-to-t from-[#F3E260] to-[#F5E880] border-t-4 border-[#F3E260] shadow-xl"></div>
+              </div>
+
+              {/* Third Place - Right */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <Avatar className="size-14 border-4 border-[#CD7F32] shadow-lg pixel-perfect transition-all duration-300 hover:scale-105">
+                    <AvatarImage
+                      src={`/placeholder-avatar-2.png`}
+                      className="pixel-perfect"
+                    />
+                    <AvatarFallback className="text-white font-bold bg-[#CD7F32]">
+                      3
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#CD7F32] rounded-full flex items-center justify-center text-xs font-bold text-white">
+                    3
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <span className="text-[#2D2D2D] block truncate max-w-20">
+                    {topScores[2]?.displayName ?? "---"}
+                  </span>
+                  <span className="text-[#666] block">
+                    {topScores[2]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
+                {/* Podium Base */}
+                <div className="w-14 h-8 bg-gradient-to-t from-[#CD7F32] to-[#E6934A] border-t-4 border-[#CD7F32] shadow-lg"></div>
+              </div>
+            </div>
           </div>
         </Card>
 
         {/* Quick Facts Carousel */}
-        <Card className="bg-[#F5F5F5]/80 backdrop-blur-sm">
-          <CardContent className="p-6 h-full">
+        <Card className="animate-retro-slide">
+          <CardContent className="p-6 space-y-4">
             {isLoading ? (
-              <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-                <span className="ml-2 text-gray-600">Loading facts...</span>
+              <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
+                <p className="text-[#666]">Loading facts...</p>
               </div>
             ) : error ? (
-              <div className="text-center py-8">
-                <p className="text-red-500 font-semibold">
-                  Oops! Something went wrong
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Unable to load fun facts right now
-                </p>
+              <div className="text-center py-12 space-y-3">
+                <h4 className="text-[#E63946]">⚠ ERROR! ⚠</h4>
+                <p className="text-[#666]">Unable to load fun facts</p>
               </div>
             ) : facts.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-gray-600">No facts available</p>
+              <div className="text-center py-12">
+                <p className="text-[#666]">No facts available</p>
               </div>
             ) : (
-              <Carousel
-                plugins={[
-                  Autoplay({
-                    delay: 5000,
-                    stopOnInteraction: true,
-                  }),
-                ]}
-              >
-                <CarouselContent>
-                  {facts.map((fact: Fact, index: number) => (
-                    <CarouselItem key={index}>
-                      <div className="px-2">
-                        <h3 className="text-[22px] text-center font-medium font-['Poppins']">
-                          {fact.title}
-                        </h3>
-                        <p className="mt-2 text-left sm:text-center text-[16px] font-['Raleway']">
-                          {fact.content}
-                        </p>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
+              <>
+                <div className="text-center space-y-2">
+                  <h3 className="text-[#E63946]">💡 Did You Know? 💡</h3>
+                  <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#F3E260] to-transparent mx-auto"></div>
+                </div>
+                <Carousel
+                  plugins={[
+                    Autoplay({
+                      delay: 6000,
+                      stopOnInteraction: true,
+                    }),
+                  ]}
+                  className="w-full"
+                >
+                  <CarouselContent>
+                    {facts.map((fact: Fact, index: number) => (
+                      <CarouselItem key={index}>
+                        <div className="px-6 py-4 text-center space-y-3">
+                          <h4 className="text-[#2D2D2D]">{fact.title}</h4>
+                          <p className="leading-relaxed text-[#2D2D2D] max-w-2xl mx-auto">
+                            {fact.content}
+                          </p>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
+              </>
             )}
           </CardContent>
         </Card>
 
         {/* Navigation Buttons */}
-        <div className=" grid-cols-1 sm:grid-cols-2 gap-4 hidden sm:grid">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-retro-slide">
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
             onClick={() => router.push("/quizHistory")}
           >
-            <Book className="mr-2 h-5 w-5" />
-            Quizzes
+            <Book className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <span>📚 Quiz History</span>
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
             onClick={() => router.push("/leaderboard")}
           >
-            <Users className="mr-2 h-5 w-5" />
-            Leaderboard
+            <Users className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <span>👥 Leaderboard</span>
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
             onClick={() => router.push("/achievements")}
           >
-            <Award className="mr-2 h-5 w-5" />
-            My Achievements
+            <Award className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <span>🏅 Achievements</span>
           </Button>
           <Button
             variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
             onClick={() => router.push("/settings")}
           >
-            <Settings className="mr-2 h-5 w-5" />
-            Settings
+            <Settings className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <span>⚙️ Settings</span>
           </Button>
         </div>
+
+        {/* Spacer for bottom */}
+        <div className="h-8"></div>
       </div>
 
-      {/* Background Elements - Updated with design colors */}
-      <div className="fixed inset-0 pointer-events-none -z-10">
-        {/* Pokéball background element */}
-        <div className="absolute -rotate-45 top-5 left-5 sm:size-20 bg-[#E63946] rounded-full opacity-10 overflow-hidden">
-          <div className="absolute top-[45%] w-full h-[10%] bg-[#9E9E9E]"></div>
-          <div className="absolute top-[50%] w-full h-[50%] bg-[#F5F5F5]"></div>
-          <div className="absolute top-[40%] left-[40%] w-[20%] h-[20%] bg-[#9E9E9E] rounded-full"></div>
+      {/* Cleaner Background Elements */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        {/* Subtle Pokéball */}
+        <div className="absolute top-[15%] left-[5%] w-12 h-12 opacity-15 animate-retro-pulse">
+          <div className="w-full h-full bg-[#E63946] rounded-full relative">
+            <div className="absolute top-[45%] w-full h-[10%] bg-[#2D2D2D]"></div>
+            <div className="absolute top-[50%] w-full h-[50%] bg-[#F5F5F5] rounded-b-full"></div>
+            <div className="absolute top-[40%] left-[40%] w-[20%] h-[20%] bg-[#2D2D2D] rounded-full border border-[#F5F5F5]"></div>
+          </div>
         </div>
-        {/* Pill background element */}
-        <div className="absolute rotate-45 bottom-20 right-2 w-20 h-12 sm:w-32 sm:h-12 opacity-10">
-          <div className="absolute inset-0 bg-[#F3E260] rounded-full"></div>
-          <div className="absolute left-[45%] w-[10%] h-full bg-[#9E9E9E]"></div>
+
+        {/* Subtle Pill */}
+        <div className="absolute bottom-[20%] right-[8%] w-16 h-8 opacity-15 animate-retro-pulse">
+          <div className="w-full h-full bg-gradient-to-r from-[#F3E260] to-[#1E90FF] rounded-full relative">
+            <div className="absolute left-[48%] w-[4%] h-full bg-[#2D2D2D]"></div>
+          </div>
         </div>
+
+        {/* Minimal floating particles */}
+        <div className="absolute top-[30%] right-[15%] w-2 h-2 bg-[#F3E260] rounded-full animate-retro-pulse opacity-20"></div>
+        <div className="absolute bottom-[35%] left-[12%] w-3 h-3 bg-[#1E90FF] rounded-full animate-retro-pulse opacity-20"></div>
       </div>
     </main>
   );

@@ -13,7 +13,7 @@ A visual identity guide for apps and games inspired by the whimsical, elemental 
 
 | Trait         | Description |
 |---------------|-------------|
-| **Theme**     | A modern reimagining of classic Pokémon UI: bright pastel skies, cozy forest towns, elemental creatures, and calm adventure. |
+| **Theme**     | A modern reimagining of classic Pokémon UI: pixalated UI, bright pastel skies, cozy forest towns, elemental creatures, and calm adventure. |
 | **Perspective** | Top-down and 3/4 view sprites and tiles, following retro JRPG overworld logic. |
 | **Mood**      | Wholesome, nostalgic, and playful — designed to evoke curiosity and calm. |
 | **Inspiration** | Pokémon FireRed/LeafGreen, Pokémon Mystery Dungeon, Stardew Valley, EarthBound, Chrono Trigger |
@@ -24,21 +24,21 @@ A visual identity guide for apps and games inspired by the whimsical, elemental 
 
 The palette focuses on three disciplined color families, each with 2–3 shades for consistency in UI, sprite, and background design.
 
-### 🟥 Accent: Crimson Ember
+### Accent: Crimson Ember
 - `#E63946` (Base)
 - `#B02E38` (Shadow)
 - `#F2727D` (Highlight)
 
-**Use for:** Selection glows, hover interactions, power indicators, elemental attacks (fire, passion, danger).
+**Use for:** Selection glows, hover interactions, power indicators, Action Buttons.
 
-### 🟫 Primary: Timberwolf
+### Primary: Timberwolf
 - `#CCC6BD` (Base)
 - `#AFAAA2` (Mid-tone)
 - `#8D8882` (Shadow)
 
 **Use for:** Backgrounds, textboxes, card fills, and general surfaces. Soft neutral for UI grounding.
 
-### 🟩 Secondary: Asparagus
+### Secondary: Asparagus
 - `#83A075` (Base)
 - `#5E7A58` (Shadow)
 - `#A9C89B` (Highlight)
@@ -47,11 +47,22 @@ The palette focuses on three disciplined color families, each with 2–3 shades 
 
 #### Additional Guidance:
 - Stick to **low color-count clusters**
-- **No harsh blacks** — use dark blue or green instead
+- **No harsh blacks** — use timerberwolf or asparagus green instead
 - Sky gradients use **ordered dithering**
 - Warm colors for characters, cool tones for backgrounds
 
 ---
+
+## Font Sizes and Weights:
+The typographic hierarchy is based on a 1.4 modular scale:
+
+- H1: 44px, **Bold (700)**
+- H2: 32px, **Bold (700)**
+- H3: 22px, **Medium (500)**
+- H4: 16px, **Medium (500)**
+- H5: 12px, **Regular (400)**
+- Body Text: 16px, **Regular (400)**
+- Labels/Text on Buttons: 14px, **Medium (500)**
 
 ## ✨ Pixel Animation & FX System
 
@@ -87,6 +98,7 @@ Use sprite layering to keep effects independent and composable with characters/o
 | **Base Color** | Secondary (Asparagus) |
 | **Corner Radius** | 2px–4px |
 | **Padding**      | `8px 12px` |
+| **Border**      | Boxed 2px wide border |
 | **Font**         | Pixelify Sans (uppercase) |
 | **Outline**      | 1px darker asparagus or soft shadow (for depth) |
 | **Hover**        | Slight increase in brightness + accent border (`#E63946`) |
@@ -99,10 +111,11 @@ Use sprite layering to keep effects independent and composable with characters/o
 | Element         | Spec |
 |-----------------|------|
 | **Background**  | Timberwolf (`#CCC6BD`) |
-| **Border**      | Inner inset shadow using deep timberwolf |
+| **Border**      | Boxed 2px wide border with Inner inset shadow using deep timberwolf |
 | **Padding**     | 12px internal |
 | **Elevation**   | Slight 1px "lift" using a darker pixel layer underneath |
 | **Header Strip** | Optional top bar in accent red (`#E63946`) for category |
+
 
 > Cards often serve as containers for info, pokédex-like data, or menu choices.
 
@@ -114,8 +127,8 @@ Typography mixes retro aesthetics with modern clarity.
 
 | Use Case         | Font                         | Size Range | Notes |
 |------------------|------------------------------|------------|-------|
-| **Header / Title** | [**Press Start 2P**](https://fonts.google.com/specimen/Press+Start+2P) | 16px–24px | Pixel-font caps for menu titles, location names |
-| **Body Text**     | [**Pixelify Sans**](https://fonts.google.com/specimen/Pixelify+Sans) | 12px–14px | Readable at small sizes, round edges, excellent for dialogue |
+| **Header / Title** | [**Press Start 2P**](mdc:https:/fonts.google.com/specimen/Press+Start+2P) | 16px–24px | Pixel-font caps for menu titles, location names |
+| **Body Text**     |  | @**VT323** | Readable at small sizes, round edges, excellent for dialogue |
 | **Buttons/Labels**| Tight 8px pixel fonts or bold uppercase Pixelify Sans | 8px–10px | Use for clear CTAs, toggles, tags |
 
 ### Textbox Styling Tips:
@@ -139,3 +152,5 @@ Typography mixes retro aesthetics with modern clarity.
 | **Stardew Valley**       | Modern UI cohesion with retro assets |
 | **Chrono Trigger**       | Spell animations, dynamic light effects |
 | **EarthBound**           | Emotional tone through minimalist assets |
+
+

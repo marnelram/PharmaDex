@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -77,12 +78,21 @@ export default {
             textShadow: "0 0 16px #ff0000, 0 0 44px #ff0000, 0 0 76px #ff0000",
           },
         },
+        shimmer: {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
       },
       animation: {
         glow: "glow 2s ease-in-out infinite",
         "glow-large": "glow-large 2s ease-in-out infinite",
+        shimmer: "shimmer 2s infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
