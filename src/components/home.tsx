@@ -38,7 +38,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
     <main className="min-h-[80dvh] sm:min-h-[90dvh] w-full flex flex-col items-center p-4 sm:p-6 lg:p-8 animate-pixel-fade">
       <div className="w-full max-w-4xl mx-auto space-y-8">
         {/* Title Section */}
-        <div className="text-center space-y-4">
+        <div className="text-center py-1 bg-white/60 rounded-t-xl">
           <h1 className="text-[#E63946] animate-retro-glow">
             Drug or Pokémon?
           </h1>
