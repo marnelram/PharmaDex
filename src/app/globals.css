@@ -5,22 +5,26 @@
 
 :root {
   /* Design Guide Color System */
-  --primary: #f5f5f5;
-  --secondary: #e6e6e6;
-  --accent-red: #e63946;
-  --accent-red-dark: #b02833;
-  --accent-yellow: #f3e260;
-  --accent-yellow-dark: #d4c94d;
-  --dark: #2d2d2d;
+  --accent-red: #eb4755;
+  --accent-red-dark: #bd284d; /* Hue -10 */
+  --accent-red-light: #e99d96; /* Hue +10 */
+
+  --primary: #d9e2cf;
+  --primary-light: #e7e9e2; /* Hue -10 */
+  --primary-dark: #afbea7; /* Hue +10 */
+
+  --secondary: #4c99e6;
+  --secondary-dark: #2e5cb8; /* Hue -10 */
+  --secondary-light: #99cce6; /* Hue +10 */
 
   /* System Variables */
-  --background: #f5f5f5;
-  --foreground: #2d2d2d;
-  --card: #ffffff;
-  --card-foreground: #2d2d2d;
-  --border: #e6e6e6;
-  --ring: #e63946;
-  --radius: 0px;
+  --background: var(--primary);
+  --foreground: #1a1a1a;
+  --card: var(--secondary-light);
+  --card-foreground: #1a1a1a;
+  --border: #1a1a1a;
+  --ring: var(--accent-red);
+  --radius: 16px;
 }
 
 .dark {
@@ -83,7 +87,7 @@
 
   h2 {
     font-family: "Press Start 2P", monospace;
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 400;
     line-height: 1.2;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
@@ -92,7 +96,7 @@
 
   h3 {
     font-family: "Press Start 2P", monospace;
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 400;
     line-height: 1.3;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
@@ -101,7 +105,7 @@
 
   h4 {
     font-family: "Press Start 2P", monospace;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: 400;
     line-height: 1.4;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
@@ -110,7 +114,7 @@
 
   h5 {
     font-family: "Press Start 2P", monospace;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.4;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
@@ -120,7 +124,7 @@
   /* Body Text */
   p {
     font-family: "VT323", monospace;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.6;
   }
@@ -198,26 +202,26 @@
     border-radius: 16px !important;
     background: linear-gradient(
       90deg,
-      #4a90e2 0%,
-      #4a90e2 2%,
+      #4c99e6 0%,
+      #4c99e6 2%,
 
-      #81b8f0 2%,
-      #81b8f0 3%,
+      #99cce6 2%,
+      #99cce6 3%,
 
-      #d2e8fa 3%,
-      #d2e8fa 3.5%,
+      #daedf1 3%,
+      #daedf1 3.5%,
 
       #ffffff 3.5%,
       #ffffff 96.5%,
 
-      #d2e8fa 96.5%,
-      #d2e8fa 97%,
+      #daedf1 96.5%,
+      #daedf1 97%,
 
-      #81b8f0 97%,
-      #81b8f0 98%,
+      #99cce6 97%,
+      #99cce6 98%,
 
-      #4a90e2 98%,
-      #4a90e2 100%
+      #4c99e6 98%,
+      #4c99e6 100%
     );
     box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
       inset 0 -2px 0px rgba(0, 0, 0, 0.2),
@@ -231,100 +235,76 @@
     border-radius: 16px !important;
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #3f0d2a 0%,
+      #3f0d2a 2%,
 
-      #8b1e2b 2%,
-      #8b1e2b 3%,
+      #7e1b44 2%,
+      #7e1b44 3%,
 
-      #b02833 3%,
-      #b02833 3.5%,
+      #bd284d 3%,
+      #bd284d 3.5%,
 
-      #e63946 3.5%,
-      #e63946 96.5%,
+      #eb4755 3.5%,
+      #eb4755 96.5%,
 
-      #b02833 96.5%,
-      #b02833 97%,
+      #bd284d 96.5%,
+      #bd284d 97%,
 
-      #8b1e2b 97%,
-      #8b1e2b 98%,
+      #7e1b44 97%,
+      #7e1b44 98%,
 
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #3f0d2a 98%,
+      #3f0d2a 100%
     );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.3),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.4),
-      inset 2px 0 0px rgba(255, 255, 255, 0.2),
-      inset -2px 0 0px rgba(0, 0, 0, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.4);
-    position: relative;
-    color: white !important;
   }
 
   .retro-button-red:hover {
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #3f0d2a 0%,
+      #3f0d2a 2%,
 
-      #a0252f 2%,
-      #a0252f 3%,
+      #7e1b44 2%,
+      #7e1b44 3%,
 
-      #c53030 3%,
-      #c53030 3.5%,
+      #bd284d 3%,
+      #bd284d 3.5%,
 
-      #ff4444 3.5%,
-      #ff4444 96.5%,
+      #bd284d 3.5%,
+      #bd284d 96.5%,
 
-      #c53030 96.5%,
-      #c53030 97%,
+      #bd284d 96.5%,
+      #bd284d 97%,
 
-      #a0252f 97%,
-      #a0252f 98%,
+      #7e1b44 97%,
+      #7e1b44 98%,
 
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #3f0d2a 98%,
+      #3f0d2a 100%
     );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.4),
-      inset 2px 0 0px rgba(255, 255, 255, 0.3),
-      inset -2px 0 0px rgba(0, 0, 0, 0.3), 2px 2px 6px rgba(0, 0, 0, 0.5),
-      0 0 0 2px rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
   }
 
   .retro-button-red:active {
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #150411 0%,
+      #150411 2%,
 
-      #6b1b24 2%,
-      #6b1b24 3%,
+      #3f0d2a 2%,
+      #3f0d2a 3%,
 
-      #8b1e2b 3%,
-      #8b1e2b 3.5%,
+      #bd284d 3.5%,
+      #bd284d 96.5%,
 
-      #b02833 3.5%,
-      #b02833 96.5%,
+      #3f0d2a 97%,
+      #3f0d2a 98%,
 
-      #8b1e2b 96.5%,
-      #8b1e2b 97%,
-
-      #6b1b24 97%,
-      #6b1b24 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #150411 98%,
+      #150411 100%
     );
-    box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.1),
-      inset 0 2px 0px rgba(0, 0, 0, 0.4), inset 2px 0 0px rgba(0, 0, 0, 0.2),
-      inset -2px 0 0px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.3);
-    transform: translateY(1px);
   }
 
   .retro-button-destructive {
-    border: 6px solid #1a1a1a;
-    border-radius: 16px !important;
     background: linear-gradient(
       90deg,
       #1a1a1a 0%,
@@ -348,12 +328,6 @@
       #1a1a1a 98%,
       #1a1a1a 100%
     );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.3),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.4),
-      inset 2px 0 0px rgba(255, 255, 255, 0.2),
-      inset -2px 0 0px rgba(0, 0, 0, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.4);
-    position: relative;
-    color: white !important;
   }
 
   .retro-button-destructive:hover {
@@ -380,12 +354,6 @@
       #1a1a1a 98%,
       #1a1a1a 100%
     );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.4),
-      inset 2px 0 0px rgba(255, 255, 255, 0.3),
-      inset -2px 0 0px rgba(0, 0, 0, 0.3), 2px 2px 6px rgba(0, 0, 0, 0.5),
-      0 0 0 2px rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
   }
 
   .retro-button-destructive:active {
@@ -412,106 +380,28 @@
       #1a1a1a 98%,
       #1a1a1a 100%
     );
-    box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.1),
-      inset 0 2px 0px rgba(0, 0, 0, 0.4), inset 2px 0 0px rgba(0, 0, 0, 0.2),
-      inset -2px 0 0px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.3);
-    transform: translateY(1px);
   }
 
   .retro-button-outline {
-    border: 6px solid #1a1a1a;
-    border-radius: 16px !important;
-    background: linear-gradient(
-      90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
-
-      #9e9e9e 2%,
-      #9e9e9e 3%,
-
-      #e5e5e5 3%,
-      #e5e5e5 3.5%,
-
-      #ffffff 3.5%,
-      #ffffff 96.5%,
-
-      #e5e5e5 96.5%,
-      #e5e5e5 97%,
-
-      #9e9e9e 97%,
-      #9e9e9e 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
-    );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.2),
-      inset 2px 0 0px rgba(255, 255, 255, 0.3),
-      inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.3);
-    position: relative;
-    color: #2d2d2d !important;
+    background: transparent;
+    border: 3px solid #1a1a1a;
+    color: #1a1a1a;
   }
 
   .retro-button-outline:hover {
-    background: linear-gradient(
-      90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
-
-      #d4c94d 2%,
-      #d4c94d 3%,
-
-      #e6d455 3%,
-      #e6d455 3.5%,
-
-      #f3e260 3.5%,
-      #f3e260 96.5%,
-
-      #e6d455 96.5%,
-      #e6d455 97%,
-
-      #d4c94d 97%,
-      #d4c94d 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
-    );
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.2),
-      inset 2px 0 0px rgba(255, 255, 255, 0.3),
-      inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.4),
-      0 0 0 2px rgba(255, 255, 255, 0.2);
+    background: rgba(26, 26, 26, 0.1);
+    border: 3px solid #1a1a1a;
+    color: #1a1a1a;
     transform: translateY(-1px);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .retro-button-outline:active {
-    background: linear-gradient(
-      90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
-
-      #757575 2%,
-      #757575 3%,
-
-      #9e9e9e 3%,
-      #9e9e9e 3.5%,
-
-      #e5e5e5 3.5%,
-      #e5e5e5 96.5%,
-
-      #9e9e9e 96.5%,
-      #9e9e9e 97%,
-
-      #757575 97%,
-      #757575 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
-    );
-    box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.2),
-      inset 0 2px 0px rgba(0, 0, 0, 0.2), inset 2px 0 0px rgba(0, 0, 0, 0.1),
-      inset -2px 0 0px rgba(0, 0, 0, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: rgba(26, 26, 26, 0.2);
+    border: 3px solid #1a1a1a;
+    color: #1a1a1a;
     transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .retro-button-secondary {
@@ -519,26 +409,26 @@
     border-radius: 16px !important;
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #394936 0%,
+      #394936 2%,
 
-      #d4c94d 2%,
-      #d4c94d 3%,
+      #bcc9b6 2%,
+      #bcc9b6 3%,
 
-      #e6d455 3%,
-      #e6d455 3.5%,
+      #d9e2cf 3%,
+      #d9e2cf 3.5%,
 
-      #f3e260 3.5%,
-      #f3e260 96.5%,
+      #f3f4f1 3.5%,
+      #f3f4f1 96.5%,
 
-      #e6d455 96.5%,
-      #e6d455 97%,
+      #d9e2cf 96.5%,
+      #d9e2cf 97%,
 
-      #d4c94d 97%,
-      #d4c94d 98%,
+      #bcc9b6 97%,
+      #bcc9b6 98%,
 
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #394936 98%,
+      #394936 100%
     );
     box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
       inset 0 -2px 0px rgba(0, 0, 0, 0.2),
@@ -551,58 +441,45 @@
   .retro-button-secondary:hover {
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #394936 0%,
+      #394936 2%,
 
-      #e6d455 2%,
-      #e6d455 3%,
+      #bcc9b6 2%,
+      #bcc9b6 3%,
 
-      #f3e260 3%,
-      #f3e260 3.5%,
+      #ffffff 3.5%,
+      #ffffff 96.5%,
 
-      #fff066 3.5%,
-      #fff066 96.5%,
+      #bcc9b6 97%,
+      #bcc9b6 98%,
 
-      #f3e260 96.5%,
-      #f3e260 97%,
-
-      #e6d455 97%,
-      #e6d455 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #394936 98%,
+      #394936 100%
     );
     box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
       inset 0 -2px 0px rgba(0, 0, 0, 0.2),
       inset 2px 0 0px rgba(255, 255, 255, 0.3),
       inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.4),
       0 0 0 2px rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
   }
 
   .retro-button-secondary:active {
     background: linear-gradient(
       90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
+      #283126 0%,
+      #283126 2%,
 
-      #b8a73a 2%,
-      #b8a73a 3%,
+      #394936 2%,
+      #394936 3%,
 
-      #d4c94d 3%,
-      #d4c94d 3.5%,
+      #afbea7 3.5%,
+      #afbea7 96.5%,
 
-      #e6d455 3.5%,
-      #e6d455 96.5%,
+      #394936 97%,
+      #394936 98%,
 
-      #d4c94d 96.5%,
-      #d4c94d 97%,
-
-      #b8a73a 97%,
-      #b8a73a 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
+      #283126 98%,
+      #283126 100%
     );
     box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.2),
       inset 0 2px 0px rgba(0, 0, 0, 0.2), inset 2px 0 0px rgba(0, 0, 0, 0.1),
@@ -714,36 +591,10 @@
   }
 
   .retro-button-ghost:hover {
-    background: linear-gradient(
-      90deg,
-      #1a1a1a 0%,
-      #1a1a1a 2%,
-
-      #d4c94d 2%,
-      #d4c94d 3%,
-
-      #e6d455 3%,
-      #e6d455 3.5%,
-
-      #f3e260 3.5%,
-      #f3e260 96.5%,
-
-      #e6d455 96.5%,
-      #e6d455 97%,
-
-      #d4c94d 97%,
-      #d4c94d 98%,
-
-      #1a1a1a 98%,
-      #1a1a1a 100%
-    ) !important;
-    border: 6px solid #1a1a1a !important;
-    border-radius: 16px !important;
-    box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0px rgba(0, 0, 0, 0.2),
-      inset 2px 0 0px rgba(255, 255, 255, 0.3),
-      inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
-    color: #2d2d2d !important;
+    background: rgba(45, 45, 45, 0.05) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #1a1a1a !important;
   }
 
   .retro-button-link {
@@ -785,16 +636,21 @@
     transform: translate3d(0, -2px, 0);
   }
 }
-
 @keyframes retroGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 5px var(--accent-red), 0 0 10px var(--accent-red),
-      0 0 15px var(--accent-red);
+  0% {
+    filter: brightness(1) contrast(1.2);
+  }
+  25% {
+    filter: brightness(1.2) contrast(1.4);
   }
   50% {
-    box-shadow: 0 0 10px var(--accent-red), 0 0 20px var(--accent-red),
-      0 0 25px var(--accent-red);
+    filter: brightness(1.3) contrast(1.5);
+  }
+  75% {
+    filter: brightness(1.2) contrast(1.4);
+  }
+  100% {
+    filter: brightness(1) contrast(1.2);
   }
 }
 
@@ -866,7 +722,7 @@
     animation: retroBounce 1s ease-in-out;
   }
   .animate-retro-glow {
-    animation: retroGlow 2s ease-in-out infinite;
+    animation: retroGlow 1.5s steps(8) infinite;
   }
   .animate-retro-pulse {
     animation: retroPulse 2s ease-in-out infinite;

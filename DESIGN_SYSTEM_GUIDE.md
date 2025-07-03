@@ -1,13 +1,3 @@
----
-description:
-globs:
-alwaysApply: true
----
----
-description:
-globs:
-alwaysApply: true
----
 # 🎮 Pixel Art Style Guide: Pokémon-Inspired UI
 
 A visual identity guide for apps and games inspired by the whimsical, elemental world of Pokémon, reimagined through a modern pastel pixel lens. **All styles described below are already implemented in `globals.css` and component files.**
@@ -16,20 +6,21 @@ A visual identity guide for apps and games inspired by the whimsical, elemental 
 
 ## 🌟 Core Visual Identity
 
-| Trait         | Description |
-|---------------|-------------|
-| **Theme**     | A modern reimagining of classic Pokémon UI: pixalated UI, bright pastel skies, cozy forest towns, elemental creatures, and calm adventure. |
-| **Perspective** | Top-down and 3/4 view sprites and tiles, following retro JRPG overworld logic. |
-| **Mood**      | Wholesome, nostalgic, and playful — designed to evoke curiosity and calm. |
-| **Inspiration** | Pokémon FireRed/LeafGreen, Pokémon Mystery Dungeon, Stardew Valley, EarthBound, Chrono Trigger |
+| Trait           | Description                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Theme**       | A modern reimagining of classic Pokémon UI: pixelated UI, bright pastel skies, cozy forest towns, elemental creatures, and calm adventure. |
+| **Perspective** | Top-down and 3/4 view sprites and tiles, following retro JRPG overworld logic.                                                             |
+| **Mood**        | Wholesome, nostalgic, and playful — designed to evoke curiosity and calm.                                                                  |
+| **Inspiration** | Pokémon FireRed/LeafGreen, Pokémon Mystery Dungeon, Stardew Valley, EarthBound, Chrono Trigger                                             |
 
 ---
 
-## 🎨 Color System
+## 🎨 Color System (Already Implemented)
 
 The color palette is implemented as CSS variables in `globals.css`. **Always use CSS variables instead of hardcoded colors.**
 
 ### CSS Variables Available:
+
 ```css
 /* Primary Colors */
 var(--accent-red)        /* #eb4755 - Use for buttons, highlights, headers */
@@ -52,55 +43,11 @@ var(--border)           /* Border color (#1a1a1a) */
 ```
 
 ### Color Usage Guidelines:
+
 - **Headers & Titles**: `text-[var(--accent-red)]` or use `h1`, `h2`, `h3` tags (styled automatically)
 - **Body Text**: `text-[var(--foreground)]` or use default text styling
 - **Cards**: Use `.retro-card` class (automatically styled)
 - **Buttons**: Use Button component variants (see Button section below)
-
----
-
-## 🔠 Typography System (Already Implemented)
-
-Typography is automatically styled via CSS. **Use semantic HTML tags for proper styling.**
-
-### Typography Hierarchy:
-```tsx
-<h1>Main Title</h1>          {/* 44px, Press Start 2P, accent-red */}
-<h2>Section Header</h2>      {/* 32px, Press Start 2P, accent-red */}
-<h3>Subsection</h3>          {/* 22px, Press Start 2P */}
-<h4>Small Header</h4>        {/* 16px, Press Start 2P */}
-<h5>Tiny Header</h5>         {/* 12px, Press Start 2P */}
-<p>Body text content</p>     {/* 18px, VT323 */}
-<span>Labels and small text</span> {/* 16px, VT323 */}
-```
-
-### Typography Features:
-- **Pixel fonts**: Press Start 2P for headers, VT323 for body
-- **Text shadows**: Automatic retro text shadows
-- **Responsive**: Auto-scales on mobile devices
-- **Consistent spacing**: Proper line-height and letter-spacing
-
-## ✨ Animation System (Already Implemented)
-
-Animation utilities are available as CSS classes. **Use these classes for consistent animations.**
-
-### Animation Classes Available:
-```tsx
-<div className="animate-retro-bounce">Bouncing element</div>
-<div className="animate-retro-glow">Glowing element</div>
-<div className="animate-retro-pulse">Pulsing element</div>
-<div className="animate-retro-shake">Shaking element</div>
-<div className="animate-retro-slide">Sliding element</div>
-<div className="animate-pixel-fade">Fading element</div>
-<div className="animate-shimmer">Shimmering element</div>
-```
-
-### Animation Usage Guidelines:
-- **Buttons**: Use `animate-retro-pulse` for CTAs
-- **Icons**: Use `animate-retro-bounce` on hover
-- **Headers**: Use `animate-retro-glow` for titles
-- **Page transitions**: Use `animate-retro-slide` or `animate-pixel-fade`
-- **Error states**: Use `animate-retro-shake`
 
 ---
 
@@ -109,6 +56,7 @@ Animation utilities are available as CSS classes. **Use these classes for consis
 All button styles are implemented in the Button component. **Use the Button component with variants instead of custom styling.**
 
 ### Button Variants Available:
+
 ```tsx
 import { Button } from "@/components/ui/button";
 
@@ -135,6 +83,7 @@ import { Button } from "@/components/ui/button";
 ```
 
 ### Button Sizes Available:
+
 ```tsx
 <Button size="sm">Small</Button>
 <Button size="default">Default</Button>
@@ -145,6 +94,7 @@ import { Button } from "@/components/ui/button";
 ```
 
 ### Button Features:
+
 - **Pixel-perfect borders**: Automatically applied via `pixel-border` class
 - **Retro animations**: Built-in hover/active states
 - **Accessible**: Full keyboard navigation and screen reader support
@@ -156,12 +106,13 @@ import { Button } from "@/components/ui/button";
 Card styling is implemented via the `.retro-card` class. **Use this class for consistent card styling.**
 
 ### Card Usage:
+
 ```tsx
 // Method 1: Using retro-card class
 <div className="retro-card p-6">
   <h3>Card Title</h3>
   <p>Card content goes here...</p>
-</div>
+</div>;
 
 // Method 2: Using Card component (inherits retro styling)
 import { Card, CardContent } from "@/components/ui/card";
@@ -171,14 +122,66 @@ import { Card, CardContent } from "@/components/ui/card";
     <h3>Card Title</h3>
     <p>Card content goes here...</p>
   </CardContent>
-</Card>
+</Card>;
 ```
 
 ### Card Features:
+
 - **Sky blue gradient background**: Automatically applied
 - **Dark pixel borders**: 6px `#1a1a1a` borders
 - **Inset shadows**: Creates depth effect
 - **16px border radius**: Consistent with design system
+
+---
+
+## 🔠 Typography System (Already Implemented)
+
+Typography is automatically styled via CSS. **Use semantic HTML tags for proper styling.**
+
+### Typography Hierarchy:
+
+```tsx
+<h1>Main Title</h1>          {/* 44px, Press Start 2P, accent-red */}
+<h2>Section Header</h2>      {/* 32px, Press Start 2P, accent-red */}
+<h3>Subsection</h3>          {/* 22px, Press Start 2P */}
+<h4>Small Header</h4>        {/* 16px, Press Start 2P */}
+<h5>Tiny Header</h5>         {/* 12px, Press Start 2P */}
+<p>Body text content</p>     {/* 18px, VT323 */}
+<span>Labels and small text</span> {/* 16px, VT323 */}
+```
+
+### Typography Features:
+
+- **Pixel fonts**: Press Start 2P for headers, VT323 for body
+- **Text shadows**: Automatic retro text shadows
+- **Responsive**: Auto-scales on mobile devices
+- **Consistent spacing**: Proper line-height and letter-spacing
+
+---
+
+## ✨ Animation System (Already Implemented)
+
+Animation utilities are available as CSS classes. **Use these classes for consistent animations.**
+
+### Animation Classes Available:
+
+```tsx
+<div className="animate-retro-bounce">Bouncing element</div>
+<div className="animate-retro-glow">Glowing element</div>
+<div className="animate-retro-pulse">Pulsing element</div>
+<div className="animate-retro-shake">Shaking element</div>
+<div className="animate-retro-slide">Sliding element</div>
+<div className="animate-pixel-fade">Fading element</div>
+<div className="animate-shimmer">Shimmering element</div>
+```
+
+### Animation Usage Guidelines:
+
+- **Buttons**: Use `animate-retro-pulse` for CTAs
+- **Icons**: Use `animate-retro-bounce` on hover
+- **Headers**: Use `animate-retro-glow` for titles
+- **Page transitions**: Use `animate-retro-slide` or `animate-pixel-fade`
+- **Error states**: Use `animate-retro-shake`
 
 ---
 
@@ -187,6 +190,7 @@ import { Card, CardContent } from "@/components/ui/card";
 Additional utility classes for consistent pixel-perfect styling:
 
 ### Utility Classes Available:
+
 ```tsx
 <img className="pixel-perfect" />     {/* Pixelated image rendering */}
 <div className="pixel-border">        {/* Pixel-perfect borders */}
@@ -199,6 +203,7 @@ Additional utility classes for consistent pixel-perfect styling:
 ## 📱 Component Usage Examples
 
 ### Complete Home Page Section:
+
 ```tsx
 // Use existing components and classes
 <div className="retro-card animate-retro-slide">
@@ -222,6 +227,7 @@ Additional utility classes for consistent pixel-perfect styling:
 ```
 
 ### Navigation Grid:
+
 ```tsx
 <div className="grid grid-cols-2 gap-4">
   <div className="retro-card p-6 cursor-pointer hover:scale-[1.02] transition-all">
@@ -247,6 +253,7 @@ Additional utility classes for consistent pixel-perfect styling:
 ## 🧠 Artist & Game Design Inspirations
 
 ### 🧑‍🎨 Artist Reference
+
 - **@slynyrd** – Expert in blending pixel comfort with visual depth. Study their work for sky gradients, subtle motion, and cozy scenes.
 
 ### 🎮 Game Inspirations
@@ -264,6 +271,7 @@ Additional utility classes for consistent pixel-perfect styling:
 ## 🔧 Implementation Checklist
 
 When building new components:
+
 - [ ] Use Button component with appropriate variant
 - [ ] Apply `.retro-card` for card containers
 - [ ] Use semantic HTML tags for typography
@@ -271,7 +279,3 @@ When building new components:
 - [ ] Reference CSS variables for colors
 - [ ] Test with `.pixel-perfect` class for images
 - [ ] Ensure accessibility with proper ARIA labels
-
-
-
-

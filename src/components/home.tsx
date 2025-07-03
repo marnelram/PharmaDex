@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardContent } from "@/components/ui/card";
+
 import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fact, QuizAttempt } from "@prisma/client";
@@ -38,18 +38,18 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
     <main className="min-h-[80dvh] sm:min-h-[90dvh] w-full flex flex-col items-center p-4 sm:p-6 lg:p-8 animate-pixel-fade">
       <div className="w-full max-w-4xl mx-auto space-y-8">
         {/* Title Section */}
-        <div className="text-center py-1 bg-white/60 rounded-t-xl">
-          <h1 className="text-[#E63946] animate-retro-glow">
-            Drug or Pokémon?
-          </h1>
-          <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto"></div>
+        <div className="text-white p-8 text-center animate-retro-slide bg-black/30 rounded-lg">
+          <h2 className="mb-4">Drug or Pokémon?</h2>
+          <h5 className="mt-4 max-w-4xl mx-auto">
+            Can you tell the difference between medication and Pokémon?
+          </h5>
         </div>
 
         {/* Main CTA */}
-        <div className="flex justify-center">
+        <div className="flex justify-center animate-retro-slide">
           <Button
-            size="wide"
-            className="animate-retro-pulse hover:animate-none transition-all duration-300"
+            size="lg"
+            className="animate-retro-pulse transition-all duration-300"
             onClick={() => router.push("/quiz")}
           >
             ▶ Start Quiz ◀
@@ -57,222 +57,173 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
         </div>
 
         {/* Leaderboard Preview */}
-        <Card className="animate-retro-slide">
-          <div className="p-6 space-y-6">
-            <div className="text-center">
-              <h2 className="text-[#E63946] mb-2">🏆 Champions 🏆</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#F3E260] to-transparent mx-auto"></div>
-            </div>
+        <div className="retro-card animate-retro-slide">
+          <div className="p-8 space-y-6">
+            <h2 className="text-center">🏆 Champions 🏆</h2>
 
             {/* Podium Display */}
             <div className="flex justify-center items-end gap-8 sm:gap-12 lg:gap-16">
-              {/* Second Place - Left */}
+              {/* Second Place */}
               <div className="flex flex-col items-center space-y-3">
                 <div className="relative">
-                  <Avatar className="size-16 border-4 border-[#9E9E9E] shadow-lg pixel-perfect transition-all duration-300 hover:scale-105">
-                    <AvatarImage
-                      src={`/placeholder-avatar-1.png`}
-                      className="pixel-perfect"
-                    />
-                    <AvatarFallback className="text-white font-bold bg-[#9E9E9E]">
-                      2
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#9E9E9E] rounded-full flex items-center justify-center text-xs font-bold text-white">
+                  <div className="size-16 rounded-full bg-gray-200 border-4 border-gray-500 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                    <span className="font-bold text-lg">🥈</span>
+                  </div>
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-500 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
                     2
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <span className="text-[#2D2D2D] block truncate max-w-20">
+                  <h5 className="block truncate max-w-20">
                     {topScores[1]?.displayName ?? "---"}
-                  </span>
-                  <span className="text-[#666] block">
+                  </h5>
+                  <span className="block text-sm opacity-75">
                     {topScores[1]?.totalScore.toLocaleString() ?? 0} PTS
                   </span>
                 </div>
-                {/* Podium Base */}
-                <div className="w-16 h-12 bg-gradient-to-t from-[#9E9E9E] to-[#B8B8B8] border-t-4 border-[#9E9E9E] shadow-lg"></div>
               </div>
 
-              {/* First Place - Center */}
+              {/* First Place */}
               <div className="flex flex-col items-center space-y-3">
                 <div className="relative">
-                  <Avatar className="size-20 border-4 border-[#F3E260] shadow-xl pixel-perfect transition-all duration-300 hover:scale-105 animate-retro-glow">
-                    <AvatarImage
-                      src={`/placeholder-avatar-0.png`}
-                      className="pixel-perfect"
-                    />
-                    <AvatarFallback className="text-[#2D2D2D] font-bold bg-[#F3E260]">
-                      1
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="size-20 rounded-full bg-yellow-200 border-4 border-yellow-600 pixel-circle flex items-center justify-center shadow-xl pixel-perfect animate-retro-glow">
+                    <span className="font-bold text-2xl">🥇</span>
+                  </div>
                   <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-3xl animate-retro-bounce">
                     👑
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#F3E260] rounded-full flex items-center justify-center text-xs font-bold text-[#2D2D2D]">
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-600 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold">
                     1
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <span className="text-[#2D2D2D] block truncate max-w-24">
+                  <h5 className="block truncate max-w-24">
                     {topScores[0]?.displayName ?? "---"}
-                  </span>
-                  <span className="text-[#666] block">
+                  </h5>
+                  <span className="block text-sm opacity-75">
                     {topScores[0]?.totalScore.toLocaleString() ?? 0} PTS
                   </span>
                 </div>
-                {/* Podium Base */}
-                <div className="w-20 h-16 bg-gradient-to-t from-[#F3E260] to-[#F5E880] border-t-4 border-[#F3E260] shadow-xl"></div>
               </div>
 
-              {/* Third Place - Right */}
+              {/* Third Place */}
               <div className="flex flex-col items-center space-y-3">
                 <div className="relative">
-                  <Avatar className="size-14 border-4 border-[#CD7F32] shadow-lg pixel-perfect transition-all duration-300 hover:scale-105">
-                    <AvatarImage
-                      src={`/placeholder-avatar-2.png`}
-                      className="pixel-perfect"
-                    />
-                    <AvatarFallback className="text-white font-bold bg-[#CD7F32]">
-                      3
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#CD7F32] rounded-full flex items-center justify-center text-xs font-bold text-white">
+                  <div className="size-14 rounded-full bg-orange-200 border-4 border-orange-700 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                    <span className="font-bold">🥉</span>
+                  </div>
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-orange-700 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
                     3
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <span className="text-[#2D2D2D] block truncate max-w-20">
+                  <h5 className="block truncate max-w-20">
                     {topScores[2]?.displayName ?? "---"}
-                  </span>
-                  <span className="text-[#666] block">
+                  </h5>
+                  <span className="block text-sm opacity-75">
                     {topScores[2]?.totalScore.toLocaleString() ?? 0} PTS
                   </span>
                 </div>
-                {/* Podium Base */}
-                <div className="w-14 h-8 bg-gradient-to-t from-[#CD7F32] to-[#E6934A] border-t-4 border-[#CD7F32] shadow-lg"></div>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* Quick Facts Carousel */}
-        <Card className="animate-retro-slide">
-          <CardContent className="p-6 space-y-4">
+        <div className="retro-card animate-retro-slide">
+          <CardContent className="p-8 space-y-6">
+            <div className="text-center">
+              <h3 className="mb-2">💡 Did You Know? 💡</h3>
+            </div>
+
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-12 space-y-4">
-                <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
-                <p className="text-[#666]">Loading facts...</p>
+                <Loader2 className="h-8 w-8 animate-spin" />
+                <p>Loading facts...</p>
               </div>
             ) : error ? (
               <div className="text-center py-12 space-y-3">
-                <h4 className="text-[#E63946]">⚠ ERROR! ⚠</h4>
-                <p className="text-[#666]">Unable to load fun facts</p>
+                <h4>⚠ ERROR! ⚠</h4>
+                <p>Unable to load fun facts</p>
               </div>
             ) : facts.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-[#666]">No facts available</p>
+                <p>No facts available</p>
               </div>
             ) : (
-              <>
-                <div className="text-center space-y-2">
-                  <h3 className="text-[#E63946]">💡 Did You Know? 💡</h3>
-                  <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#F3E260] to-transparent mx-auto"></div>
-                </div>
-                <Carousel
-                  plugins={[
-                    Autoplay({
-                      delay: 6000,
-                      stopOnInteraction: true,
-                    }),
-                  ]}
-                  className="w-full"
-                >
-                  <CarouselContent>
-                    {facts.map((fact: Fact, index: number) => (
-                      <CarouselItem key={index}>
-                        <div className="px-6 py-4 text-center space-y-3">
-                          <h4 className="text-[#2D2D2D]">{fact.title}</h4>
-                          <p className="leading-relaxed text-[#2D2D2D] max-w-2xl mx-auto">
-                            {fact.content}
-                          </p>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-              </>
+              <Carousel
+                plugins={[
+                  Autoplay({
+                    delay: 6000,
+                    stopOnInteraction: true,
+                  }),
+                ]}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {facts.map((fact: Fact, index: number) => (
+                    <CarouselItem key={index}>
+                      <div className="px-6 py-4 text-center space-y-4">
+                        <h4 className="font-bold">{fact.title}</h4>
+                        <p className="leading-relaxed max-w-2xl mx-auto">
+                          {fact.content}
+                        </p>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             )}
           </CardContent>
-        </Card>
+        </div>
 
         {/* Navigation Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-retro-slide">
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
-            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/quizHistory")}
           >
-            <Book className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <Book className="h-6 w-6 group-hover:animate-retro-bounce" />
             <span>📚 Quiz History</span>
           </Button>
+
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
-            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/leaderboard")}
           >
-            <Users className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <Users className="h-6 w-6 group-hover:animate-retro-bounce" />
             <span>👥 Leaderboard</span>
           </Button>
+
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
-            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/achievements")}
           >
-            <Award className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <Award className="h-6 w-6 group-hover:animate-retro-bounce" />
             <span>🏅 Achievements</span>
           </Button>
+
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
-            className="h-16 flex items-center justify-center space-x-3 group transition-all duration-300 hover:scale-[1.02]"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/settings")}
           >
-            <Settings className="h-5 w-5 group-hover:animate-retro-bounce" />
+            <Settings className="h-6 w-6 group-hover:animate-retro-bounce" />
             <span>⚙️ Settings</span>
           </Button>
         </div>
 
         {/* Spacer for bottom */}
         <div className="h-8"></div>
-      </div>
-
-      {/* Cleaner Background Elements */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        {/* Subtle Pokéball */}
-        <div className="absolute top-[15%] left-[5%] w-12 h-12 opacity-15 animate-retro-pulse">
-          <div className="w-full h-full bg-[#E63946] rounded-full relative">
-            <div className="absolute top-[45%] w-full h-[10%] bg-[#2D2D2D]"></div>
-            <div className="absolute top-[50%] w-full h-[50%] bg-[#F5F5F5] rounded-b-full"></div>
-            <div className="absolute top-[40%] left-[40%] w-[20%] h-[20%] bg-[#2D2D2D] rounded-full border border-[#F5F5F5]"></div>
-          </div>
-        </div>
-
-        {/* Subtle Pill */}
-        <div className="absolute bottom-[20%] right-[8%] w-16 h-8 opacity-15 animate-retro-pulse">
-          <div className="w-full h-full bg-gradient-to-r from-[#F3E260] to-[#1E90FF] rounded-full relative">
-            <div className="absolute left-[48%] w-[4%] h-full bg-[#2D2D2D]"></div>
-          </div>
-        </div>
-
-        {/* Minimal floating particles */}
-        <div className="absolute top-[30%] right-[15%] w-2 h-2 bg-[#F3E260] rounded-full animate-retro-pulse opacity-20"></div>
-        <div className="absolute bottom-[35%] left-[12%] w-3 h-3 bg-[#1E90FF] rounded-full animate-retro-pulse opacity-20"></div>
       </div>
     </main>
   );
