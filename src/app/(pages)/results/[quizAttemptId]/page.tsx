@@ -65,15 +65,17 @@ export default async function ResultsPage(props: { params: tParams }) {
   const wrongAnswers = answers.filter((answer) => answer.isCorrect === false);
 
   return (
-    <TimedResults
-      quizAttempt={quizAttempt}
-      username={username ?? null}
-      totalScore={totalScore ?? 0}
-      correctCount={correctCount ?? 0}
-      totalQuestions={totalQuestions}
-      rank={actualRank}
-      topAttempts={topAttempts}
-      wrongAnswers={wrongAnswers}
-    />
+    <div className="w-full sm:h-[calc(100dvh-92px)] h-[calc(100dvh-130px)] flex flex-col items-center justify-center mx-auto">
+      <TimedResults
+        quizAttempt={quizAttempt}
+        username={username ?? null}
+        totalScore={totalScore ?? 0}
+        correctCount={correctCount ?? 0}
+        totalQuestions={totalQuestions}
+        rank={actualRank}
+        topAttempts={topAttempts}
+        wrongAnswers={wrongAnswers}
+      />
+    </div>
   );
 }

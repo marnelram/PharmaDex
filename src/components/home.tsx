@@ -58,7 +58,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
 
         {/* Leaderboard Preview */}
         <div className="retro-card animate-retro-slide">
-          <div className="p-8 space-y-6">
+          <div className="md:p-8 p-6 space-y-6">
             <h2 className="text-center">🏆 Champions 🏆</h2>
 
             {/* Podium Display */}
@@ -180,7 +180,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-retro-slide">
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-4 animate-retro-slide">
           <Button
             variant="secondary"
             size="lg"
@@ -188,7 +188,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
             onClick={() => router.push("/quizHistory")}
           >
             <Book className="h-6 w-6 group-hover:animate-retro-bounce" />
-            <span>📚 Quiz History</span>
+            <span>Quiz History</span>
           </Button>
 
           <Button
@@ -198,7 +198,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
             onClick={() => router.push("/leaderboard")}
           >
             <Users className="h-6 w-6 group-hover:animate-retro-bounce" />
-            <span>👥 Leaderboard</span>
+            <span>Leaderboard</span>
           </Button>
 
           <Button
@@ -208,7 +208,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
             onClick={() => router.push("/achievements")}
           >
             <Award className="h-6 w-6 group-hover:animate-retro-bounce" />
-            <span>🏅 Achievements</span>
+            <span>Achievements</span>
           </Button>
 
           <Button
@@ -218,7 +218,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
             onClick={() => router.push("/settings")}
           >
             <Settings className="h-6 w-6 group-hover:animate-retro-bounce" />
-            <span>⚙️ Settings</span>
+            <span>Settings</span>
           </Button>
         </div>
 

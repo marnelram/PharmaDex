@@ -207,10 +207,10 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
 
   if (isQuizAttemptPending) {
     return (
-      <div className="h-[80dvh] backdrop-blur-sm flex items-center justify-center">
-        <div className="text-center font-['Raleway'] flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 animate-spin text-[#E63946]" />
-          <p className="text-[16px] font-medium">Loading quiz...</p>
+      <div className="flex items-center justify-center">
+        <div className="text-center flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--accent-red)]" />
+          <p className="text-lg font-medium">Loading quiz...</p>
         </div>
       </div>
     );
@@ -218,17 +218,18 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
 
   if (isQuizAttemptError) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5]/80 backdrop-blur-sm flex items-center justify-center">
-        <Card className="w-full max-w-md rounded-[15px]">
-          <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
-            <AlertCircle className="h-12 w-12 text-[#E63946]" />
-            <h2 className="text-[22px] font-medium">Error</h2>
-            <p className="text-[#9E9E9E]">
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="retro-card w-full max-w-md">
+          <CardContent className="p-6 text-center flex flex-col items-center gap-4">
+            <AlertCircle className="h-12 w-12 text-[var(--accent-red)]" />
+            <h2>Error</h2>
+            <p className="text-[var(--muted-foreground)]">
               {quizAttemptError?.message || "Failed to load quiz"}
             </p>
             <Button
               onClick={() => window.location.reload()}
-              className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
+              variant="default"
+              className="hover:animate-retro-pulse"
             >
               Try Again
             </Button>
@@ -241,15 +242,18 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   // Guard clause for undefined quiz items
   if (!questions || questions.length === 0) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5]/80 backdrop-blur-sm flex items-center justify-center">
-        <Card className="w-full max-w-md rounded-[15px]">
-          <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
-            <AlertCircle className="h-12 w-12 text-[#E63946]" />
-            <h2 className="text-[22px] font-medium">No Questions Available</h2>
-            <p className="text-[#9E9E9E]">Please try again later</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="retro-card w-full max-w-md">
+          <CardContent className="p-6 text-center flex flex-col items-center gap-4">
+            <AlertCircle className="h-12 w-12 text-[var(--accent-red)]" />
+            <h2>No Questions Available</h2>
+            <p className="text-[var(--muted-foreground)]">
+              Please try again later
+            </p>
             <Button
               onClick={() => window.location.reload()}
-              className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
+              variant="default"
+              className="animate-retro-pulse"
             >
               Refresh
             </Button>
@@ -259,42 +263,41 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     );
   }
 
-  if (!isGameStarted) {
-    return (
-      <Instructions
-        setIsGameStarted={setIsGameStarted}
-        setIsPracticeMode={setIsPracticeMode}
-        startTimeRef={startTimeRef}
-      />
-    );
-  }
-
-  if (!isPracticeMode) {
-    return (
-      <TimedQuiz
-        progress={progress}
-        isQuizComplete={isQuizComplete}
-        handleTimeComplete={handleTimeComplete}
-        streak={streak}
-        questions={questions}
-        currentQuestion={currentQuestion}
-        startTimeRef={startTimeRef}
-        handleQuizComplete={handleQuizComplete}
-        handleAnswer={handleAnswer}
-      />
-    );
-  } else {
-    return (
-      <PracticeQuiz
-        progress={progress}
-        showFeedback={showFeedback}
-        isQuizComplete={isQuizComplete}
-        questions={questions}
-        currentQuestion={currentQuestion}
-        handleQuizComplete={handleQuizComplete}
-        handleAnswer={handleAnswer}
-        handleNextQuestion={handleNextQuestion}
-      />
-    );
-  }
+  return (
+    <div className="w-full flex flex-col items-center sm:p-4 gap-4">
+      <h1 className="hidden sm:block text-center text-accent-red text-outline-thick animate-retro-glow">
+        Drug or Pokémon?
+      </h1>
+      {!isGameStarted ? (
+        <Instructions
+          setIsGameStarted={setIsGameStarted}
+          setIsPracticeMode={setIsPracticeMode}
+          startTimeRef={startTimeRef}
+        />
+      ) : isPracticeMode ? (
+        <PracticeQuiz
+          progress={progress}
+          showFeedback={showFeedback}
+          isQuizComplete={isQuizComplete}
+          questions={questions}
+          currentQuestion={currentQuestion}
+          handleQuizComplete={handleQuizComplete}
+          handleAnswer={handleAnswer}
+          handleNextQuestion={handleNextQuestion}
+        />
+      ) : (
+        <TimedQuiz
+          progress={progress}
+          isQuizComplete={isQuizComplete}
+          handleTimeComplete={handleTimeComplete}
+          streak={streak}
+          questions={questions}
+          currentQuestion={currentQuestion}
+          startTimeRef={startTimeRef}
+          handleQuizComplete={handleQuizComplete}
+          handleAnswer={handleAnswer}
+        />
+      )}
+    </div>
+  );
 }

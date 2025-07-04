@@ -53,14 +53,13 @@ export function DisplayNameDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="retro-card sm:max-w-md animate-retro-slide">
         <DialogHeader>
-          <DialogTitle className="text-[22px] font-['Poppins'] font-bold">
-            Add Your Name to the Leaderboard
+          <DialogTitle asChild>
+            <h3 className="text-center animate-retro-glow">
+              Add Your Name to the Leaderboard
+            </h3>
           </DialogTitle>
-          <DialogDescription className="font-['Raleway']">
-            Enter a name to show on the leaderboard!! 🎉🎈
-          </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
@@ -68,27 +67,22 @@ export function DisplayNameDialog({
             placeholder="Enter your display name"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="font-['Raleway']"
+            className="pixel-border"
           />
 
           {isError && (
-            <p className="text-[#E63946] text-sm font-['Raleway']">
+            <p className="text-accent-red text-sm animate-retro-shake">
               Failed to update display name. Please try again.
             </p>
           )}
 
           <div className="flex justify-end gap-3">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="font-['Raleway']"
-            >
-              Cancel
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
+              <p className="text-foreground">Cancel</p>
             </Button>
             <Button
               onClick={() => mutate()}
               disabled={!displayName.trim() || isPending}
-              className="bg-[#E63946] hover:bg-[#d62f3c] font-['Raleway']"
             >
               {isPending ? (
                 <>

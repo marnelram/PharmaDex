@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins, Raleway } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
-
-const poppinsFont = Poppins({
-  weight: ["100", "400", "900"],
-  subsets: ["latin"],
-});
-
-const ralewayFont = Raleway({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "PharmaDex",
@@ -27,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppinsFont.className} ${ralewayFont.className} antialiased bg-[#F5F5F5]`}
-      >
+      <body className="antialiased">
         <Providers>{children}</Providers>
         <Toaster />
         <Analytics />

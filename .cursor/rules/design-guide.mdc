@@ -29,31 +29,31 @@ A visual identity guide for apps and games inspired by the whimsical, elemental 
 
 The color palette is implemented as CSS variables in `globals.css`. **Always use CSS variables instead of hardcoded colors.**
 
-### CSS Variables Available:
-```css
+### Tailwind Color Classes Available:
+```tsx
 /* Primary Colors */
-var(--accent-red)        /* #eb4755 - Use for buttons, highlights, headers */
-var(--accent-red-dark)   /* #bd284d - Use for button hover states */
-var(--accent-red-light)  /* #e99d96 - Use for subtle accents */
+-accent-red         /* #eb4755 - Use for buttons, highlights, headers */
+-accent-red-dark    /* #bd284d - Use for button hover states */
+-accent-red-light   /* #e99d96 - Use for subtle accents */
 
-var(--primary)           /* #d9e2cf - Use for backgrounds, neutral surfaces */
-var(--primary-dark)      /* #afbea7 - Use for subtle borders, shadows */
-var(--primary-light)     /* #e7e9e2 - Use for light backgrounds */
+-primary            /* #d9e2cf - Use for backgrounds, neutral surfaces */
+-primary-dark       /* #afbea7 - Use for subtle borders, shadows */
+-primary-light      /* #e7e9e2 - Use for light backgrounds */
 
-var(--secondary)         /* #4c99e6 - Use for card gradients, sky elements */
-var(--secondary-dark)    /* #2e5cb8 - Use for darker accents */
-var(--secondary-light)   /* #99cce6 - Use for card backgrounds */
+-secondary          /* #4c99e6 - Use for card gradients, sky elements */
+-secondary-dark     /* #2e5cb8 - Use for darker accents */
+-secondary-light    /* #99cce6 - Use for card backgrounds */
 
 /* System Colors */
-var(--background)        /* Main background color */
-var(--foreground)        /* Main text color (#1a1a1a) */
-var(--card)             /* Card background */
-var(--border)           /* Border color (#1a1a1a) */
+bg-background           /* Main background color */
+text-foreground         /* Main text color (#1a1a1a) */
+bg-card                 /* Card background */
+border-border           /* Border color */
 ```
 
 ### Color Usage Guidelines:
-- **Headers & Titles**: `text-[var(--accent-red)]` or use `h1`, `h2`, `h3` tags (styled automatically)
-- **Body Text**: `text-[var(--foreground)]` or use default text styling
+- **Headers & Titles**: `-accent-red` or use `h1`, `h2`, `h3` tags (styled automatically)
+- **Body Text**: `text-foreground` or use default text styling
 - **Cards**: Use `.retro-card` class (automatically styled)
 - **Buttons**: Use Button component variants (see Button section below)
 
@@ -70,8 +70,8 @@ Typography is automatically styled via CSS. **Use semantic HTML tags for proper 
 <h3>Subsection</h3>          {/* 22px, Press Start 2P */}
 <h4>Small Header</h4>        {/* 16px, Press Start 2P */}
 <h5>Tiny Header</h5>         {/* 12px, Press Start 2P */}
-<p>Body text content</p>     {/* 18px, VT323 */}
-<span>Labels and small text</span> {/* 16px, VT323 */}
+<p>Body text content</p>     {/* 20px, VT323 */}
+<span>Labels and small text</span> {/* 20px, VT323 */}
 ```
 
 ### Typography Features:

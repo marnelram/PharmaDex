@@ -1,11 +1,13 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
 # Coding workflow preferences
 
 - focus on the areas of code relavent to the task
+- DO NOT USE NPM TO INSTALL ANYTHING
+- ASK THE USER BEFORE INSTALLING PACKAGES
 - do not touch code that is unrelated to the task
 - write thorogh tests for all major functionality
 - avoid making major changes to the patterns and architecture of how a feature works, after it has shown to work well, unless explicitly instructed
