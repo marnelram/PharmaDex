@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import { ChevronDown, ClipboardList } from "lucide-react"; // Import the icon
+import { ChevronDown } from "lucide-react";
 import { Answer, QuizAttempt } from "@prisma/client";
 import { cn } from "@/lib/utils"; // Add this import if not already present
 import { DisplayNameDialog } from "@/components/results/display-name-dialog";
 import { MistakeDialog } from "./mistakes-dialog";
+import { PokeballPercentage } from "./pokeball";
 
 interface TimedResultsProps {
   quizAttempt: QuizAttempt;
@@ -61,15 +62,21 @@ export default function TimedResults({
 
   return (
     <div className="flex flex-col items-center justify-center p-2 sm:p-8">
-      <Card className="w-full mb-20 bg-[#F5F5F5]/60 backdrop-blur-sm sm:mb-0 max-w-2xl rounded-[15px] shadow-lg">
+      <Card className="retro-card w-full mb-20 sm:mb-0 max-w-2xl animate-retro-slide">
         <CardContent className="p-4 sm:p-8 flex flex-col items-center justify-center gap-4 sm:gap-8">
           <div className="flex flex-col items-center justify-center gap-2 sm:gap-4">
-            <h1 className="text-[32px] sm:text-[44px] font-bold text-center font-['Poppins']">
-              Quiz Results
-            </h1>
+            <div className="flex items-center gap-2 mx-2">
+              <div className="animate-retro-glow text-2xl sm:text-4xl">🎯</div>
+              <h1 className="text-center">Quiz Results</h1>
+              <div className="animate-retro-glow text-2xl sm:text-4xl">🎯</div>
+            </div>
             {/* Achievement Message */}
-            <div className="flex items-center gap-2 text-[16px] sm:text-[22px] font-['Raleway']">
-              <span role="img" aria-label="achievement icon">
+            <div className="flex items-center gap-2">
+              <span
+                role="img"
+                aria-label="achievement icon"
+                className="animate-retro-bounce"
+              >
                 {percentage >= 95
                   ? "💊"
                   : percentage >= 80
@@ -92,52 +99,20 @@ export default function TimedResults({
 
           {/* Score Section */}
           <div className="flex items-center gap-8 sm:gap-16">
-            {/* Circle percentage */}
-            <div className="relative size-44 sm:size-56">
-              {/* Grade percentage */}
-              <div className="absolute z-20 top-0 right-0 bg-[#F5F5F5]/80 backdrop-blur-sm rounded-full size-14 border-2 border-[#E63946] flex items-center justify-center shadow-md">
-                <span className="text-[18px] font-['Poppins'] font-bold text-[#E63946]">
-                  {percentage}%
-                </span>
-              </div>
-
-              <div className="absolute inset-0 rounded-full border-8 border-[#E63946] overflow-hidden">
-                <div
-                  className="absolute bottom-0 w-full bg-[#E63946] transition-all duration-1000"
-                  style={{ height: `${percentage}%` }}
-                />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-[32px] font-['Poppins'] font-bold">
-                  {/* Diagonal fraction */}
-                  <div className="flex flex-col items-start">
-                    <span className="text-[32px] w-full text-center font-['Poppins'] font-bold">
-                      {correctCount}
-                    </span>
-                    <span className="h-[3px] w-16 text-black bg-black" />
-                    <span className="text-[32px] w-full text-center font-['Poppins'] font-bold ">
-                      {totalQuestions}
-                    </span>
-                  </div>
-                </p>
-              </div>
-
-              <Button
-                variant="ghost"
-                className="absolute -right-12 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-full"
-                onClick={() => setShowModal(true)}
-              >
-                <ClipboardList className="size-16 text-gray-600" />
-              </Button>
-            </div>
+            <PokeballPercentage
+              correctCount={correctCount}
+              totalQuestions={totalQuestions}
+              percentage={percentage}
+              onMistakesClick={() => setShowModal(true)}
+            />
           </div>
 
           {/* Score and Rank Display */}
           <div className="flex w-full flex-col items-baseline gap-2">
             {/* Score display */}
-            <div className="flex w-full text-[28px] font-['Poppins'] font-medium items-center justify-center gap-4">
-              <h2 className="">Score: </h2>
-              <p className="text-[28px] font-bold">
+            <div className="flex w-full items-center justify-center gap-4">
+              <h2 className="text-xl font-bold">⭐ Score: </h2>
+              <p className="text-2xl font-bold text-accent-red">
                 {totalScore.toLocaleString()}
               </p>
             </div>
@@ -146,16 +121,16 @@ export default function TimedResults({
             <div className="flex w-full flex-col">
               <div
                 className={cn(
-                  "relative flex w-full justify-center items-center gap-2 border-2 p-2 text-[22px] font-['Poppins'] bg-gray-300/60 border-gray-300",
+                  "relative flex w-full justify-center items-center gap-2 border-2 p-2 bg-secondary/60 border-secondary pixel-border",
                   showLeaderboard ? "rounded-t-lg" : "rounded-lg"
                 )}
               >
-                <span className="font-medium">Rank:</span>
-                <div className="bg-[#F3E260] px-4 py-1 rounded-full flex items-center gap-2">
+                <span className="font-medium">🏆 Rank:</span>
+                <div className="bg-accent-red-light px-4 py-1 rounded-full flex items-center gap-2 pixel-border">
                   <div className="relative">
-                    <span className="text-[22px] font-bold">#{rank}</span>
+                    <span className="font-bold">#{rank}</span>
                     {rank <= 3 && (
-                      <span className="absolute -top-5 left-7 text-[24px]">
+                      <span className="absolute -top-5 left-7 text-2xl animate-retro-bounce">
                         {rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}
                       </span>
                     )}
@@ -163,11 +138,11 @@ export default function TimedResults({
                 </div>
                 <button
                   onClick={() => setShowLeaderboard(!showLeaderboard)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-gray-100 transition-colors duration-300 rounded-lg p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-secondary/20 transition-colors duration-300 rounded-lg p-1"
                 >
                   <ChevronDown
                     className={cn(
-                      "size-8 text-gray-600 transition-transform duration-200",
+                      "size-8 text-foreground transition-transform duration-200 animate-retro-pulse",
                       showLeaderboard && "transform rotate-180"
                     )}
                   />
@@ -186,12 +161,12 @@ export default function TimedResults({
                 <div className="overflow-hidden">
                   <div
                     className={cn(
-                      "bg-gray-300/60 p-4 shadow-sm",
+                      "bg-secondary/60 p-4 shadow-sm pixel-border",
                       showLeaderboard ? "rounded-b-lg" : "rounded-lg"
                     )}
                   >
-                    <h3 className="font-['Poppins'] font-semibold text-lg mb-3">
-                      Top Scores:
+                    <h3 className="font-semibold text-lg mb-3">
+                      🏆 Top Scores:
                     </h3>
                     <div className="space-y-2">
                       {topAttempts.map((attempt, index) => {
@@ -201,22 +176,22 @@ export default function TimedResults({
                             <div
                               key={attempt.id}
                               className={cn(
-                                "flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 px-4 sm:px-6",
+                                "flex items-center justify-between p-2 rounded-lg hover:bg-secondary/20 px-4 sm:px-6 transition-colors duration-200",
                                 attempt.id === quizAttempt.id &&
-                                  "bg-[#F3E260] hover:bg-[#fcf7c9]"
+                                  "bg-accent-red-light hover:bg-accent-red-light/80"
                               )}
                             >
                               <div className="flex items-center gap-3">
-                                <span className="font-['Poppins'] font-medium w-8">
+                                <span className="font-medium w-8">
                                   #{index + 1}
                                 </span>
-                                <span className="font-['Raleway']">
+                                <span>
                                   {attempt.displayName ||
                                     attempt.user?.name ||
                                     "Anonymous"}
                                 </span>
                               </div>
-                              <span className="font-['Poppins'] font-bold">
+                              <span className="font-bold">
                                 {attempt.totalScore.toLocaleString()}
                               </span>
                             </div>
@@ -226,7 +201,7 @@ export default function TimedResults({
                           return (
                             <div
                               key="ellipsis"
-                              className="text-center py-2 text-gray-500 font-['Poppins']"
+                              className="text-center py-2 text-foreground/60"
                             >
                               • • •
                             </div>
@@ -243,16 +218,20 @@ export default function TimedResults({
 
           <div className="grid grid-cols-2 gap-6 mt-4">
             <Button
+              variant="secondary"
+              size="lg"
               onClick={() => router.push("/")}
-              className="h-12 px-6 rounded-[25px] bg-[#9E9E9E] hover:bg-[#757575] transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
+              className="animate-retro-pulse"
             >
-              Back to Home
+              🏠 Back to Home
             </Button>
             <Button
+              variant="default"
+              size="lg"
               onClick={() => router.push("/quiz")}
-              className="h-12 px-6 rounded-[25px] bg-[#E63946] hover:bg-[#d62f3c] hover:scale-105 transition-all duration-300 font-['Raleway'] text-[14px] font-medium"
+              className="animate-retro-pulse"
             >
-              Play Again
+              🎮 Play Again
             </Button>
           </div>
         </CardContent>

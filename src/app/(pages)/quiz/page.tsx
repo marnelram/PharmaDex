@@ -27,7 +27,7 @@ export default async function QuizPage() {
   const quiz: Quiz = await response.json();
 
   return (
-    <div className="w-full flex flex-col items-center mx-auto">
+    <div className="w-full sm:h-[calc(100dvh-92px)] h-[calc(100dvh-130px)] flex flex-col items-center justify-center mx-auto">
       <QuizComponent quiz={quiz} />
     </div>
   );

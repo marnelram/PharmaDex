@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardContent } from "@/components/ui/card";
+
 import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fact, QuizAttempt } from "@prisma/client";
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/carousel";
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { cn } from "@/lib/utils";
 
 export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
   const router = useRouter();
@@ -36,88 +35,137 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
   });
 
   return (
-    <main className="size-full h-[80dvh] sm:h-[90dvh] overflow-y-auto flex flex-col items-center justify-between p-8">
-      <div className="w-full max-w-4xl flex flex-col gap-4">
-        {/* Title */}
-        <h1 className="text-[44px] font-bold text-center font-['Poppins']">
-          Drug or Pokémon?
-        </h1>
+    <main className="min-h-[80dvh] sm:min-h-[90dvh] w-full flex flex-col items-center p-4 sm:p-6 lg:p-8 animate-pixel-fade">
+      <div className="w-full max-w-4xl mx-auto space-y-8">
+        {/* Title Section */}
+        <div className="text-white p-8 text-center animate-retro-slide bg-black/30 rounded-lg">
+          <h2 className="mb-4">Drug or Pokémon?</h2>
+          <h5 className="mt-4 max-w-4xl mx-auto">
+            Can you tell the difference between medication and Pokémon?
+          </h5>
+        </div>
 
         {/* Main CTA */}
-        <Button
-          className="w-full py-8 text-[22px] font-bold rounded-[25px] bg-[#E63946] hover:bg-[#d32d3a] transition-all hover:scale-105 duration-300 shadow-lg font-['Poppins']"
-          onClick={() => router.push("/quiz")}
-        >
-          Start Quiz
-        </Button>
+        <div className="flex justify-center animate-retro-slide">
+          <Button
+            size="lg"
+            className="animate-retro-pulse transition-all duration-300"
+            onClick={() => router.push("/quiz")}
+          >
+            ▶ Start Quiz ◀
+          </Button>
+        </div>
 
         {/* Leaderboard Preview */}
-        <Card className="p-4 rounded-[15px] bg-[#F5F5F5]/80 backdrop-blur-sm">
-          <h2 className="text-[32px] font-bold pb-2 px-4 font-['Poppins']">
-            Top Players
-          </h2>
-          <div className="grid grid-cols-3 justify-center items-end gap-4 md:gap-12 lg:gap-24">
-            {[2, 0, 1].map((rank) => (
-              <div key={rank} className="flex flex-col items-center">
-                <Avatar
-                  className={cn(
-                    rank == 0 && "size-16",
-                    rank == 1 && "size-14",
-                    rank == 2 && "size-12"
-                  )}
-                >
-                  <AvatarImage src={`/placeholder-avatar-${rank}.png`} />
-                  <AvatarFallback>{rank + 1}</AvatarFallback>
-                </Avatar>
-                <span className="mt-2 font-semibold line-clamp-1">
-                  {topScores[rank]?.displayName ?? "---"}
-                </span>
-                <span className="text-sm text-gray-600">
-                  {topScores[rank]?.totalScore.toLocaleString() ?? 0} pts
-                </span>
+        <div className="retro-card animate-retro-slide">
+          <div className="md:p-8 p-6 space-y-6 lg:space-y-12">
+            <h2 className="text-center">🏆 Champions 🏆</h2>
+
+            {/* Podium Display */}
+            <div className="flex justify-around items-end">
+              {/* Second Place */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <div className="size-16 rounded-full bg-gray-200 border-4 border-gray-500 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                    <span className="font-bold text-lg">🥈</span>
+                  </div>
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-500 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
+                    2
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <h5 className="block truncate max-w-42">
+                    {topScores[1]?.displayName ?? "---"}
+                  </h5>
+                  <span className="block text-sm opacity-75">
+                    {topScores[1]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
               </div>
-            ))}
+
+              {/* First Place */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <div className="size-20 rounded-full bg-yellow-200 border-4 border-yellow-600 pixel-circle flex items-center justify-center shadow-xl pixel-perfect animate-retro-glow">
+                    <span className="font-bold text-2xl">🥇</span>
+                  </div>
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-3xl animate-retro-bounce">
+                    👑
+                  </div>
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-600 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold">
+                    1
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <h5 className="block truncate max-w-42">
+                    {topScores[0]?.displayName ?? "---"}
+                  </h5>
+                  <span className="block text-sm opacity-75">
+                    {topScores[0]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
+              </div>
+
+              {/* Third Place */}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="relative">
+                  <div className="size-14 rounded-full bg-orange-200 border-4 border-orange-700 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                    <span className="font-bold">🥉</span>
+                  </div>
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-orange-700 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
+                    3
+                  </div>
+                </div>
+                <div className="text-center space-y-1">
+                  <h5 className="block truncate max-w-42">
+                    {topScores[2]?.displayName ?? "---"}
+                  </h5>
+                  <span className="block text-sm opacity-75">
+                    {topScores[2]?.totalScore.toLocaleString() ?? 0} PTS
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </Card>
+        </div>
 
         {/* Quick Facts Carousel */}
-        <Card className="bg-[#F5F5F5]/80 backdrop-blur-sm">
-          <CardContent className="p-6 h-full">
+        <div className="retro-card animate-retro-slide">
+          <CardContent className="p-8 space-y-6">
+            <div className="text-center">
+              <h3 className="mb-2">💡 Did You Know? 💡</h3>
+            </div>
+
             {isLoading ? (
-              <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-                <span className="ml-2 text-gray-600">Loading facts...</span>
+              <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                <Loader2 className="h-8 w-8 animate-spin" />
+                <p>Loading facts...</p>
               </div>
             ) : error ? (
-              <div className="text-center py-8">
-                <p className="text-red-500 font-semibold">
-                  Oops! Something went wrong
-                </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Unable to load fun facts right now
-                </p>
+              <div className="text-center py-12 space-y-3">
+                <h4>⚠ ERROR! ⚠</h4>
+                <p>Unable to load fun facts</p>
               </div>
             ) : facts.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-gray-600">No facts available</p>
+              <div className="text-center py-12">
+                <p>No facts available</p>
               </div>
             ) : (
               <Carousel
                 plugins={[
                   Autoplay({
-                    delay: 5000,
+                    delay: 6000,
                     stopOnInteraction: true,
                   }),
                 ]}
+                className="w-full"
               >
                 <CarouselContent>
                   {facts.map((fact: Fact, index: number) => (
                     <CarouselItem key={index}>
-                      <div className="px-2">
-                        <h3 className="text-[22px] text-center font-medium font-['Poppins']">
-                          {fact.title}
-                        </h3>
-                        <p className="mt-2 text-left sm:text-center text-[16px] font-['Raleway']">
+                      <div className="px-6 py-4 text-center space-y-4">
+                        <h4 className="font-bold">{fact.title}</h4>
+                        <p className="leading-relaxed max-w-2xl mx-auto">
                           {fact.content}
                         </p>
                       </div>
@@ -129,58 +177,53 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
               </Carousel>
             )}
           </CardContent>
-        </Card>
+        </div>
 
         {/* Navigation Buttons */}
-        <div className=" grid-cols-1 sm:grid-cols-2 gap-4 hidden sm:grid">
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-4 animate-retro-slide">
           <Button
-            variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            variant="secondary"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/quizHistory")}
           >
-            <Book className="mr-2 h-5 w-5" />
-            Quizzes
+            <Book className="h-6 w-6 group-hover:animate-retro-bounce" />
+            <span>Quiz History</span>
           </Button>
+
           <Button
-            variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            variant="secondary"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/leaderboard")}
           >
-            <Users className="mr-2 h-5 w-5" />
-            Leaderboard
+            <Users className="h-6 w-6 group-hover:animate-retro-bounce" />
+            <span>Leaderboard</span>
           </Button>
+
           <Button
-            variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            variant="secondary"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/achievements")}
           >
-            <Award className="mr-2 h-5 w-5" />
-            My Achievements
+            <Award className="h-6 w-6 group-hover:animate-retro-bounce" />
+            <span>Achievements</span>
           </Button>
+
           <Button
-            variant="outline"
-            className="py-6 flex items-center justify-center rounded-[25px] text-[14px] font-medium font-['Raleway'] border-[#9E9E9E] hover:bg-[#F3E260]/80 bg-[#F5F5F5]/80 transition-color duration-300"
+            variant="secondary"
+            size="lg"
+            className="h-16 flex items-center justify-center space-x-3 group"
             onClick={() => router.push("/settings")}
           >
-            <Settings className="mr-2 h-5 w-5" />
-            Settings
+            <Settings className="h-6 w-6 group-hover:animate-retro-bounce" />
+            <span>Settings</span>
           </Button>
         </div>
-      </div>
 
-      {/* Background Elements - Updated with design colors */}
-      <div className="fixed inset-0 pointer-events-none -z-10">
-        {/* Pokéball background element */}
-        <div className="absolute -rotate-45 top-5 left-5 sm:size-20 bg-[#E63946] rounded-full opacity-10 overflow-hidden">
-          <div className="absolute top-[45%] w-full h-[10%] bg-[#9E9E9E]"></div>
-          <div className="absolute top-[50%] w-full h-[50%] bg-[#F5F5F5]"></div>
-          <div className="absolute top-[40%] left-[40%] w-[20%] h-[20%] bg-[#9E9E9E] rounded-full"></div>
-        </div>
-        {/* Pill background element */}
-        <div className="absolute rotate-45 bottom-20 right-2 w-20 h-12 sm:w-32 sm:h-12 opacity-10">
-          <div className="absolute inset-0 bg-[#F3E260] rounded-full"></div>
-          <div className="absolute left-[45%] w-[10%] h-full bg-[#9E9E9E]"></div>
-        </div>
+        {/* Spacer for bottom */}
+        <div className="h-8"></div>
       </div>
     </main>
   );

@@ -28,88 +28,90 @@ export default function TimedQuiz({
   handleAnswer,
 }: TimedQuizProps) {
   return (
-    <div className="size-full flex flex-col items-center sm:p-4 gap-4">
-      {/* Title */}
-      <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
-        Drug or Pokémon?
-      </h1>
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5]/60 backdrop-blur-sm shadow-none border-none sm:border sm:shadow-lg">
-        <CardContent className="p-8 pt-20 flex h-[80dvh] sm:h-auto flex-col items-center justify-between gap-4 sm:gap-8">
-          {/* Progress Bar */}
-          <Progress
-            value={progress}
-            className="h-3 rounded-full bg-[#9E9E9E]/40"
-            indicatorClassName="bg-[#E63946]"
-          />
-          {!isQuizComplete ? (
-            <div className="flex flex-col items-center gap-4">
-              <div className="relative">
-                <CountdownCircleTimer
-                  key={startTimeRef.current}
-                  isPlaying={!isQuizComplete}
-                  duration={5}
-                  colors={["#54d548", "#F3E260", "#E63946"]}
-                  colorsTime={[5, 2.5, 0]}
-                  size={60}
-                  strokeWidth={6}
-                  trailColor="#9E9E9E20"
-                  onComplete={handleTimeComplete}
-                  updateInterval={0.05}
-                />
-                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 flex items-center">
-                  {streak >= 3 && streak < 5 && (
-                    <p className="text-[16px] font-bold animate-glow">🔥</p>
-                  )}
-                  {streak >= 5 && streak < 10 && (
-                    <p className="text-[22px] font-bold animate-glow">🔥</p>
-                  )}
-                  {streak >= 10 && (
-                    <p className="text-[32px] font-bold animate-glow-large">
-                      🔥
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="text-center flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <h2 className="text-[32px] font-bold font-['Poppins']">
-                    {questions[currentQuestion]?.name}
-                  </h2>
-                </div>
-              </div>
-              <div className="w-40 h-40 mx-auto bg-[#9E9E9E]/40 rounded-full flex items-center justify-center">
-                <span className="text-[44px] text-[#9E9E9E]">?</span>
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                <Button
-                  onClick={() => handleAnswer("Drug")}
-                  className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-                >
-                  Drug
-                </Button>
-                <Button
-                  onClick={() => handleAnswer("Pokemon")}
-                  className="py-8 text-[22px] font-bold font-['Poppins'] bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-transform duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-                >
-                  Pokémon
-                </Button>
+    <Card className="retro-card w-full max-w-2xl">
+      <CardContent className="p-8 pt-20 flex flex-col items-center justify-between gap-4 sm:gap-8">
+        {/* Progress Bar */}
+        <Progress
+          value={progress}
+          className="h-3 rounded-full bg-muted"
+          indicatorClassName="bg-accent-red"
+        />
+        {!isQuizComplete ? (
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative">
+              <CountdownCircleTimer
+                key={startTimeRef.current}
+                isPlaying={!isQuizComplete}
+                duration={5}
+                colors={["#54d548", "#F3E260", "#eb4755"]}
+                colorsTime={[5, 2.5, 0]}
+                size={60}
+                strokeWidth={10}
+                trailColor="#9ca3af"
+                onComplete={handleTimeComplete}
+                updateInterval={0.05}
+              />
+              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 flex items-center">
+                {streak >= 3 && streak < 5 && (
+                  <p className="text-base font-bold animate-retro-glow text-outline">
+                    🔥
+                  </p>
+                )}
+                {streak >= 5 && streak < 10 && (
+                  <p className="text-xl font-bold animate-retro-glow text-outline">
+                    🔥
+                  </p>
+                )}
+                {streak >= 10 && (
+                  <p className="text-2xl font-bold animate-retro-glow text-outline">
+                    🔥
+                  </p>
+                )}
               </div>
             </div>
-          ) : (
-            <div className="text-center flex flex-col gap-6">
-              <h2 className="text-[32px] font-bold font-['Poppins']">
-                Quiz Complete!
-              </h2>
+            <div className="text-center flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-foreground">
+                  {questions[currentQuestion]?.name}
+                </h2>
+              </div>
+            </div>
+            <div className="w-40 h-40 mx-auto bg-muted rounded-full flex items-center justify-center pixel-border">
+              <span className="text-4xl text-muted-foreground">?</span>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
               <Button
-                onClick={handleQuizComplete}
-                className="bg-[#E63946] hover:bg-[#d32d3a] py-8 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
+                onClick={() => handleAnswer("Drug")}
+                variant="default"
+                size="lg"
+                className="sm:hover:animate-retro-pulse"
               >
-                See Results
+                Drug
+              </Button>
+              <Button
+                onClick={() => handleAnswer("Pokemon")}
+                variant="default"
+                size="lg"
+                className="sm:hover:animate-retro-pulse"
+              >
+                Pokémon
               </Button>
             </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+          </div>
+        ) : (
+          <div className="text-center flex flex-col gap-6">
+            <h2 className="text-foreground">Quiz Complete!</h2>
+            <Button
+              onClick={handleQuizComplete}
+              variant="default"
+              size="lg"
+              className="animate-retro-pulse"
+            >
+              See Results
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

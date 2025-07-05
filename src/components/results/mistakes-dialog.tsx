@@ -22,41 +22,42 @@ export function MistakeDialog({
 }: MistakeDialogProps) {
   return (
     <Dialog open={showModal} onOpenChange={setShowModal}>
-      <DialogContent className="max-w-md max-h-[60vh]">
+      <DialogContent className="retro-card max-w-md max-h-[60vh] animate-retro-slide">
         <DialogHeader>
-          <DialogTitle className="text-[22px] font-['Poppins'] font-bold">
-            {wrongAnswers.length < 1 ? "Congratulations!" : "Review Mistakes"}
+          <DialogTitle asChild>
+            <h3 className="text-center animate-retro-glow">
+              {wrongAnswers.length < 1
+                ? "🎉 Congratulations! 🎉"
+                : "Review Mistakes"}
+            </h3>
           </DialogTitle>
         </DialogHeader>
         <ScrollArea className="mt-4 px-4 h-[40dvh] overflow-y-auto">
           <div className="grid gap-4">
             {wrongAnswers.length < 1 ? (
-              <p className="text-center text-gray-500 text-bold font-['Raleway']">
+              <p className="text-center animate-retro-bounce">
                 Perfect Score! 🥳🎈🎉
               </p>
             ) : (
               wrongAnswers.map((answer, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-['Poppins'] font-medium">
-                      {answer.questionName}
-                    </span>
-                    <span className="text-sm text-gray-500 font-['Raleway']">
-                      Actually a{" "}
-                      {answer.userGuess === "Drug" ? "Pokémon" : "Drug"}
-                    </span>
-                  </div>
-                  <div
-                    className={`px-3 py-1 rounded-full text-sm font-['Raleway'] ${
-                      answer.userGuess === "Drug"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    Guessed {answer.userGuess}
+                <div key={i} className="retro-card p-4 px-6 animate-retro-fade">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <h5 className="mb-1">{answer.questionName}</h5>
+                      <p className="text-sm opacity-70">
+                        Actually a{" "}
+                        {answer.userGuess === "Drug" ? "Pokémon" : "Drug"}
+                      </p>
+                    </div>
+                    <div
+                      className={`px-3 py-1 rounded-full text-sm pixel-border ${
+                        answer.userGuess === "Drug"
+                          ? "bg-[var(--secondary-light)] text-[var(--secondary-dark)]"
+                          : "bg-[var(--accent-red-light)] text-[var(--accent-red-dark)]"
+                      }`}
+                    >
+                      Guessed {answer.userGuess}
+                    </div>
                   </div>
                 </div>
               ))

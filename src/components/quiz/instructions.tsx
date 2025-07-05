@@ -13,88 +13,86 @@ export default function Instructions({
   startTimeRef,
 }: InstructionsProps) {
   return (
-    <div className="size-full flex flex-col items-center sm:p-4 gap-4">
-      <h1 className="hidden sm:block text-[44px] font-bold text-center font-['Poppins']">
-        Drug or Pokémon?
-      </h1>
-      <Card className="w-full max-w-2xl rounded-[15px] bg-[#F5F5F5]/60 shadow-none border-none sm:border sm:shadow-lg">
-        <CardContent className="p-4 flex flex-col items-center gap-4 sm:gap-8">
-          <h2 className="sm:text-[32px] text-[22px] font-bold font-['Poppins']">
-            How to Play
-          </h2>
+    <Card className="retro-card w-full max-w-2xl">
+      <CardContent className="p-4 flex flex-col items-center gap-4 sm:gap-8">
+        <h2 className="text-center text-foreground">How to Play</h2>
 
-          <div className="space-y-4 sm:space-y-6 text-[16px] font-['Raleway']">
-            <p className="text-center">
-              You&apos;ll be shown a name and have 5 seconds to decide if
-              it&apos;s a Drug or a Pokémon!
-            </p>
+        <div className="space-y-4 sm:space-y-6">
+          <p className="text-center mx-4">
+            You&apos;ll be shown a name and have 5 seconds to decide if
+            it&apos;s a Drug or a Pokémon!
+          </p>
 
-            <div className="space-y-6 sm:space-y-8">
-              <ul className="list-disc list-inside space-y-1 sm:space-y-2">
-                <li>
-                  Quick answers earn more points (up to 1000 per question)
-                </li>
-                <li>Build streaks to multiply your score:</li>
-                <li>
-                  Balance speed with accuracy - wrong answers reset your streak!
-                </li>
-              </ul>
-              <div className="w-full flex justify-center bg-white/70 shadow-md rounded-lg p-4">
-                <table className="w-full max-w-sm table-fixed border-none">
-                  <thead className="border-b border-gray-600">
-                    <tr className="text-left">
-                      <th># Correct</th>
-                      <th>Multiplier</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="h-10">3</td>
-                      <td className="text-[#807730] font-bold flex items-center h-10">
-                        1.5x multiplier <span className="text-[16px]">🔥</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="h-10">5</td>
-                      <td className="text-[#e69b39] flex items-center font-bold h-10">
-                        2x multiplier <span className="text-[22px]">🔥</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="h-10">10</td>
-                      <td className="text-[#E63946] font-bold flex items-center h-10">
-                        3x multiplier <span className="text-[32px]">🔥</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <div className="space-y-6 sm:space-y-8">
+            <ul className="list-disc list-inside space-y-1 sm:space-y-2">
+              <li>Quick answers earn more points (up to 1000 per question)</li>
+              <li>Build streaks to multiply your score:</li>
+              <li>
+                Balance speed with accuracy - wrong answers reset your streak!
+              </li>
+            </ul>
+            <div className="w-full flex justify-center p-4">
+              <table className="w-full max-w-sm table-fixed border-none">
+                <thead className="border-b border-border">
+                  <tr className="text-left">
+                    <th className="font-bold"># Correct</th>
+                    <th className="font-bold">Multiplier</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="h-10">3</td>
+                    <td className="text-accent-red-light tracking-wider text-outline font-bold flex items-center h-10">
+                      1.5x multiplier{" "}
+                      <span className="text-outline text-base ml-1">🔥</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="h-10">5</td>
+                    <td className="text-accent-red tracking-wider text-outline flex items-center font-bold h-10">
+                      2x multiplier{" "}
+                      <span className="text-outline text-xl ml-1">🔥</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="h-10">10</td>
+                    <td className="text-accent-red-dark tracking-wider text-outline font-bold flex items-center h-10">
+                      3x multiplier{" "}
+                      <span className="text-outline  text-2xl ml-1">🔥</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
 
-          <div className="flex gap-4">
-            <Button
-              onClick={() => {
-                setIsGameStarted(true);
-                startTimeRef.current = Date.now();
-              }}
-              className="bg-[#E63946] mt-2 hover:bg-[#d32d3a] py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
-            >
-              Start Quiz
-            </Button>
-            <Button
-              onClick={() => {
-                setIsPracticeMode(true);
-                setIsGameStarted(true);
-                startTimeRef.current = Date.now();
-              }}
-              className="bg-gray-500 mt-2 hover:bg-gray-600 py-6 sm:py-8 px-8 sm:px-12 text-[22px] font-bold font-['Poppins'] rounded-[25px] transition-transform duration-300 hover:scale-105"
-            >
-              Practice
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        <div className="flex gap-4">
+          <Button
+            onClick={() => {
+              setIsGameStarted(true);
+              startTimeRef.current = Date.now();
+            }}
+            variant="default"
+            size="lg"
+            className="hover:animate-retro-pulse"
+          >
+            Start Quiz
+          </Button>
+          <Button
+            onClick={() => {
+              setIsPracticeMode(true);
+              setIsGameStarted(true);
+              startTimeRef.current = Date.now();
+            }}
+            variant="secondary"
+            size="lg"
+            className="hover:animate-retro-pulse"
+          >
+            Practice
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

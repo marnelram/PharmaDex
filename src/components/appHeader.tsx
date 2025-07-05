@@ -18,33 +18,49 @@ import Link from "next/link";
 export default function AppHeader({ session }: { session: Session | null }) {
   return (
     <header className="sticky top-0 w-full z-50 ">
-      <div className="flex items-center gap-2 justify-between w-full max-w-5xl mx-auto bg-[#F5F5F5]/80 backdrop-blur-sm rounded-[15px] shadow-md p-2 sm:p-4 px-6 sm:px-8">
+      <div className="flex items-center gap-2 justify-between w-full max-w-5xl mx-auto bg-primary-light backdrop-blur-sm border-[6px] border-t-0 rounded-lg rounded-t-none p-2 sm:p-4 px-6 sm:px-8">
         <div className="hidden sm:flex items-center w-24">
-          <Link href="/">
-            <Image src="/logo.png" alt="logo" width={40} height={40} />
+          <Link
+            href="/"
+            className="transform transition-transform hover:scale-105 animate-retro-bounce"
+          >
+            <Image
+              src="/logo.png"
+              alt="logo"
+              width={40}
+              height={40}
+              className="pixel-border pixel-perfect"
+            />
           </Link>
         </div>
-        <Link href="/">
-          <h1 className=" text-[32px] font-bold font-['Poppins']">PharmaDex</h1>
+        <Link href="/" className="hover:animate-retro-pulse">
+          <h1>PharmaDex</h1>
         </Link>
         <div className="relative">
           {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar className="w-10 h-10 cursor-pointer">
+                <Avatar className="w-10 h-10 cursor-pointer pixel-border hover:animate-retro-bounce transition-all">
                   <AvatarImage
                     src={session.user.image || "/default-avatar.png"}
+                    className="pixel-perfect"
                   />
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-secondary-light text-foreground font-bold">
                     {session.user.name?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48 -translate-x-7">
-                <DropdownMenuItem onClick={() => redirect("/profile")}>
+              <DropdownMenuContent className="w-48 -translate-x-7 retro-card">
+                <DropdownMenuItem
+                  onClick={() => redirect("/profile")}
+                  className="hover:bg-secondary-light hover:text-foreground cursor-pointer"
+                >
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => signOut({ redirectTo: "/" })}>
+                <DropdownMenuItem
+                  onClick={() => signOut({ redirectTo: "/" })}
+                  className="hover:bg-accent-red hover:text-primary cursor-pointer"
+                >
                   <LogOut className="mr-2 h-5 w-5" />
                   Logout
                 </DropdownMenuItem>
@@ -53,7 +69,9 @@ export default function AppHeader({ session }: { session: Session | null }) {
           ) : (
             <Button
               onClick={() => redirect("/auth/signin")}
-              className="bg-[#E63946] hover:bg-[#d32d3a] transition-all duration-300 w-24 shadow-md rounded-[25px] text-[14px] font-medium"
+              variant="default"
+              size="sm"
+              className="w-24 hover:animate-shimmer"
             >
               <LogIn className="mr-2 h-5 w-5" />
               Login

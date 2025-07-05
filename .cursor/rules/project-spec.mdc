@@ -1,195 +1,141 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
-# 📄 Product Specification: Drug or Pokémon?
+# 🎮 Pixel Art Style Guide: Pokémon-Inspired UI
 
-## 🎯 Product Overview
-An engaging, educational, and entertaining quiz app that challenges users to determine whether a name belongs to a pharmaceutical drug or a Pokémon character.
-
----
-
-## 🧠 Design Philosophy
-The app combines playful visual elements with practical usability to create an engaging, educational, and entertaining experience for users. The game theme is centered around a playful, recognizable Pokéball-inspired design that incorporates elements of pharmaceuticals for a cohesive and interactive user experience.
+A visual identity guide for apps and games inspired by the whimsical, elemental world of Pokémon, reimagined through a modern pastel pixel lens. Built for use in UI, animations, and app design.
 
 ---
 
-## 🎨 Visual Identity & Color Palette (60-30-10 Rule)
+## 🌟 Core Visual Identity
 
-- **Primary (60%) – Off-white (#F5F5F5):** Main background color
-- **Secondary (30%) – Gray (#e6e6e6):** Used for headers, buttons, and secondary elements
-- **Accent (10%):**
-  - **Red (#E63946):** Used for CTA buttons, highlights, and quiz states
-  - **Muted Yellow (#F3E260):** Used for text highlights and progress indicators
-- **Neutral Tones:** Soft grays for backgrounds and dividers
-
-**Color Contrast Note:**
-High contrast ensures sufficient difference in brightness for legibility:
-- Text contrast adheres to WCAG 2.1 standards:
-  - 4.5:1 ratio for normal text
-  - 3:1 ratio for large text (e.g., H1)
-
-**Typography:**
-- **Header Font:** Poppins
-- **Body Font:** Raleway
-
-**Font Sizes and Weights:**
-The typographic hierarchy is based on a 1.4 modular scale:
-- H1: 44px, **Bold (700)**
-- H2: 32px, **Bold (700)**
-- H3: 22px, **Medium (500)**
-- H4: 16px, **Medium (500)**
-- H5: 12px, **Regular (400)**
-- Body Text: 16px, **Regular (400)**
-- Labels/Text on Buttons: 14px, **Medium (500)**
-
-**Legibility Guidelines:**
-- Avoid overly thin weights for small text to improve readability
-- Maintain padding between headers and body text for clarity
-
-**Layout Inspiration:**
-- **Buttons:** Capsule-shaped with rounded corners (border-radius: 25px)
-- **Cards:** Soft rounded edges (border-radius: 15px)
-- **Modals:** Centered, with rounded corners matching the theme
+| Trait         | Description |
+|---------------|-------------|
+| **Theme**     | A modern reimagining of classic Pokémon UI: bright pastel skies, cozy forest towns, elemental creatures, and calm adventure. |
+| **Perspective** | Top-down and 3/4 view sprites and tiles, following retro JRPG overworld logic. |
+| **Mood**      | Wholesome, nostalgic, and playful — designed to evoke curiosity and calm. |
+| **Inspiration** | Pokémon FireRed/LeafGreen, Pokémon Mystery Dungeon, Stardew Valley, EarthBound, Chrono Trigger |
 
 ---
 
-## 🧩 Core Features
+## 🎨 Brand Colors & Palette Structure
 
-### Quiz Gameplay
-- Simple "Drug or Pokémon?" choice for each name presented
-- Educational tidbits about drugs or Pokémon after each answer
-- Scoring system with streaks and achievements
+The palette focuses on three disciplined color families, each with 2–3 shades for consistency in UI, sprite, and background design.
 
-### Visual Elements
-- **Pokémon Elements:**
-  - Cartoonish, colorful Pokémon icons (customized or silhouette-style)
-  - Subtle Pokéball motifs in backgrounds
-- **Pharmaceutical Elements:**
-  - Detailed, colorful pill designs (minimalistic representations)
-  - Medical symbols integrated into UI elements
+### 🟥 Accent: Crimson Ember
+- `#E63946` (Base)
+- `#B02E38` (Shadow)
+- `#F2727D` (Highlight)
 
-### Gamification
-- **Progress Indicators:**
-  - Pokéball progress bar with sections filling as the quiz progresses
-  - Achievement badges styled as Pokémon trainer icons or pill-themed awards
-- **Leaderboard:**
-  - Global leaderboard displaying ranks
-- **Streak Tracking:**
-  - Bonus points for streaks, visually represented by a glowing effect on streak numbers
+**Use for:** Selection glows, hover interactions, power indicators, elemental attacks (fire, passion, danger).
 
-### Interaction Design
-- **Animations (Microinteractions):**
-  - Button Hover: Slight bounce or grow animation (scale: 1.05)
-  - Answer Feedback:
-    - Correct: A pokéball bounces and opens briefly
-    - Incorrect: A pill breaks apart and disappears
-  - Screen Transitions: Subtle sliding transitions for quizzes
-- **Sound Effects (Optional, toggle-able):**
-  - Correct Answer: Pokéball "click" sound
-  - Incorrect Answer: A subtle pill "pop"
-  - Button Clicks: Light tap sound for user feedback
+### 🟫 Primary: Timberwolf
+- `#CCC6BD` (Base)
+- `#AFAAA2` (Mid-tone)
+- `#8D8882` (Shadow)
 
-### Accessibility Features
-- **Color Contrast:**
-  - High contrast text and interactive elements
-  - Avoiding pure white (#FFFFFF) for text to reduce eye strain
-- **Touch Target Size:**
-  - Buttons and interactive elements at least 48px in height/width
-- **Keyboard Navigation:**
-  - All elements navigable via keyboard (tab and arrow keys)
+**Use for:** Backgrounds, textboxes, card fills, and general surfaces. Soft neutral for UI grounding.
 
-## 🔄 Project Workflow
+### 🟩 Secondary: Asparagus
+- `#83A075` (Base)
+- `#5E7A58` (Shadow)
+- `#A9C89B` (Highlight)
 
-### 🧪 Use Case Flow
-1. User opens app and sees home screen with "Start Quiz" button
-2. User taps button and begins quiz
-3. Name is presented with "Drug" or "Pokémon" choice buttons
-4. User selects answer and receives immediate feedback
-5. Educational information is displayed about the correct answer
-6. Process repeats until quiz completion
-7. Final score is displayed with option to share or return to home
+**Use for:** Button backgrounds, menu items, nature elements, gentle progress indicators.
 
-### 🧩 App Lifecycle
-1. Splash screen with app logo
-2. Home screen with navigation options
-3. Quiz selection (standard or custom)
-4. Quiz gameplay
-5. Results and achievements
-6. Return to home or share results
+#### Additional Guidance:
+- Stick to **low color-count clusters**
+- **No harsh blacks** — use dark blue or green instead
+- Sky gradients use **ordered dithering**
+- Warm colors for characters, cool tones for backgrounds
 
 ---
 
-## 🗂️ Project Structure
+## ✨ Pixel Animation & FX System
 
-### 🔧 Functional Modules
+### 🕹 Animation Style
 
-| Module             | Responsibility                                           |
-|--------------------|-----------------------------------------------------------|
-| Home Screen        | Entry point with navigation to all features              |
-| Quiz Engine        | Core gameplay mechanics and scoring                      |
-| Leaderboard        | Global ranking system and player scores                  |
-| Achievements       | Badge system and progress tracking                       |
-| Settings           | Sound, notifications, and accessibility options          |
-| Custom Input       | Allowing users to add custom names to quiz               |
+| Parameter       | Detail |
+|-----------------|--------|
+| **Frame Rate**  | 6–10 fps (chunky and readable) |
+| **Ease**        | Ease-in/out with squish-stretch to simulate bounce |
+| **Cycle Length** | 4–8 frames for idle/FX loops; 10–15 for transitions |
 
-### Screen-Specific Designs
+### 🌪 Common UI/World Effects
 
-#### Home Screen
-- **Primary Elements:**
-  - Large "Start Quiz" button with gradient colors and subtle shadowing
-  - Leaderboard Preview widget showing top 3 players
-  - Quick Facts Carousel with Pokémon trivia and drug facts
-- **Navigation:**
-  - Quizzes (Default/Custom Modes)
-  - Leaderboard
-  - Achievements
-  - Settings (sound, notifications, theme)
-- **Background:** Subtle gradient with Pokémon motifs and pill graphics
+| Effect              | Style Description |
+|---------------------|------------------|
+| **Button Press**    | 1px shrink (squish), flash highlight (1–2 frames), return to base scale |
+| **Selection Glow**  | 2-frame pulsing outline (lighter accent shade), looping at 6fps |
+| **Fire FX**         | Wavy flickers, 2–3 shades, asymmetrical cycles |
+| **Ripple FX**       | 3-ring ripple from touch point with fade-out over 6–8 frames |
+| **Stat Increases / Level Up** | Radial burst of sparkles (tiny pixel stars), sometimes with bounce-scale effect |
+| **Toast Feedback**  | Slide-in 2px at a time, with fade and typewriter-like reveal for text |
 
-#### Quiz Interface
-- **Question Area:**
-  - Quiz name displayed in bold, large text
-  - Rotating visual aid (Pokémon silhouette or pill design)
-- **Answer Buttons:**
-  - Two prominent buttons labeled "Drug" and "Pokémon" in contrasting colors
-  - Hover/tap effects with color shifts or glowing borders
-- **Feedback System:**
-  - Correct Answer: Confetti animation, congratulatory message, badge icon
-  - Incorrect Answer: Playful animation with humorous message
-
-#### Leaderboard and Scoring
-- **Leaderboard Screen:**
-  - Top 3 players with podium-style graphics and avatars
-  - Scrollable list for additional rankings
-- **Icons:**
-  - Unique avatars styled as Pokémon Trainers or Pharmacists
-- **Score Highlights:**
-  - Player's current score and rank displayed prominently
-
-#### Achievements and Badges
-- **Badge Gallery:**
-  - Colorful badges resembling Pokémon gym badges or pharmaceutical seals
-  - Example Titles: "Pokémon Professor" (50 correct Pokémon answers), "Pharmacist in Training" (25 correct drug answers)
-  - Interactive details showing how badges were earned
+Use sprite layering to keep effects independent and composable with characters/objects.
 
 ---
 
-## 🔐 Data & Privacy
-- No personal health information collected
-- Optional username for leaderboard participation
-- Local storage of game progress and achievements
+## 🔘 UI Components: Button & Card Design
+
+### Button Style
+
+| Element      | Spec |
+|--------------|------|
+| **Base Color** | Secondary (Asparagus) |
+| **Corner Radius** | 2px–4px |
+| **Padding**      | `8px 12px` |
+| **Font**         | Pixelify Sans (uppercase) |
+| **Outline**      | 1px darker asparagus or soft shadow (for depth) |
+| **Hover**        | Slight increase in brightness + accent border (`#E63946`) |
+| **Click**        | Shrinks 1px on all sides (bounce), fires ripple or glow animation |
+
+> Animations are pixelated (no anti-aliasing), ~6fps, usually 4–6 frames long.
+
+### Card Style
+
+| Element         | Spec |
+|-----------------|------|
+| **Background**  | Timberwolf (`#CCC6BD`) |
+| **Border**      | Inner inset shadow using deep timberwolf |
+| **Padding**     | 12px internal |
+| **Elevation**   | Slight 1px "lift" using a darker pixel layer underneath |
+| **Header Strip** | Optional top bar in accent red (`#E63946`) for category |
+
+> Cards often serve as containers for info, pokédex-like data, or menu choices.
 
 ---
 
-## ✨ Unique Selling Points (USPs)
-- Educational content disguised as engaging gameplay
-- Visually appealing design inspired by both pharmaceutical and Pokémon aesthetics
-- Accessible to players of all ages and backgrounds
-- Combination of education and entertainment in a simple, addictive format
+## 🔠 Typography System
 
-## 🛠️ Technical Considerations
-- Use scalable vector graphics (SVGs) for Pokéball and pill icons for consistent rendering
-- Optimize animations to avoid performance lags on slower devices
-- Cross-platform compatibility for web and mobile experiences
+Typography mixes retro aesthetics with modern clarity.
+
+| Use Case         | Font                         | Size Range | Notes |
+|------------------|------------------------------|------------|-------|
+| **Header / Title** | [**Press Start 2P**](https://fonts.google.com/specimen/Press+Start+2P) | 16px–24px | Pixel-font caps for menu titles, location names |
+| **Body Text**     | [**Pixelify Sans**](https://fonts.google.com/specimen/Pixelify+Sans) | 12px–14px | Readable at small sizes, round edges, excellent for dialogue |
+| **Buttons/Labels**| Tight 8px pixel fonts or bold uppercase Pixelify Sans | 8px–10px | Use for clear CTAs, toggles, tags |
+
+### Textbox Styling Tips:
+- Rounded corners, soft border (deep timberwolf)
+- Fixed-width text wrapping (around 200–240px)
+- Sound-style bounce or flicker on letter-by-letter reveal (à la Pokémon)
+
+---
+
+## 🧠 Artist & Game Design Inspirations
+
+### 🧑‍🎨 Artist Reference
+- **@slynyrd** – Expert in blending pixel comfort with visual depth. Study their work for sky gradients, subtle motion, and cozy scenes.
+
+### 🎮 Game Inspirations
+
+| Game                     | Study For |
+|--------------------------|------------|
+| **Pokémon FireRed/LeafGreen** | Classic tile logic, clean UI, bold palettes |
+| **Pokémon Mystery Dungeon (GBA)** | Character portraits, dungeons, dramatic lighting |
+| **Stardew Valley**       | Modern UI cohesion with retro assets |
+| **Chrono Trigger**       | Spell animations, dynamic light effects |
+| **EarthBound**           | Emotional tone through minimalist assets |

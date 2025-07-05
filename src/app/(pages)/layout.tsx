@@ -10,7 +10,7 @@ export default async function Layout({
   const session = await auth();
 
   return (
-    <div className="bg-[url('/pokemon-background.png')] bg-cover bg-center bg-fixed min-h-screen flex flex-col">
+    <div className="bg-[url('/mountains.png')] bg-cover bg-center bg-fixed min-h-screen flex flex-col">
       <AppHeader session={session} />
       <main className="flex-grow w-full">{children}</main>
       <AppNav />
