@@ -17,7 +17,6 @@ import prisma from "./lib/db/prisma";
  */
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // Configure one or more authentication providers
-  // @ts-expect-error - PrismaAdapter is not typed correctly
   adapter: PrismaAdapter(prisma) as Adapter,
   callbacks: {
     // https://next-auth.js.org/configuration/callbacks#jwt-callback

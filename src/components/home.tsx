@@ -58,11 +58,11 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
 
         {/* Leaderboard Preview */}
         <div className="retro-card animate-retro-slide">
-          <div className="md:p-8 p-6 space-y-6">
+          <div className="md:p-8 p-6 space-y-6 lg:space-y-12">
             <h2 className="text-center">🏆 Champions 🏆</h2>
 
             {/* Podium Display */}
-            <div className="flex justify-center items-end gap-8 sm:gap-12 lg:gap-16">
+            <div className="flex justify-around items-end">
               {/* Second Place */}
               <div className="flex flex-col items-center space-y-3">
                 <div className="relative">
@@ -74,7 +74,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-20">
+                  <h5 className="block truncate max-w-42">
                     {topScores[1]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -97,7 +97,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-24">
+                  <h5 className="block truncate max-w-42">
                     {topScores[0]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -117,7 +117,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-20">
+                  <h5 className="block truncate max-w-42">
                     {topScores[2]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">

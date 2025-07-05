@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function QuizHistoryPage() {
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8">
       <Card className="w-full max-w-2xl rounded-[15px] shadow-lg">
         <CardHeader className="relative p-4 border-b w-full">
           <Link href="/">

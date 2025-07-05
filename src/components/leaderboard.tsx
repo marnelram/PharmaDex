@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Trophy, Medal, UserIcon, ChevronLeft } from "lucide-react";
@@ -20,88 +20,93 @@ export default function Leaderboard({
 }: LeaderboardProps) {
   return (
     <div className="size-full flex flex-col items-center justify-start p-4 sm:p-6">
-      <Card className="w-full h-fit max-w-3xl bg-[#F5F5F5] shadow-lg">
-        <CardHeader className="relative sm:p-4 p-2 border-b">
+      <div className="w-full h-fit max-w-3xl animate-retro-slide bg-primary-light border-[6px] rounded-[15px]">
+        <div className="relative sm:p-6 p-4 border-b-[6px] border-border">
           <Link href="/">
-            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer text-foreground animate-retro-bounce" />
           </Link>
-          <CardTitle className="text-[32px] sm:text-[44px] font-bold text-center font-['Poppins']">
-            Leaderboard
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          <h1 className="text-center">Leaderboard</h1>
+        </div>
+        <div className="p-6">
           {/* Top 3 Players */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-12 items-end py-4 sm:py-6 rounded-[15px]">
-            {[2, 1, 3].map((rank) => {
-              const quizAttempt = quizzes[rank - 1];
-              return (
-                <div
-                  key={quizAttempt?.id}
-                  className={`flex flex-col justify-between bg-[#F5F5F5] gap-4 rounded-[15px] items-center ${
-                    rank === 1 ? "order-2" : rank === 2 ? "order-1" : "order-3"
-                  }`}
-                >
-                  <Avatar
-                    className={`border-2 sm:border-4 transition-transform hover:scale-105 ${
-                      rank === 1
-                        ? "border-[#F3E260] size-16 sm:size-24"
-                        : rank === 2
-                        ? "border-[#A7A7A7] size-14 sm:size-20"
-                        : "border-[#E63946] size-12 sm:size-16"
-                    }`}
-                  >
-                    <AvatarImage
-                      src={quizAttempt?.user?.image ?? ""}
-                      alt={quizAttempt?.displayName ?? ""}
-                    />
-                    <AvatarFallback className="font-['Raleway'] text-sm sm:text-base">
-                      <UserIcon className="size-6 sm:size-8 text-gray-600" />
-                    </AvatarFallback>
-                  </Avatar>
+          <div className="p-8 mb-6">
+            <h2 className="text-center mb-6">🥇 Champions 🥇</h2>
+            <div className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-12 items-end">
+              {[2, 1, 3].map((rank) => {
+                const quizAttempt = quizzes[rank - 1];
+                return (
                   <div
-                    className={`text-xl sm:text-2xl font-bold mt-1 sm:mt-2 ${
+                    key={quizAttempt?.id}
+                    className={`flex flex-col justify-between gap-4 rounded-[15px] items-center animate-retro-bounce ${
                       rank === 1
-                        ? "text-[#F3E260]"
+                        ? "order-2"
                         : rank === 2
-                        ? "text-[#A7A7A7]"
-                        : "text-[#E63946]"
+                        ? "order-1"
+                        : "order-3"
                     }`}
                   >
-                    {rank === 1 ? (
-                      <Trophy className="size-6 sm:size-8 animate-bounce" />
-                    ) : (
-                      <Medal className="size-6 sm:size-8" />
-                    )}
+                    <Avatar
+                      className={`pixel-border transition-transform hover:scale-105 ${
+                        rank === 1
+                          ? "border-yellow-400 size-16 sm:size-24"
+                          : rank === 2
+                          ? "border-gray-400 size-14 sm:size-20"
+                          : "border-orange-400 size-12 sm:size-16"
+                      }`}
+                    >
+                      <AvatarImage
+                        src={quizAttempt?.user?.image ?? ""}
+                        alt={quizAttempt?.displayName ?? ""}
+                        className="pixel-perfect"
+                      />
+                      <AvatarFallback>
+                        <UserIcon className="size-6 sm:size-8 text-foreground" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <div
+                      className={`text-xl sm:text-2xl font-bold mt-1 sm:mt-2 ${
+                        rank === 1
+                          ? "text-yellow-400"
+                          : rank === 2
+                          ? "text-gray-400"
+                          : "text-orange-400"
+                      }`}
+                    >
+                      {rank === 1 ? (
+                        <Trophy className="size-6 sm:size-8 animate-retro-bounce" />
+                      ) : (
+                        <Medal className="size-6 sm:size-8" />
+                      )}
+                    </div>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="font-semibold text-foreground">
+                        {quizAttempt?.displayName ?? "Anonymous"}
+                      </span>
+                      <span className="text-sm text-foreground opacity-70">
+                        {quizAttempt?.totalScore.toLocaleString() ?? 0} pts
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="font-['Raleway'] font-semibold text-gray-800 text-[14px] sm:text-[16px] mt-1">
-                      {quizAttempt?.displayName ?? "Anonymous"}
-                    </span>
-                    <span className="font-['Raleway'] text-[12px] sm:text-[14px] text-gray-600">
-                      {quizAttempt?.totalScore.toLocaleString() ?? 0} pts
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
+
           {user && (
-            <Card className="mb-4 sm:mb-6 bg-[#E63946] text-white hover:shadow-lg transition-shadow">
-              <CardContent className="flex items-center justify-between p-3 sm:p-4">
+            <Card className="mb-6">
+              <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center">
-                  <span className="text-[18px] sm:text-[22px] font-medium font-['Raleway'] mr-2 sm:mr-4">
-                    {userRank ?? "?"}
-                  </span>
-                  <Avatar className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-4 border-2 border-white">
-                    <AvatarFallback className="font-['Raleway'] text-sm">
-                      <UserIcon className="size-4 sm:size-6 text-gray-600" />
+                  <h3 className=" mr-4">#{userRank ?? "?"}</h3>
+                  <Avatar className="w-8 h-8 sm:w-10 sm:h-10 mr-4 pixel-border">
+                    <AvatarFallback>
+                      <UserIcon className="size-4 sm:size-6 text-foreground" />
                     </AvatarFallback>
                   </Avatar>
-                  <span className="font-['Raleway'] font-medium text-[14px] sm:text-[16px]">
+                  <span className="font-medium">
                     {user?.name ?? "Anonymous"}
                   </span>
                 </div>
-                <span className="font-['Raleway'] font-bold text-[14px] sm:text-[16px]">
+                <span className="font-bold">
                   {user?.topScore.toLocaleString()} pts
                 </span>
               </CardContent>
@@ -109,40 +114,41 @@ export default function Leaderboard({
           )}
 
           {/* Scrollable Leaderboard */}
-          <ScrollArea
-            type="always"
-            className="h-[20dvh] sm:h-[30dvh] w-full rounded-[15px] border"
-          >
-            {quizzes.slice(3).map((quiz, index) => (
-              <div
-                key={quiz.id}
-                className="flex items-center justify-between py-2 border-b last:border-b-0 hover:bg-[#F5F5F5] transition-colors px-4 sm:px-8"
-              >
-                <div className="flex items-center">
-                  <span className="font-['Raleway'] text-[14px] sm:text-[16px] font-medium w-6 sm:w-8">
-                    {index + 4}
-                  </span>
-                  <Avatar className="w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-4">
-                    <AvatarImage
-                      src={quiz.user?.image ?? ""}
-                      alt={quiz.displayName ?? "Anonymous"}
-                    />
-                    <AvatarFallback className="font-['Raleway'] text-sm">
-                      <UserIcon className="size-4 sm:size-6 text-gray-600" />
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="font-['Raleway'] text-[14px] sm:text-[16px]">
-                    {quiz.displayName ?? "Anonymous"}
+          <div className="retro-card">
+            <h3 className="p-4 border-b border-border">📊 Full Rankings 📊</h3>
+            <ScrollArea type="always" className="h-[20dvh] sm:h-[30dvh] w-full">
+              {quizzes.slice(3).map((quiz, index) => (
+                <div
+                  key={quiz.id}
+                  className="flex items-center justify-between py-3 border-b border-border last:border-b-0 transition-colors px-4 sm:px-6"
+                >
+                  <div className="flex items-center">
+                    <span className="font-medium w-8 text-foreground">
+                      {index + 4}
+                    </span>
+                    <Avatar className="w-8 h-8 sm:w-10 sm:h-10 mr-4 pixel-border">
+                      <AvatarImage
+                        src={quiz.user?.image ?? ""}
+                        alt={quiz.displayName ?? "Anonymous"}
+                        className="pixel-perfect"
+                      />
+                      <AvatarFallback>
+                        <UserIcon className="size-4 sm:size-6 text-foreground" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-foreground">
+                      {quiz.displayName ?? "Anonymous"}
+                    </span>
+                  </div>
+                  <span className="font-medium text-foreground">
+                    {quiz.totalScore} pts
                   </span>
                 </div>
-                <span className="font-['Raleway'] font-medium text-[14px] sm:text-[16px]">
-                  {quiz.totalScore} pts
-                </span>
-              </div>
-            ))}
-          </ScrollArea>
-        </CardContent>
-      </Card>
+              ))}
+            </ScrollArea>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
