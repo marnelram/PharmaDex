@@ -74,7 +74,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-42">
+                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
                     {topScores[1]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -97,7 +97,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-42">
+                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
                     {topScores[0]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -117,7 +117,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
                   </div>
                 </div>
                 <div className="text-center space-y-1">
-                  <h5 className="block truncate max-w-42">
+                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
                     {topScores[2]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
