@@ -7,14 +7,12 @@ import { useRouter } from "next/navigation";
 export default function SignIn() {
   const router = useRouter();
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center px-4">
-      <div className="bg-[#F5F5F5]/60 rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <div className="bg-primary-light rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
         {/* Logo/Header Section */}
         <div className="text-center space-y-4">
-          <h1 className="text-[44px] font-bold text-[#E63946]">
-            Drug or Pokémon?
-          </h1>
-          <p className="font-['Raleway'] text-[16px] text-[#9E9E9E]">
+          <h1 className="font-bold text-accent-red">Drug or Pokémon?</h1>
+          <p className="text-muted-foreground">
             Test your knowledge of medicines and monsters!
           </p>
         </div>
@@ -25,14 +23,14 @@ export default function SignIn() {
             onClick={() =>
               signIn("google", { callbackUrl: "/", redirect: true })
             }
-            className="w-full flex items-center justify-center gap-3 bg-[#F5F5F5]/60 border-2 border-[#9E9E9E] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
+            className="w-full flex items-center justify-center gap-3 bg-primary-light border-2 border-muted-foreground rounded-[25px] py-4 px-6 font-medium hover:scale-105 transition-transform duration-200"
           >
             <Image
               src="/google-icon.webp"
               alt="Google"
               width={24}
               height={24}
-              className="min-w-[24px]"
+              className="min-w-6"
             />
             Continue with Google
           </button>
@@ -40,10 +38,10 @@ export default function SignIn() {
           {/* Decorative Elements */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#9E9E9E]"></div>
+              <div className="w-full border-t border-muted-foreground"></div>
             </div>
             <div className="relative flex justify-center">
-              <span className="px-4 bg-[#F5F5F5] text-[14px] font-['Raleway'] text-[#9E9E9E]">
+              <span className="px-4 bg-primary-light text-muted-foreground">
                 or try as guest
               </span>
             </div>
@@ -51,14 +49,14 @@ export default function SignIn() {
 
           <button
             onClick={() => router.push("/quiz")}
-            className="w-full bg-[#E63946] text-[#F5F5F5] rounded-[25px] py-4 px-6 text-[14px] font-medium hover:scale-105 transition-transform duration-200"
+            className="w-full bg-accent-red text-primary rounded-[25px] py-4 px-6 font-medium hover:scale-105 transition-transform duration-200"
           >
             Play as Guest
           </button>
         </div>
 
         {/* Footer */}
-        <div className="text-center font-['Raleway'] text-[12px] text-[#9E9E9E]">
+        <div className="text-center text-muted-foreground">
           <p>Start your journey as a Pharmacist Trainer today!</p>
         </div>
       </div>

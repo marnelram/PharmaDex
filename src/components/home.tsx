@@ -59,22 +59,24 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
         {/* Leaderboard Preview */}
         <div className="retro-card animate-retro-slide">
           <div className="md:p-8 p-6 space-y-6 lg:space-y-12">
-            <h2 className="text-center">🏆 Champions 🏆</h2>
+            <h2 className="text-center text-lg sm:text-xl lg:text-2xl">
+              🏆 Champions 🏆
+            </h2>
 
             {/* Podium Display */}
             <div className="flex justify-around items-end">
               {/* Second Place */}
-              <div className="flex flex-col items-center space-y-3">
+              <div className="flex flex-col items-center space-y-3 w-32 sm:w-48 lg:w-64">
                 <div className="relative">
-                  <div className="size-16 rounded-full bg-gray-200 border-4 border-gray-500 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                  <div className="size-14 sm:size-16 rounded-full bg-gray-200 border-4 border-gray-500 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
                     <span className="font-bold text-lg">🥈</span>
                   </div>
-                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-500 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 size-4 sm:size-6 bg-gray-500 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
                     2
                   </div>
                 </div>
-                <div className="text-center space-y-1">
-                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
+                <div className="text-center space-y-1 hidden sm:block">
+                  <h5 className="block truncate">
                     {topScores[1]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -84,20 +86,20 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
               </div>
 
               {/* First Place */}
-              <div className="flex flex-col items-center space-y-3">
+              <div className="flex flex-col items-center space-y-3 w-32 sm:w-48 lg:w-64">
                 <div className="relative">
-                  <div className="size-20 rounded-full bg-yellow-200 border-4 border-yellow-600 pixel-circle flex items-center justify-center shadow-xl pixel-perfect animate-retro-glow">
+                  <div className="size-16 sm:size-20 rounded-full bg-yellow-200 border-4 border-yellow-600 pixel-circle flex items-center justify-center shadow-xl pixel-perfect animate-retro-glow">
                     <span className="font-bold text-2xl">🥇</span>
                   </div>
                   <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-3xl animate-retro-bounce">
                     👑
                   </div>
-                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-600 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold">
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 size-4 sm:size-6 bg-yellow-600 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold">
                     1
                   </div>
                 </div>
-                <div className="text-center space-y-1">
-                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
+                <div className="text-center space-y-1 hidden sm:block">
+                  <h5 className="block truncate">
                     {topScores[0]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
@@ -107,22 +109,62 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
               </div>
 
               {/* Third Place */}
-              <div className="flex flex-col items-center space-y-3">
+              <div className="flex flex-col items-center space-y-3 w-32 sm:w-48 lg:w-64">
                 <div className="relative">
-                  <div className="size-14 rounded-full bg-orange-200 border-4 border-orange-700 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
+                  <div className="size-10 sm:size-14 rounded-full bg-orange-200 border-4 border-orange-700 pixel-circle flex items-center justify-center shadow-lg pixel-perfect">
                     <span className="font-bold">🥉</span>
                   </div>
-                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-orange-700 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
+                  <div className="absolute rounded-full -bottom-1 left-1/2 transform -translate-x-1/2 size-4 sm:size-6 bg-orange-700 pixel-circle-small border-2 border-[var(--border)] flex items-center justify-center text-xs font-bold text-white">
                     3
                   </div>
                 </div>
-                <div className="text-center space-y-1">
-                  <h5 className="block truncate w-28 sm:w-36 lg:w-42">
+                <div className="text-center space-y-1 hidden sm:block">
+                  <h5 className="block truncate">
                     {topScores[2]?.displayName ?? "---"}
                   </h5>
                   <span className="block text-sm opacity-75">
                     {topScores[2]?.totalScore.toLocaleString() ?? 0} PTS
                   </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Top 3 Names & Scores */}
+            <div className="flex flex-col items-center mt-12 sm:hidden">
+              <div className="px-2 w-full max-w-lg">
+                <div className="space-y-3">
+                  {/* First Place */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">🥇</span>
+                      <h5>{topScores[0]?.displayName ?? "---"}</h5>
+                    </div>
+                    <p className="font-bold text-accent-red">
+                      {topScores[0]?.totalScore.toLocaleString() ?? 0} PTS
+                    </p>
+                  </div>
+
+                  {/* Second Place */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">🥈</span>
+                      <h5>{topScores[1]?.displayName ?? "---"}</h5>
+                    </div>
+                    <p className="font-bold text-accent-red">
+                      {topScores[1]?.totalScore.toLocaleString() ?? 0} PTS
+                    </p>
+                  </div>
+
+                  {/* Third Place */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">🥉</span>
+                      <h5>{topScores[2]?.displayName ?? "---"}</h5>
+                    </div>
+                    <p className="font-bold text-accent-red">
+                      {topScores[2]?.totalScore.toLocaleString() ?? 0} PTS
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +175,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
         <div className="retro-card animate-retro-slide">
           <CardContent className="p-8 space-y-6">
             <div className="text-center">
-              <h3 className="mb-2">💡 Did You Know? 💡</h3>
+              <h3 className="mb-2">Did You Know?</h3>
             </div>
 
             {isLoading ? (

@@ -64,6 +64,8 @@ export function DisplayNameDialog({
         <div className="flex flex-col gap-4">
           <Input
             placeholder="Enter your display name"
+            maxLength={15}
+            type="text"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             className="pixel-border"

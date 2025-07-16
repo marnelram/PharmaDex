@@ -62,7 +62,7 @@ export default function AppHeader({ session }: { session: Session | null }) {
                   className="hover:bg-accent-red hover:text-primary cursor-pointer"
                 >
                   <LogOut className="mr-2 h-5 w-5" />
-                  Logout
+                  <p>Logout</p>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -70,11 +70,11 @@ export default function AppHeader({ session }: { session: Session | null }) {
             <Button
               onClick={() => redirect("/auth/signin")}
               variant="default"
-              size="sm"
-              className="w-24 hover:animate-shimmer"
+              size="icon"
+              className="sm:w-24 hover:animate-shimmer flex items-center gap-2"
             >
-              <LogIn className="mr-2 h-5 w-5" />
-              Login
+              <LogIn className="size-5 sm:size-6" />
+              <p className="hidden sm:block">Login</p>
             </Button>
           )}
         </div>
