@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "npx prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed-facts": "npx ts-node scripts/seed-facts-questions.ts",
+    "db:clear-facts": "npx ts-node scripts/clear-facts-questions.ts",
+    "db:seed-facts-fresh": "npm run db:clear-facts && npm run db:seed-facts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.1",

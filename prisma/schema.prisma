@@ -63,6 +63,7 @@ model User {
   quizAttempts  QuizAttempt[]
   badges        UserBadge[]
   stats         Stats?
+  factsQuizAttempts FactsQuizAttempt[]
 }
 
 model Stats {
@@ -124,6 +125,7 @@ model Fact {
   pokemon   Pokemon?  @relation(fields: [pokemonId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  factsQuestions FactsQuestion[]
 }
 
 model Achievement {
@@ -202,4 +204,47 @@ model UserBadge {
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, badgeId])
+}
+
+model FactsQuestion {
+  id                String   @id @default(cuid())
+  question          String   // The actual question text
+  correctAnswer     String   // The correct answer
+  wrongAnswers      String[] // Array of 3 wrong answers
+  category          String   // "drug" or "pokemon" or "general"
+  difficulty        String   @default("medium") // easy, medium, hard
+  explanation       String?  // Optional explanation after answering
+  relatedFactId     String?
+  relatedFact       Fact?    @relation(fields: [relatedFactId], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  factsQuizAnswers  FactsQuizAnswer[]
+}
+
+model FactsQuizAttempt {
+  id             String            @id @default(cuid())
+  userId         String?
+  user           User?             @relation(fields: [userId], references: [id])
+  displayName    String?           // optional name for leaderboard
+  totalScore     Int
+  completed      Boolean           @default(false)
+  correctCount   Int               @default(0)
+  totalQuestions Int
+  answers        FactsQuizAnswer[]
+  createdAt      DateTime          @default(now())
+
+  @@index([completed(sort: Desc), createdAt(sort: Asc)])
+}
+
+model FactsQuizAnswer {
+  id                   String            @id @default(cuid())
+  questionId           String
+  question             FactsQuestion     @relation(fields: [questionId], references: [id])
+  userAnswer           String            // User's selected answer
+  score                Int
+  isCorrect            Boolean
+  factsQuizAttempt     FactsQuizAttempt  @relation(fields: [factsQuizAttemptId], references: [id])
+  factsQuizAttemptId   String
+
+  @@index([factsQuizAttemptId])
 }

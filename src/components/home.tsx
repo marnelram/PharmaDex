@@ -52,7 +52,7 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
             className="animate-retro-pulse transition-all duration-300"
             onClick={() => router.push("/quiz")}
           >
-            ▶ Start Quiz ◀
+            ▶ Start Classic Quiz ◀
           </Button>
         </div>
 
@@ -219,6 +219,43 @@ export default function Home({ topScores }: { topScores: QuizAttempt[] }) {
               </Carousel>
             )}
           </CardContent>
+        </div>
+
+        {/* Quiz Mode Selection */}
+        <div className="retro-card animate-retro-slide">
+          <div className="p-6 space-y-4">
+            <h3 className="text-center">🎮 Choose Your Quiz Mode 🎮</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Button
+                size="lg"
+                className="h-20 flex flex-col items-center justify-center space-y-2 group animate-retro-pulse"
+                onClick={() => router.push("/quiz")}
+              >
+                <span className="text-2xl">🤔</span>
+                <div className="text-center">
+                  <div className="font-bold">Drug or Pokémon?</div>
+                  <div className="text-xs opacity-75">
+                    Classic guessing game
+                  </div>
+                </div>
+              </Button>
+
+              <Button
+                variant="secondary"
+                size="lg"
+                className="h-20 flex flex-col items-center justify-center space-y-2 group"
+                onClick={() => router.push("/facts-quiz")}
+              >
+                <span className="text-2xl">🧠</span>
+                <div className="text-center">
+                  <div className="font-bold">Facts Quiz</div>
+                  <div className="text-xs opacity-75">
+                    Multiple choice trivia
+                  </div>
+                </div>
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Navigation Buttons */}
