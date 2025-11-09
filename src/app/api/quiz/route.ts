@@ -3,7 +3,7 @@ import { Questions } from "@/lib/validation/types/quiz";
 import prisma from "@/lib/db/prisma";
 
 export async function POST(request: Request) {
-  const { userId } = await request.json();
+  const { userId, questionCount = 25 } = await request.json();
 
   try {
     // Get all quiz items
@@ -31,7 +31,10 @@ export async function POST(request: Request) {
       })),
     ]);
 
-    questions = questions.slice(0, 25);
+    // For unlimited modes, provide a large pool (100 questions)
+    // For modes with specific counts, use that count
+    const count = questionCount === "unlimited" ? 100 : questionCount;
+    questions = questions.slice(0, count);
 
     // Create new quiz attempt
     const quizAttempt = await prisma.quizAttempt.create({

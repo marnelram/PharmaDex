@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db/prisma";
 
 export async function POST(req: NextRequest) {
-  const { quizId, totalScore } = await req.json();
+  const { quizId, totalScore, gameMode = "classic" } = await req.json();
 
   if (!quizId || typeof totalScore !== "number") {
     return NextResponse.json({ message: "Invalid data" }, { status: 400 });
@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
       data: {
         completed: true,
         totalScore,
+        gameMode,
       },
     });
 

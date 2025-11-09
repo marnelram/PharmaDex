@@ -158,6 +158,7 @@ model QuizAttempt {
   completed      Boolean   @default(false)
   correctCount   Int       @default(0)
   totalQuestions Int
+  gameMode       String    @default("classic") // Game mode: classic, lightning, timeAttack, blitz, survival, endless, practice
   answers        Answer[]
   createdAt      DateTime  @default(now())
 

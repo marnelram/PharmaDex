@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"; // Add this import if not already present
 import { DisplayNameDialog } from "@/components/results/display-name-dialog";
 import { MistakeDialog } from "./mistakes-dialog";
 import { PokeballPercentage } from "./pokeball";
+import { GAME_MODES, GameMode } from "@/lib/validation/types/gameMode";
 
 interface TimedResultsProps {
   quizAttempt: QuizAttempt;
@@ -60,6 +61,9 @@ export default function TimedResults({
     });
   }
 
+  const gameMode = (quizAttempt.gameMode || "classic") as GameMode;
+  const modeConfig = GAME_MODES[gameMode];
+
   return (
     <div className="flex flex-col items-center justify-center p-2 sm:p-8">
       <Card className="retro-card w-full mb-20 sm:mb-0 max-w-2xl animate-retro-slide">
@@ -70,6 +74,13 @@ export default function TimedResults({
               <h1 className="text-center">Quiz Results</h1>
               <div className="animate-retro-glow text-2xl sm:text-4xl">🎯</div>
             </div>
+
+            {/* Game Mode Badge */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-secondary/80 rounded-full pixel-border">
+              <span className="text-lg">{modeConfig.icon}</span>
+              <span className="font-semibold text-sm">{modeConfig.name} Mode</span>
+            </div>
+
             {/* Achievement Message */}
             <div className="flex items-center gap-2">
               <span

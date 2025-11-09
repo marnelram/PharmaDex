@@ -13,6 +13,7 @@ export default async function QuizPage() {
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
   // Forward the authentication cookies/headers
+  // Fetch a large pool of questions (100) to support all game modes
   const response = await fetch(`${protocol}://${host}/api/quiz`, {
     method: "POST",
     headers: {
@@ -20,7 +21,10 @@ export default async function QuizPage() {
       // Forward the cookie header from the incoming request
       cookie: headersList.get("cookie") ?? "",
     },
-    body: JSON.stringify({ userId: session?.user.id ?? null }),
+    body: JSON.stringify({
+      userId: session?.user.id ?? null,
+      questionCount: 100
+    }),
     cache: "no-store",
   });
 
