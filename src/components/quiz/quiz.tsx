@@ -43,7 +43,6 @@ export default function QuizComponent({
     showAchievements,
 
     // Actions
-    startGame,
     answerQuestion,
     nextQuestion,
     completeQuiz,
@@ -108,10 +107,6 @@ export default function QuizComponent({
       return response.json();
     },
   });
-
-  const handleGameStart = (mode: "practice" | "timed") => {
-    startGame(mode); // Default to regular mode
-  };
 
   const handleAnswer = async (answer: string) => {
     const { correct, currentScore } = await answerQuestion(
@@ -295,7 +290,7 @@ export default function QuizComponent({
   return (
     <>
       {!isGameStarted ? (
-        <Instructions handleGameStart={handleGameStart} />
+        <Instructions />
       ) : !isQuizComplete ? (
         isPracticeMode ? (
           <PracticeQuiz
