@@ -14,7 +14,13 @@ import Instructions from "./instructions";
 import PracticeQuiz from "./practice";
 import { GameMode, GAME_MODES } from "@/lib/validation/types/gameMode";
 
-export default function QuizComponent({ quiz }: { quiz: Quiz }) {
+export default function QuizComponent({
+  quiz,
+  gameMode,
+}: {
+  quiz: Quiz;
+  gameMode: GameMode;
+}) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [totalScore, setTotalScore] = React.useState(0);
@@ -25,7 +31,6 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const [streak, setStreak] = React.useState(0);
   const [multiplier, setMultiplier] = React.useState(1);
   const [isGameStarted, setIsGameStarted] = React.useState(false);
-  const [gameMode, setGameMode] = React.useState<GameMode>("classic");
   const [lives, setLives] = React.useState(3);
   const [totalTimeRemaining, setTotalTimeRemaining] = React.useState(60);
   const [questionsAnswered, setQuestionsAnswered] = React.useState(0);
@@ -324,8 +329,8 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       </h1>
       {!isGameStarted ? (
         <Instructions
+          gameMode={gameMode}
           setIsGameStarted={setIsGameStarted}
-          setGameMode={setGameMode}
           startTimeRef={startTimeRef}
         />
       ) : gameMode === "practice" ? (
