@@ -1,0 +1,387 @@
+/* ============================================
+   RETRO COMPONENT STYLES
+   ============================================
+
+   This file contains all custom retro-gaming
+   styled component classes used throughout
+   the PharmaDex application.
+
+   Imported by: globals.css
+   ============================================ */
+
+/* ============================================
+   BASE COMPONENTS
+   ============================================ */
+
+.retro-button {
+  font-family: "VT323", monospace;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 12px !important;
+  image-rendering: pixelated;
+  position: relative;
+  color: var(--primary) !important;
+}
+
+.pixel-border {
+  border-radius: 12px !important;
+  position: relative;
+}
+
+.retro-card {
+  border: 6px solid #1a1a1a;
+  border-radius: 16px !important;
+  background: linear-gradient(
+    90deg,
+    #4c99e6 0%,
+    #4c99e6 2%,
+    #99cce6 2%,
+    #99cce6 3%,
+    #daedf1 3%,
+    #daedf1 3.5%,
+    #ffffff 3.5%,
+    #ffffff 96.5%,
+    #daedf1 96.5%,
+    #daedf1 97%,
+    #99cce6 97%,
+    #99cce6 98%,
+    #4c99e6 98%,
+    #4c99e6 100%
+  );
+  box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0px rgba(0, 0, 0, 0.2),
+    inset 2px 0 0px rgba(255, 255, 255, 0.3),
+    inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.pixel-perfect {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* ============================================
+   BUTTON VARIANTS
+   ============================================ */
+
+/* RED BUTTON (Primary) */
+.retro-button-red {
+  border: 6px solid #1a1a1a;
+  border-radius: 16px !important;
+  background: linear-gradient(
+    90deg,
+    #3f0d2a 0%,
+    #3f0d2a 2%,
+    #7e1b44 2%,
+    #7e1b44 3%,
+    #bd284d 3%,
+    #bd284d 3.5%,
+    #eb4755 3.5%,
+    #eb4755 96.5%,
+    #bd284d 96.5%,
+    #bd284d 97%,
+    #7e1b44 97%,
+    #7e1b44 98%,
+    #3f0d2a 98%,
+    #3f0d2a 100%
+  );
+}
+
+.retro-button-red:hover {
+  background: linear-gradient(
+    90deg,
+    #3f0d2a 0%,
+    #3f0d2a 2%,
+    #7e1b44 2%,
+    #7e1b44 3%,
+    #bd284d 3%,
+    #bd284d 3.5%,
+    #bd284d 3.5%,
+    #bd284d 96.5%,
+    #bd284d 96.5%,
+    #bd284d 97%,
+    #7e1b44 97%,
+    #7e1b44 98%,
+    #3f0d2a 98%,
+    #3f0d2a 100%
+  );
+}
+
+.retro-button-red:active {
+  background: linear-gradient(
+    90deg,
+    #150411 0%,
+    #150411 2%,
+    #3f0d2a 2%,
+    #3f0d2a 3%,
+    #bd284d 3.5%,
+    #bd284d 96.5%,
+    #3f0d2a 97%,
+    #3f0d2a 98%,
+    #150411 98%,
+    #150411 100%
+  );
+}
+
+/* SECONDARY BUTTON (Green/Cream) */
+.retro-button-secondary {
+  border: 6px solid #1a1a1a;
+  border-radius: 16px !important;
+  background: linear-gradient(
+    90deg,
+    #394936 0%,
+    #394936 2%,
+    #bcc9b6 2%,
+    #bcc9b6 3%,
+    #d9e2cf 3%,
+    #d9e2cf 3.5%,
+    #f3f4f1 3.5%,
+    #f3f4f1 96.5%,
+    #d9e2cf 96.5%,
+    #d9e2cf 97%,
+    #bcc9b6 97%,
+    #bcc9b6 98%,
+    #394936 98%,
+    #394936 100%
+  );
+  box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0px rgba(0, 0, 0, 0.2),
+    inset 2px 0 0px rgba(255, 255, 255, 0.3),
+    inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  color: #2d2d2d !important;
+}
+
+.retro-button-secondary:hover {
+  background: linear-gradient(
+    90deg,
+    #394936 0%,
+    #394936 2%,
+    #bcc9b6 2%,
+    #bcc9b6 3%,
+    #ffffff 3.5%,
+    #ffffff 96.5%,
+    #bcc9b6 97%,
+    #bcc9b6 98%,
+    #394936 98%,
+    #394936 100%
+  );
+  box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0px rgba(0, 0, 0, 0.2),
+    inset 2px 0 0px rgba(255, 255, 255, 0.3),
+    inset -2px 0 0px rgba(0, 0, 0, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.retro-button-secondary:active {
+  background: linear-gradient(
+    90deg,
+    #283126 0%,
+    #283126 2%,
+    #394936 2%,
+    #394936 3%,
+    #afbea7 3.5%,
+    #afbea7 96.5%,
+    #394936 97%,
+    #394936 98%,
+    #283126 98%,
+    #283126 100%
+  );
+  box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.2),
+    inset 0 2px 0px rgba(0, 0, 0, 0.2), inset 2px 0 0px rgba(0, 0, 0, 0.1),
+    inset -2px 0 0px rgba(0, 0, 0, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+/* SUCCESS BUTTON (Green) */
+.retro-button-success {
+  border: 6px solid #1a1a1a;
+  border-radius: 16px !important;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #1f5f3f 2%,
+    #1f5f3f 3%,
+    #2e8b57 3%,
+    #2e8b57 3.5%,
+    #4ae54a 3.5%,
+    #4ae54a 96.5%,
+    #2e8b57 96.5%,
+    #2e8b57 97%,
+    #1f5f3f 97%,
+    #1f5f3f 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+  box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0px rgba(0, 0, 0, 0.3),
+    inset 2px 0 0px rgba(255, 255, 255, 0.3),
+    inset -2px 0 0px rgba(0, 0, 0, 0.2), 2px 2px 4px rgba(0, 0, 0, 0.4);
+  position: relative;
+  color: white !important;
+}
+
+.retro-button-success:hover {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #2e8b57 2%,
+    #2e8b57 3%,
+    #4ae54a 3%,
+    #4ae54a 3.5%,
+    #7fff7f 3.5%,
+    #7fff7f 96.5%,
+    #4ae54a 96.5%,
+    #4ae54a 97%,
+    #2e8b57 97%,
+    #2e8b57 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+  box-shadow: inset 0 2px 0px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0px rgba(0, 0, 0, 0.3),
+    inset 2px 0 0px rgba(255, 255, 255, 0.3),
+    inset -2px 0 0px rgba(0, 0, 0, 0.2), 2px 2px 6px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.retro-button-success:active {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #154a2f 2%,
+    #154a2f 3%,
+    #1f5f3f 3%,
+    #1f5f3f 3.5%,
+    #2e8b57 3.5%,
+    #2e8b57 96.5%,
+    #1f5f3f 96.5%,
+    #1f5f3f 97%,
+    #154a2f 97%,
+    #154a2f 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+  box-shadow: inset 0 -2px 0px rgba(255, 255, 255, 0.2),
+    inset 0 2px 0px rgba(0, 0, 0, 0.3), inset 2px 0 0px rgba(0, 0, 0, 0.2),
+    inset -2px 0 0px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
+}
+
+/* DESTRUCTIVE BUTTON (Red Danger) */
+.retro-button-destructive {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #991b1b 2%,
+    #991b1b 3%,
+    #dc2626 3%,
+    #dc2626 3.5%,
+    #ff4444 3.5%,
+    #ff4444 96.5%,
+    #dc2626 96.5%,
+    #dc2626 97%,
+    #991b1b 97%,
+    #991b1b 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+}
+
+.retro-button-destructive:hover {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #b91c1c 2%,
+    #b91c1c 3%,
+    #ef4444 3%,
+    #ef4444 3.5%,
+    #ff6666 3.5%,
+    #ff6666 96.5%,
+    #ef4444 96.5%,
+    #ef4444 97%,
+    #b91c1c 97%,
+    #b91c1c 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+}
+
+.retro-button-destructive:active {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 2%,
+    #7f1d1d 2%,
+    #7f1d1d 3%,
+    #991b1b 3%,
+    #991b1b 3.5%,
+    #dc2626 3.5%,
+    #dc2626 96.5%,
+    #991b1b 96.5%,
+    #991b1b 97%,
+    #7f1d1d 97%,
+    #7f1d1d 98%,
+    #1a1a1a 98%,
+    #1a1a1a 100%
+  );
+}
+
+/* OUTLINE BUTTON */
+.retro-button-outline {
+  background: transparent;
+  border: 3px solid #1a1a1a;
+  color: #1a1a1a;
+}
+
+.retro-button-outline:hover {
+  background: rgba(26, 26, 26, 0.1);
+  border: 3px solid #1a1a1a;
+  color: #1a1a1a;
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.retro-button-outline:active {
+  background: rgba(26, 26, 26, 0.2);
+  border: 3px solid #1a1a1a;
+  color: #1a1a1a;
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* GHOST BUTTON */
+.retro-button-ghost {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #2d2d2d !important;
+}
+
+.retro-button-ghost:hover {
+  background: rgba(45, 45, 45, 0.05) !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #1a1a1a !important;
+}
+
+/* LINK BUTTON */
+.retro-button-link {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #e63946 !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.retro-button-link:hover {
+  text-decoration: underline !important;
+}

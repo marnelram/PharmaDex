@@ -12,17 +12,17 @@ export default function QuizError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-F5F5F5/80 backdrop-blur-sm flex items-center justify-center">
-      <Card className="w-full max-w-md rounded-[15px]">
-        <CardContent className="p-6 text-center font-['Raleway'] flex flex-col items-center gap-4">
-          <AlertCircle className="h-12 w-12 text-[#E63946]" />
-          <h2 className="text-[22px] font-medium">Error</h2>
-          <p className="text-[#9E9E9E]">
+    <div className="min-h-screen bg-muted/80 backdrop-blur-sm flex items-center justify-center">
+      <Card className="w-full max-w-md rounded-lg">
+        <CardContent className="p-6 text-center flex flex-col items-center gap-4">
+          <AlertCircle className="h-12 w-12 text-accent-red" />
+          <h2 className="font-medium">Error</h2>
+          <p className="text-muted-foreground">
             {error?.message || "Failed to load quiz"}
           </p>
           <Button
             onClick={() => reset()}
-            className="bg-[#E63946] hover:bg-[#d32d3a] rounded-[25px] transition-all duration-300"
+            className="bg-accent-red hover:bg-accent-red-dark rounded-lg transition-all duration-300"
           >
             Try Again
           </Button>

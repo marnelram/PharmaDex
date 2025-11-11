@@ -1,3 +1,7 @@
+# PharmaDex
+
+PharmaDex is an interactive quiz application with a retro-gaming aesthetic that helps users learn about pharmaceuticals and Pokémon through engaging quizzes.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -18,7 +22,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load custom fonts.
+
+## Styling Guide
+
+**IMPORTANT:** Before making any styling changes, please read the [STYLING_GUIDE.md](./STYLING_GUIDE.md) document.
+
+PharmaDex uses a consistent retro-gaming design system with:
+- **Tailwind CSS** for utility-first styling
+- **Custom retro components** for buttons, cards, and UI elements
+- **Consistent color system** using CSS variables
+- **Typography system** with Press Start 2P and VT323 fonts
+
+Key styling principles:
+- ✅ Always use design system colors (e.g., `bg-accent-red`, `bg-primary`)
+- ✅ Use semantic HTML for proper typography
+- ✅ Use `rounded-lg/md/sm` for border-radius
+- ❌ Never use hex colors directly in components
+- ❌ Never use non-standard fonts (Poppins, Raleway, etc.)
+- ❌ Never use arbitrary values for common properties
+
+For detailed guidelines, examples, and best practices, see [STYLING_GUIDE.md](./STYLING_GUIDE.md).
 
 ## Learn More
 
