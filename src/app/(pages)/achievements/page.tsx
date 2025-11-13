@@ -121,11 +121,11 @@ const badges = [
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-8">
+    <div className="min-h-screen flex flex-col items-center justify-start p-4 sm:p-8">
       <Card className="w-full max-w-4xl bg-muted">
-        <CardHeader className="relative p-4 border-b w-full">
+        <CardHeader className="relative p-3 sm:p-4 border-b w-full">
           <Link href="/">
-            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-6 sm:size-8 left-3 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
           </Link>
           <CardTitle className="text-center">
             Achievements & Badges
@@ -135,9 +135,9 @@ export default function AchievementsPage() {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <ScrollArea className="h-[70vh] rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        <CardContent className="p-0 sm:p-2">
+          <ScrollArea className="h-[calc(100dvh-200px)] sm:h-[calc(100dvh-180px)] rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-3 sm:p-4">
               {badges.map((badge) => (
                 <TooltipProvider key={badge.id}>
                   <Tooltip>
@@ -149,7 +149,7 @@ export default function AchievementsPage() {
                           badge.progress >= badge.total ? "animate-bounce" : ""
                         }`}
                       >
-                        <CardContent className="p-6 flex flex-col items-center">
+                        <CardContent className="p-4 sm:p-6 flex flex-col items-center">
                           {badge.icon && (
                             <badge.icon className="w-16 h-16 mb-4" />
                           )}

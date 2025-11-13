@@ -13,9 +13,10 @@ PharmaDex uses a **retro-gaming aesthetic** inspired by classic 8-bit and 16-bit
 3. [Typography](#typography)
 4. [Component Classes](#component-classes)
 5. [Animations](#animations)
-6. [Best Practices](#best-practices)
-7. [Common Patterns](#common-patterns)
-8. [Anti-Patterns (What NOT to Do)](#anti-patterns-what-not-to-do)
+6. [Spacing & Layout](#spacing--layout)
+7. [Best Practices](#best-practices)
+8. [Common Patterns](#common-patterns)
+9. [Anti-Patterns (What NOT to Do)](#anti-patterns-what-not-to-do)
 
 ---
 
@@ -264,6 +265,158 @@ All animations respect `prefers-reduced-motion` for accessibility.
 - **Slide**: Page transitions, modal entries
 - **Fade**: Content appearing, tooltips
 - **Shimmer**: Loading states, hover effects on cards
+
+---
+
+## Spacing & Layout
+
+### Responsive Spacing Principles
+
+Always use responsive spacing that adapts to mobile and desktop viewports. This prevents overflow issues and improves the user experience across all devices.
+
+### Mobile-First Spacing
+
+Use smaller spacing on mobile and larger spacing on desktop:
+
+```tsx
+// ✅ CORRECT - Responsive spacing
+<div className="p-4 sm:p-8">           // 16px mobile, 32px desktop
+<div className="gap-3 sm:gap-4">       // 12px mobile, 16px desktop
+<div className="space-y-3 sm:space-y-4">
+
+// ❌ WRONG - Fixed large spacing causes mobile overflow
+<div className="p-8">                  // Too much padding on mobile
+<div className="gap-8">                // Too much gap on mobile
+<div className="space-y-8">            // Too much vertical spacing
+```
+
+### Spacing Scale
+
+Use Tailwind's default spacing scale (4px base unit) with responsive modifiers:
+
+- **Tight spacing**: `gap-2 sm:gap-3` (8px → 12px)
+- **Normal spacing**: `gap-3 sm:gap-4` (12px → 16px)
+- **Comfortable spacing**: `gap-4 sm:gap-6` (16px → 24px)
+- **Spacious**: `gap-6 sm:gap-8` (24px → 32px)
+
+### Preventing Overflow
+
+To prevent content overflow, especially with headers:
+
+```tsx
+// ✅ CORRECT - Content fits within viewport
+<Card className="max-h-[calc(100dvh-120px)] sm:max-h-[calc(100dvh-100px)] flex flex-col">
+  <CardContent className="overflow-y-auto">
+    {/* Scrollable content */}
+  </CardContent>
+</Card>
+
+// ✅ CORRECT - Responsive padding on pages
+<div className="p-4 sm:p-8">
+
+// ❌ WRONG - Fixed height without accounting for header
+<Card className="h-screen">
+  {/* Content will overflow */}
+</Card>
+
+// ❌ WRONG - Large padding on mobile
+<div className="p-8">  {/* Use p-4 sm:p-8 instead */}
+```
+
+### Height Calculations
+
+When accounting for the fixed header:
+
+```tsx
+// Mobile: Header is ~130px
+// Desktop: Header is ~92px
+
+// ✅ CORRECT - Account for header height
+<div className="h-[calc(100dvh-130px)] sm:h-[calc(100dvh-92px)]">
+
+// For cards with max-height
+<Card className="max-h-[calc(100dvh-120px)] sm:max-h-[calc(100dvh-100px)]">
+```
+
+### ScrollArea Usage
+
+For content that may overflow, use ScrollArea component:
+
+```tsx
+// ✅ CORRECT - ScrollArea with calculated height
+<ScrollArea className="h-[calc(100dvh-200px)] sm:h-[calc(100dvh-180px)]">
+  <div className="space-y-4">
+    {/* Content */}
+  </div>
+</ScrollArea>
+
+// ✅ CORRECT - Fixed height ScrollArea
+<ScrollArea className="h-[70vh]">
+  {/* Content */}
+</ScrollArea>
+```
+
+### Icon and Button Sizing
+
+Use responsive sizing for interactive elements:
+
+```tsx
+// ✅ CORRECT - Responsive icon sizing
+<ChevronLeft className="size-6 sm:size-8" />
+
+// ✅ CORRECT - Responsive button spacing
+<div className="flex gap-3 sm:gap-4">
+  <Button>Click</Button>
+  <Button>Cancel</Button>
+</div>
+```
+
+### Common Spacing Patterns
+
+**Page Containers:**
+```tsx
+<div className="min-h-screen p-4 sm:p-8">
+  {/* Page content */}
+</div>
+```
+
+**Card Headers:**
+```tsx
+<CardHeader className="p-3 sm:p-4">
+  {/* Header content */}
+</CardHeader>
+```
+
+**Card Content:**
+```tsx
+<CardContent className="p-4 sm:p-6">
+  {/* Content */}
+</CardContent>
+```
+
+**Element Gaps:**
+```tsx
+<div className="flex flex-col gap-3 sm:gap-4">
+  {/* Elements with vertical spacing */}
+</div>
+```
+
+### Spacing Anti-Patterns
+
+```tsx
+// ❌ WRONG - Too much vertical spacing on mobile
+<div className="space-y-8">          // Use space-y-3 sm:space-y-4
+<div className="gap-8">               // Use gap-3 sm:gap-4
+
+// ❌ WRONG - Large padding causes overflow
+<CardContent className="p-8">        // Use p-4 sm:p-6
+
+// ❌ WRONG - Fixed large gaps
+<div className="flex gap-6">          // Use gap-3 sm:gap-4
+
+// ❌ WRONG - Not accounting for header
+<div className="h-screen">            // Use h-[calc(100dvh-120px)] sm:h-[calc(100dvh-100px)]
+```
 
 ---
 
@@ -553,6 +706,7 @@ import { Badge } from "@/components/ui/badge";
 
 When updating existing components or creating new ones:
 
+**Colors & Styles:**
 - [ ] Replace all hex color values with design system colors
 - [ ] Remove `font-['Poppins']` and `font-['Raleway']` - use semantic HTML
 - [ ] Fix incorrect Tailwind syntax (e.g., `bg-F5F5F5/20` → `bg-muted/20`)
@@ -560,8 +714,20 @@ When updating existing components or creating new ones:
 - [ ] Use `retro-button` classes instead of custom button styling
 - [ ] Use `retro-card` for card containers
 - [ ] Ensure animations use provided animation classes
-- [ ] Test on mobile (responsiveness)
+
+**Spacing & Layout:**
+- [ ] Use responsive spacing (`p-4 sm:p-8` instead of `p-8`)
+- [ ] Use responsive gaps (`gap-3 sm:gap-4` instead of `gap-8`)
+- [ ] Use responsive icon sizes (`size-6 sm:size-8`)
+- [ ] Account for header height in full-height components
+- [ ] Add overflow-y-auto to scrollable content areas
+- [ ] Use max-height with calc() for cards that may overflow
+
+**Testing:**
+- [ ] Test on mobile (responsiveness and spacing)
+- [ ] Test content overflow scenarios
 - [ ] Verify accessibility (semantic HTML, ARIA labels)
+- [ ] Check ScrollArea behavior on different content lengths
 
 ---
 
