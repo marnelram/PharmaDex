@@ -241,24 +241,20 @@ export default function Instructions({
         </Card>
       )}
 
-      {/* Start Button - Sticky at bottom on mobile */}
-      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-transparent pt-6 pb-4">
-        <Card className="retro-card">
-          <CardContent className="p-4 sm:p-6">
-            <Button
-              onClick={handleStartGame}
-              variant="default"
-              size="lg"
-              className="w-full text-xl py-6 sm:py-8 animate-retro-pulse font-bold"
-            >
-              ▶ Start {modeConfig.name} Mode ◀
-            </Button>
-          </CardContent>
-        </Card>
+      {/* Start Button - Sticky at bottom */}
+      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-transparent pt-8 pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6">
+        <Button
+          onClick={handleStartGame}
+          variant="default"
+          size="lg"
+          className="w-full text-xl py-6 sm:py-8 animate-retro-pulse font-bold shadow-lg"
+        >
+          ▶ Start {modeConfig.name} Mode ◀
+        </Button>
       </div>
 
-      {/* Bottom spacing */}
-      <div className="h-4" />
+      {/* Bottom spacing for scroll padding */}
+      <div className="h-8" />
     </div>
   );
 }
