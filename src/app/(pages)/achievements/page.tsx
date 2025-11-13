@@ -37,7 +37,7 @@ const badges = [
     description: "Correctly identify 50 Pokémon",
     progress: 30,
     total: 50,
-    color: "bg-[#E63946]",
+    color: "bg-accent-red",
   },
   {
     id: 2,
@@ -121,23 +121,23 @@ const badges = [
 
 export default function AchievementsPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-8">
-      <Card className="w-full max-w-4xl bg-[#e6e6e6]">
-        <CardHeader className="relative p-4 border-b w-full">
+    <div className="min-h-screen flex flex-col items-center justify-start p-4 sm:p-8">
+      <Card className="w-full max-w-4xl bg-muted">
+        <CardHeader className="relative p-3 sm:p-4 border-b w-full">
           <Link href="/">
-            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-6 sm:size-8 left-3 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
           </Link>
-          <CardTitle className="text-[44px] font-bold text-center font-['Poppins']">
+          <CardTitle className="text-center">
             Achievements & Badges
           </CardTitle>
-          <CardDescription className="text-[16px] font-['Raleway'] text-center">
+          <CardDescription className="text-center">
             Coming Soon!
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <ScrollArea className="h-[70vh] rounded-[15px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        <CardContent className="p-0 sm:p-2">
+          <ScrollArea className="h-[calc(100dvh-200px)] sm:h-[calc(100dvh-180px)] rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-3 sm:p-4">
               {badges.map((badge) => (
                 <TooltipProvider key={badge.id}>
                   <Tooltip>
@@ -145,20 +145,20 @@ export default function AchievementsPage() {
                       <Card
                         className={`${
                           badge.color
-                        } text-[#F5F5F5] hover:scale-105 transition-transform duration-200 rounded-[15px] ${
+                        } text-muted hover:scale-105 transition-transform duration-200 rounded-lg ${
                           badge.progress >= badge.total ? "animate-bounce" : ""
                         }`}
                       >
-                        <CardContent className="p-6 flex flex-col items-center">
+                        <CardContent className="p-4 sm:p-6 flex flex-col items-center">
                           {badge.icon && (
                             <badge.icon className="w-16 h-16 mb-4" />
                           )}
-                          <h3 className="text-[22px] font-medium font-['Poppins'] text-center mb-2">
+                          <h3 className="text-center mb-2">
                             {badge.name}
                           </h3>
                           <Badge
                             variant="outline"
-                            className="bg-F5F5F5/20 text-[#F5F5F5] mb-4 text-[14px] font-medium font-['Raleway']"
+                            className="bg-muted/20 text-muted mb-4"
                           >
                             {badge.progress >= badge.total
                               ? "Completed"
@@ -166,15 +166,15 @@ export default function AchievementsPage() {
                           </Badge>
                           <Progress
                             value={(badge.progress / badge.total) * 100}
-                            className="w-full bg-F5F5F5/30"
+                            className="w-full bg-muted/30"
                           />
-                          <p className="text-[14px] mt-2 font-['Raleway']">
+                          <p className="mt-2">
                             {badge.progress} / {badge.total}
                           </p>
                         </CardContent>
                       </Card>
                     </TooltipTrigger>
-                    <TooltipContent className="font-['Raleway'] text-[14px]">
+                    <TooltipContent>
                       <p>{badge.description}</p>
                     </TooltipContent>
                   </Tooltip>
