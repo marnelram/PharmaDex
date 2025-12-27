@@ -5,11 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import { ChevronDown } from "lucide-react";
 import { Answer, QuizAttempt } from "@prisma/client";
-import { cn } from "@/lib/utils"; // Add this import if not already present
 import { DisplayNameDialog } from "@/components/results/display-name-dialog";
 import { MistakeDialog } from "./mistakes-dialog";
+import { LeaderboardDialog } from "./leaderboard-dialog";
 import { PokeballPercentage } from "./pokeball";
 import { GAME_MODES, GameMode } from "@/lib/validation/types/gameMode";
 
@@ -78,7 +77,9 @@ export default function TimedResults({
             {/* Game Mode Badge */}
             <div className="flex items-center gap-2 px-4 py-2 bg-secondary/80 rounded-full pixel-border">
               <span className="text-lg">{modeConfig.icon}</span>
-              <span className="font-semibold text-sm">{modeConfig.name} Mode</span>
+              <span className="font-semibold text-sm">
+                {modeConfig.name} Mode
+              </span>
             </div>
 
             {/* Achievement Message */}
@@ -128,102 +129,27 @@ export default function TimedResults({
               </p>
             </div>
 
-            {/* Rank display with accordion */}
-            <div className="flex w-full flex-col">
-              <div
-                className={cn(
-                  "relative flex w-full justify-center items-center gap-2 border-2 p-2 bg-secondary/60 border-secondary pixel-border",
-                  showLeaderboard ? "rounded-t-lg" : "rounded-lg"
-                )}
-              >
-                <span className="font-medium">🏆 Rank:</span>
-                <div className="bg-accent-red-light px-4 py-1 rounded-full flex items-center gap-2 pixel-border">
-                  <div className="relative">
-                    <span className="font-bold">#{rank}</span>
-                    {rank <= 3 && (
-                      <span className="absolute -top-5 left-7 text-2xl animate-retro-bounce">
-                        {rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowLeaderboard(!showLeaderboard)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-secondary/20 transition-colors duration-300 rounded-lg p-1"
-                >
-                  <ChevronDown
-                    className={cn(
-                      "size-8 text-foreground transition-transform duration-200 animate-retro-pulse",
-                      showLeaderboard && "transform rotate-180"
-                    )}
-                  />
-                </button>
-              </div>
-
-              {/* Leaderboard accordion content */}
-              <div
-                className={cn(
-                  "grid gap-2 overflow-hidden transition-all duration-200 ",
-                  showLeaderboard
-                    ? "grid-rows-[1fr] opacity-100"
-                    : "grid-rows-[0fr] opacity-0"
-                )}
-              >
-                <div className="overflow-hidden">
-                  <div
-                    className={cn(
-                      "bg-secondary/60 p-4 shadow-sm pixel-border",
-                      showLeaderboard ? "rounded-b-lg" : "rounded-lg"
-                    )}
-                  >
-                    <h3 className="font-semibold text-lg mb-3">
-                      🏆 Top Scores:
-                    </h3>
-                    <div className="space-y-2">
-                      {topAttempts.map((attempt, index) => {
-                        // Show only first 10 and last 3 entries
-                        if (index < 10 || index >= topAttempts.length - 3) {
-                          return (
-                            <div
-                              key={attempt.id}
-                              className={cn(
-                                "flex items-center justify-between p-2 rounded-lg hover:bg-secondary/20 px-4 sm:px-6 transition-colors duration-200",
-                                attempt.id === quizAttempt.id &&
-                                  "bg-accent-red-light hover:bg-accent-red-light/80"
-                              )}
-                            >
-                              <div className="flex items-center gap-3">
-                                <span className="font-medium w-8">
-                                  #{index + 1}
-                                </span>
-                                <span>
-                                  {attempt.displayName ||
-                                    attempt.user?.name ||
-                                    "Anonymous"}
-                                </span>
-                              </div>
-                              <span className="font-bold">
-                                {attempt.totalScore.toLocaleString()}
-                              </span>
-                            </div>
-                          );
-                        } else if (index === 10) {
-                          // Add ellipsis between top 10 and bottom 3
-                          return (
-                            <div
-                              key="ellipsis"
-                              className="text-center py-2 text-foreground/60"
-                            >
-                              • • •
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
-                    </div>
-                  </div>
+            {/* Rank display with view leaderboard button */}
+            <div className="flex w-full justify-center items-center gap-3 border-2 p-3 bg-secondary/60 border-secondary pixel-border rounded-lg">
+              <span className="font-medium">🏆 Rank:</span>
+              <div className="bg-accent-red-light px-4 py-1 rounded-full flex items-center gap-2 pixel-border">
+                <div className="relative">
+                  <span className="font-bold">#{rank}</span>
+                  {rank <= 3 && (
+                    <span className="absolute -top-5 left-7 text-2xl animate-retro-bounce">
+                      {rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}
+                    </span>
+                  )}
                 </div>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowLeaderboard(true)}
+                className="ml-2 text-sm hover:bg-secondary/40"
+              >
+                View Top Scores
+              </Button>
             </div>
           </div>
 
@@ -261,6 +187,13 @@ export default function TimedResults({
         onSuccess={() => {
           router.refresh();
         }}
+      />
+
+      <LeaderboardDialog
+        open={showLeaderboard}
+        onOpenChange={setShowLeaderboard}
+        topAttempts={topAttempts}
+        currentAttemptId={quizAttempt.id}
       />
     </div>
   );

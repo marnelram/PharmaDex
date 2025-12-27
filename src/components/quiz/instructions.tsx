@@ -28,7 +28,7 @@ export default function Instructions({
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6 sm:py-6 space-y-6 overflow-y-auto max-h-[85vh]">
+    <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6 sm:py-6 space-y-6">
       {/* Back Button - Fixed at top */}
       <div className="flex items-center">
         <Button
@@ -242,7 +242,7 @@ export default function Instructions({
       )}
 
       {/* Start Button - Sticky at bottom */}
-      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-transparent pt-8 pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6">
+      <div className="sticky bottom-0 left-0 right-0 pt-8 pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 ">
         <Button
           onClick={handleStartGame}
           variant="default"

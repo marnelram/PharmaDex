@@ -322,18 +322,25 @@ export default function QuizComponent({
     );
   }
 
-  return (
-    <div className="w-full flex flex-col items-center sm:p-4 gap-4">
-      <h1 className="hidden sm:block text-center text-accent-red text-outline-thick animate-retro-glow">
-        Drug or Pokémon?
-      </h1>
-      {!isGameStarted ? (
+  // Instructions view needs scrolling, quiz view needs centering
+  if (!isGameStarted) {
+    return (
+      <div className="w-full h-full overflow-y-auto">
         <Instructions
           gameMode={gameMode}
           setIsGameStarted={setIsGameStarted}
           startTimeRef={startTimeRef}
         />
-      ) : gameMode === "practice" ? (
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center sm:p-4 gap-4">
+      <h1 className="hidden sm:block text-center text-accent-red text-outline-thick animate-retro-glow">
+        Drug or Pokémon?
+      </h1>
+      {gameMode === "practice" ? (
         <PracticeQuiz
           progress={progress}
           showFeedback={showFeedback}
