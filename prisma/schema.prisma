@@ -58,11 +58,25 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  topScore      Int       @default(0)
+  topScore      Int       @default(0) // Legacy: kept for backward compatibility
   achievements  UserAchievement[]
   quizAttempts  QuizAttempt[]
   badges        UserBadge[]
   stats         Stats?
+  highScores    UserHighScore[]
+}
+
+model UserHighScore {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameMode  String   // "classic", "lightning", "timeAttack", "blitz", "survival", "endless"
+  highScore Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, gameMode])
+  @@index([gameMode, highScore(sort: Desc)]) // For leaderboard queries per game mode
 }
 
 model Stats {

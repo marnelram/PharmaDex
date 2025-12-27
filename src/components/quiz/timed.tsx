@@ -19,7 +19,6 @@ interface TimedQuizProps {
   gameMode: GameMode;
   lives: number;
   questionsAnswered: number;
-  totalTimeRemaining: number;
 }
 
 export default function TimedQuiz({
@@ -35,7 +34,6 @@ export default function TimedQuiz({
   gameMode,
   lives,
   questionsAnswered,
-  totalTimeRemaining,
 }: TimedQuizProps) {
   const modeConfig = GAME_MODES[gameMode];
   const timerDuration = modeConfig.timePerQuestion || 5;

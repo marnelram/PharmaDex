@@ -6,6 +6,61 @@ PharmaDex uses a **retro-gaming aesthetic** inspired by classic 8-bit and 16-bit
 
 ---
 
+## Quick Reference
+
+Use this section for fast lookups. See detailed sections below for more information.
+
+### Layout & Spacing
+```tsx
+className="max-w-2xl"                    // Small cards/forms
+className="max-w-4xl"                    // Medium content
+className="max-w-6xl"                    // Wide layouts/grids
+className="p-4 sm:p-6"                   // Card padding (mobile -> desktop)
+className="gap-4"                        // Space between flex/grid items
+className="hidden sm:block"              // Show on desktop only
+className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+```
+
+### Colors (Always Use CSS Variables)
+```tsx
+className="text-foreground"              // Main text
+className="text-muted-foreground"        // Secondary text
+className="text-accent-red"              // Accent red (#eb4755)
+className="bg-secondary/40"              // Translucent secondary
+className="bg-accent-red/10"             // Light red tint
+className="border-2 border-accent-red/30"
+```
+
+### Cards & Buttons
+```tsx
+<Card className="retro-card">
+  <CardContent className="p-4 sm:p-6">
+    <Button variant="default" size="lg">Red Primary</Button>
+    <Button variant="secondary">Green/Cream</Button>
+    <Button variant="ghost">Transparent</Button>
+  </CardContent>
+</Card>
+```
+
+### Typography (Use Semantic HTML)
+```tsx
+<h1>Big Title</h1>     // Press Start 2P, 44px
+<h2>Section</h2>       // Press Start 2P, 34px
+<h3>Subsection</h3>    // Press Start 2P, 28px
+<p>Body text</p>       // VT323, 20px
+// NEVER add custom fonts like font-['Poppins']
+```
+
+### Animations
+```tsx
+className="animate-retro-pulse"          // Gentle scaling pulse
+className="animate-retro-glow"           // Brightness glow
+className="animate-retro-bounce"         // Bounce once
+className="animate-retro-slide"          // Slide in from left
+```
+
+---
+
 ## Table of Contents
 
 1. [Technology Stack](#technology-stack)
@@ -37,13 +92,13 @@ PharmaDex uses a **retro-gaming aesthetic** inspired by classic 8-bit and 16-bit
 Use CSS variables or Tailwind utilities. **NEVER use hex values directly in components.**
 
 ```tsx
-// ✅ CORRECT - Use CSS variables
+// CORRECT - Use CSS variables
 <div className="bg-accent-red text-primary">
 
-// ✅ CORRECT - Use Tailwind utilities with color names
+// CORRECT - Use Tailwind utilities with color names
 <div className="bg-primary text-foreground">
 
-// ❌ WRONG - Direct hex values
+// WRONG - Direct hex values
 <div className="bg-[#E63946] text-[#F5F5F5]">
 ```
 
@@ -110,7 +165,7 @@ Use CSS variables or Tailwind utilities. **NEVER use hex values directly in comp
 Headers automatically get correct font sizes and families:
 
 ```tsx
-// ✅ CORRECT - Use semantic HTML
+// CORRECT - Use semantic HTML
 <h1>PharmaDex</h1>           // 44px (28px mobile)
 <h2>Quiz Results</h2>         // 34px (24px mobile)
 <h3>Section Title</h3>        // 28px (18px mobile)
@@ -120,7 +175,7 @@ Headers automatically get correct font sizes and families:
 <p>Body text here</p>          // 20px (16px mobile)
 <label>Input Label</label>     // 16px (14px mobile)
 
-// ❌ WRONG - Don't override with font-['Poppins'] or font-['Raleway']
+// WRONG - Don't override with font-['Poppins'] or font-['Raleway']
 <h1 className="font-['Poppins']">Wrong Font</h1>
 ```
 
@@ -140,43 +195,43 @@ Headers automatically include retro-style text shadows. Additional utilities:
 
 ### Buttons
 
-Use the `.retro-button` base class with variant modifiers:
+**PREFERRED: Use the shadcn Button component:**
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button variant="default" size="lg">      // Red primary
+<Button variant="secondary" size="lg">    // Green/cream
+<Button variant="ghost" size="sm">        // Transparent
+<Button variant="destructive">            // Red danger
+
+// With animation
+<Button
+  variant="default"
+  size="lg"
+  className="hover:animate-retro-pulse"
+>
+  Click Me
+</Button>
+```
+
+**Alternative: Use `.retro-button` base class with variant modifiers:**
 
 ```tsx
 // Primary button (red)
-<button className="retro-button retro-button-red">
-  Click Me
-</button>
+<button className="retro-button retro-button-red">Click Me</button>
 
 // Secondary button (green/cream)
-<button className="retro-button retro-button-secondary">
-  Cancel
-</button>
+<button className="retro-button retro-button-secondary">Cancel</button>
 
 // Success button (green)
-<button className="retro-button retro-button-success">
-  Confirm
-</button>
-
-// Destructive button (red danger)
-<button className="retro-button retro-button-destructive">
-  Delete
-</button>
+<button className="retro-button retro-button-success">Confirm</button>
 
 // Outline button (transparent with border)
-<button className="retro-button retro-button-outline">
-  Outline
-</button>
+<button className="retro-button retro-button-outline">Outline</button>
 
 // Ghost button (minimal styling)
-<button className="retro-button retro-button-ghost">
-  Ghost
-</button>
-
-// Link button (looks like a link)
-<button className="retro-button retro-button-link">
-  Link Style
-</button>
+<button className="retro-button retro-button-ghost">Ghost</button>
 ```
 
 **Button features:**
@@ -191,10 +246,11 @@ Use the `.retro-button` base class with variant modifiers:
 Use `.retro-card` for card containers:
 
 ```tsx
-<div className="retro-card p-6">
-  <h3>Card Title</h3>
-  <p>Card content</p>
-</div>
+<Card className="retro-card">
+  <CardContent className="p-4 sm:p-6">
+    {/* Your content */}
+  </CardContent>
+</Card>
 ```
 
 **Card features:**
@@ -203,6 +259,24 @@ Use `.retro-card` for card containers:
 - 16px border-radius
 - Inset shadows for depth
 - White background
+
+### Info Boxes (inside cards)
+
+```tsx
+<div className="bg-secondary/40 p-4 rounded-lg pixel-border">
+  <h4 className="font-semibold mb-2">Title</h4>
+  <p className="text-muted-foreground">Content</p>
+</div>
+```
+
+### Highlight Box
+
+```tsx
+<div className="bg-accent-red/10 border-2 border-accent-red/30 p-4 rounded-lg">
+  <h3 className="font-bold mb-3">Important Info</h3>
+  <p>Content</p>
+</div>
+```
 
 ### Borders
 
@@ -272,11 +346,11 @@ All animations respect `prefers-reduced-motion` for accessibility.
 ### 1. Always Use Design System Colors
 
 ```tsx
-// ✅ CORRECT
+// CORRECT
 <div className="bg-accent-red text-primary">
 <div className="bg-secondary-light border-border">
 
-// ❌ WRONG
+// WRONG
 <div className="bg-[#E63946] text-[#F5F5F5]">
 <div className="bg-blue-400 border-black">
 ```
@@ -284,12 +358,12 @@ All animations respect `prefers-reduced-motion` for accessibility.
 ### 2. Use CSS Variable Radius
 
 ```tsx
-// ✅ CORRECT - Uses --radius variable (16px)
+// CORRECT - Uses --radius variable (16px)
 <div className="rounded-lg">         // var(--radius)
 <div className="rounded-md">         // var(--radius) - 2px
 <div className="rounded-sm">         // var(--radius) - 4px
 
-// ❌ WRONG - Hardcoded values
+// WRONG - Hardcoded values
 <div className="rounded-[15px]">
 <div className="rounded-[25px]">
 ```
@@ -299,12 +373,12 @@ All animations respect `prefers-reduced-motion` for accessibility.
 Use Tailwind's default spacing scale (4px base unit):
 
 ```tsx
-// ✅ CORRECT - Consistent spacing
+// CORRECT - Consistent spacing
 <div className="p-4 gap-4">         // 16px
 <div className="p-6 gap-6">         // 24px
 <div className="p-8 gap-8">         // 32px
 
-// ❌ WRONG - Random spacing
+// WRONG - Random spacing
 <div className="p-[17px] gap-[23px]">
 ```
 
@@ -313,11 +387,11 @@ Use Tailwind's default spacing scale (4px base unit):
 Use proper HTML elements for better accessibility:
 
 ```tsx
-// ✅ CORRECT
+// CORRECT
 <button className="retro-button retro-button-red">Click</button>
 <h1>Page Title</h1>
 
-// ❌ WRONG
+// WRONG
 <div className="retro-button retro-button-red">Click</div>
 <div className="text-4xl font-bold">Page Title</div>
 ```
@@ -325,7 +399,7 @@ Use proper HTML elements for better accessibility:
 ### 5. Mobile-First Responsive Design
 
 ```tsx
-// ✅ CORRECT - Mobile first, then larger screens
+// CORRECT - Mobile first, then larger screens
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 <h1 className="text-2xl md:text-4xl">Title</h1>
 
@@ -347,12 +421,46 @@ Use proper HTML elements for better accessibility:
 </div>
 ```
 
+### Game Mode Card
+
+```tsx
+<Card className="retro-card hover:scale-105 transition-transform cursor-pointer border-2 hover:border-primary">
+  <CardContent className="p-4">
+    <div className="text-center mb-3">
+      <div className="text-4xl mb-2">icon</div>
+      <h3 className="font-bold text-lg">Mode Name</h3>
+    </div>
+    <p className="text-sm text-muted-foreground text-center mb-4">
+      Description
+    </p>
+    <Button variant="default" size="sm" className="w-full">
+      Select
+    </Button>
+  </CardContent>
+</Card>
+```
+
+### Two-Column Info Grid
+
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div className="bg-secondary/40 p-4 rounded-lg pixel-border">
+    <div className="flex items-center gap-2 mb-2">
+      <span className="text-xl">icon</span>
+      <h4 className="font-semibold">Questions</h4>
+    </div>
+    <p className="text-muted-foreground">25 questions</p>
+  </div>
+  {/* More info boxes */}
+</div>
+```
+
 ### Button Group
 
 ```tsx
 <div className="flex gap-4 justify-center">
-  <button className="retro-button retro-button-red">Confirm</button>
-  <button className="retro-button retro-button-secondary">Cancel</button>
+  <Button variant="default">Confirm</Button>
+  <Button variant="secondary">Cancel</Button>
 </div>
 ```
 
@@ -361,11 +469,34 @@ Use proper HTML elements for better accessibility:
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   {items.map(item => (
-    <div key={item.id} className="retro-card p-4">
-      {/* Card content */}
-    </div>
+    <Card key={item.id} className="retro-card">
+      <CardContent className="p-4">
+        {/* Card content */}
+      </CardContent>
+    </Card>
   ))}
 </div>
+```
+
+### Scrollable Container
+
+```tsx
+<div className="w-full max-w-4xl px-4 py-6 overflow-y-auto max-h-[85vh]">
+  {/* Content */}
+</div>
+```
+
+### Back Button
+
+```tsx
+<Button
+  variant="ghost"
+  size="sm"
+  onClick={() => router.push("/quiz")}
+>
+  <ArrowLeft className="h-4 w-4 mr-2" />
+  Back
+</Button>
 ```
 
 ### Form Input
@@ -397,88 +528,119 @@ Use proper HTML elements for better accessibility:
 
 ## Anti-Patterns (What NOT to Do)
 
-### ❌ Don't Use Hex Colors Directly
+### Don't Use Hex Colors Directly
 
 ```tsx
-// ❌ WRONG
+// WRONG
 <div className="bg-[#E63946]">
 <span style={{ color: '#F5F5F5' }}>
 
-// ✅ CORRECT
+// CORRECT
 <div className="bg-accent-red">
 <span className="text-muted">
 ```
 
-### ❌ Don't Use Non-Standard Fonts
+### Don't Use Non-Standard Fonts
 
 ```tsx
-// ❌ WRONG
+// WRONG
 <h1 className="font-['Poppins']">Title</h1>
 <p className="font-['Raleway']">Text</p>
 
-// ✅ CORRECT - Fonts are automatic
+// CORRECT - Fonts are automatic
 <h1>Title</h1>  {/* Press Start 2P */}
 <p>Text</p>     {/* VT323 */}
 ```
 
-### ❌ Don't Use Incorrect Tailwind Syntax
+### Don't Create Custom Gradients
 
 ```tsx
-// ❌ WRONG - Missing brackets
+// WRONG
+<div style={{background: 'linear-gradient(...)'}} />
+
+// CORRECT - Use existing classes
+<Card className="retro-card">
+```
+
+### Don't Use Inline Styles
+
+```tsx
+// WRONG
+<div style={{padding: '20px', color: '#eb4755'}} />
+
+// CORRECT
+<div className="p-4 text-accent-red" />
+```
+
+### Don't Use Incorrect Tailwind Syntax
+
+```tsx
+// WRONG - Missing brackets
 <div className="bg-F5F5F5/20">
 <div className="text-E63946/50">
 
-// ✅ CORRECT
+// CORRECT
 <div className="bg-muted/20">
 <div className="bg-accent-red/50">
 ```
 
-### ❌ Don't Use Arbitrary Rounded Values
+### Don't Use Arbitrary Rounded Values
 
 ```tsx
-// ❌ WRONG
+// WRONG
 <div className="rounded-[15px]">
 <div className="rounded-[25px]">
 
-// ✅ CORRECT
+// CORRECT
 <div className="rounded-lg">   {/* Uses --radius = 16px */}
 <div className="rounded-md">   {/* 14px */}
 <div className="rounded-sm">   {/* 12px */}
 ```
 
-### ❌ Don't Mix Styling Approaches
+### Don't Mix Styling Approaches
 
 ```tsx
-// ❌ WRONG - Mixing inline styles with classes
+// WRONG - Mixing inline styles with classes
 <div
   className="retro-card"
   style={{ backgroundColor: '#ffffff', padding: '20px' }}
 >
 
-// ✅ CORRECT - Use only Tailwind utilities
+// CORRECT - Use only Tailwind utilities
 <div className="retro-card bg-card p-5">
 ```
 
-### ❌ Don't Override Retro Component Styles
+### Don't Override Retro Component Styles
 
 ```tsx
-// ❌ WRONG - Fighting with retro styles
+// WRONG - Fighting with retro styles
 <button className="retro-button retro-button-red rounded-none border-0">
 
-// ✅ CORRECT - Use appropriate variant or create new component
+// CORRECT - Use appropriate variant or create new component
 <button className="retro-button retro-button-outline">
 ```
 
-### ❌ Don't Use Generic Tailwind Colors
+### Don't Use Generic Tailwind Colors
 
 ```tsx
-// ❌ WRONG - Breaks design system
+// WRONG - Breaks design system
 <div className="bg-blue-400 text-red-500">
 <div className="bg-green-600 border-yellow-300">
 
-// ✅ CORRECT - Use design system colors
+// CORRECT - Use design system colors
 <div className="bg-secondary text-accent-red">
 <div className="bg-success border-accent-red">
+```
+
+### Don't Fight !important
+
+```tsx
+// WRONG - Creates specificity hell
+<div className="bg-blue-500 !text-white !p-8">
+
+// CORRECT - Work with the system
+<Card className="retro-card">
+  <CardContent className="p-4 sm:p-6 text-foreground">
 ```
 
 ---
@@ -496,7 +658,7 @@ All reusable UI components are in `/src/components/ui/`:
 - `progress.tsx` - Progress bar component
 - `dialog.tsx` - Modal dialog component
 - `scroll-area.tsx` - Custom scrollbar component
-- And 17 more...
+- And more...
 
 ### Using UI Components
 
@@ -512,7 +674,7 @@ import { Badge } from "@/components/ui/badge";
   </CardHeader>
   <CardContent>
     <Button variant="default">Click Me</Button>
-    <Badge variant="pokemon">Pokémon</Badge>
+    <Badge variant="pokemon">Pokemon</Badge>
   </CardContent>
 </Card>
 ```
@@ -531,7 +693,7 @@ import { Badge } from "@/components/ui/badge";
 │   └── (pages)/             // All page components
 │
 ├── components/
-│   ├── ui/                  // Reusable UI components (24 files)
+│   ├── ui/                  // Reusable UI components
 │   ├── quiz/                // Quiz-specific components
 │   ├── results/             // Results-specific components
 │   ├── forms/               // Form components
@@ -549,19 +711,18 @@ import { Badge } from "@/components/ui/badge";
 
 ---
 
-## Migration Checklist
+## Quick Start Checklist
 
-When updating existing components or creating new ones:
+When adding a new feature:
 
-- [ ] Replace all hex color values with design system colors
-- [ ] Remove `font-['Poppins']` and `font-['Raleway']` - use semantic HTML
-- [ ] Fix incorrect Tailwind syntax (e.g., `bg-F5F5F5/20` → `bg-muted/20`)
-- [ ] Replace arbitrary border-radius with `rounded-lg/md/sm`
-- [ ] Use `retro-button` classes instead of custom button styling
-- [ ] Use `retro-card` for card containers
-- [ ] Ensure animations use provided animation classes
-- [ ] Test on mobile (responsiveness)
-- [ ] Verify accessibility (semantic HTML, ARIA labels)
+1. Use `<Card className="retro-card">` for containers
+2. Use `<Button variant="...">` for buttons
+3. Use semantic HTML (`h1`, `h2`, `p`) for text
+4. Use CSS variables for colors (`text-accent-red`)
+5. Use Tailwind utilities for spacing (`p-4`, `gap-4`)
+6. Add responsive breakpoints (`sm:`, `md:`, `lg:`)
+7. Use existing animation classes (`animate-retro-pulse`)
+8. NEVER use custom fonts or gradients
 
 ---
 
@@ -569,12 +730,12 @@ When updating existing components or creating new ones:
 
 ### Quick Reference
 
-**Need a color?** → Use `bg-accent-red`, `bg-primary`, `bg-secondary`, or `bg-muted`
-**Need a button?** → Use `retro-button` with variant class
-**Need a card?** → Use `retro-card`
-**Need an animation?** → Use `animate-retro-*` classes
-**Need spacing?** → Use Tailwind scale: `p-4`, `gap-4`, `m-4`
-**Need border radius?** → Use `rounded-lg/md/sm`
+**Need a color?** -> Use `bg-accent-red`, `bg-primary`, `bg-secondary`, or `bg-muted`
+**Need a button?** -> Use `<Button variant="...">` or `retro-button` with variant class
+**Need a card?** -> Use `retro-card`
+**Need an animation?** -> Use `animate-retro-*` classes
+**Need spacing?** -> Use Tailwind scale: `p-4`, `gap-4`, `m-4`
+**Need border radius?** -> Use `rounded-lg/md/sm`
 
 ### Common Questions
 
@@ -585,7 +746,7 @@ A: No. Always use the design system colors to maintain consistency.
 A: No. Only Press Start 2P (headers) and VT323 (body) maintain the retro aesthetic.
 
 **Q: Can I create custom button styles?**
-A: Use existing retro-button variants. If you need a new variant, discuss with the team first.
+A: Use existing Button variants or retro-button variants. If you need a new variant, add it to the component.
 
 **Q: What about dark mode?**
 A: Dark mode is supported via CSS variables. All colors automatically adapt.
@@ -600,5 +761,4 @@ A: Dark mode is supported via CSS variables. All colors automatically adapt.
 
 ---
 
-**Last Updated:** 2025-11-11
-**Version:** 1.0.0
+**Last Updated:** 2025-12-26

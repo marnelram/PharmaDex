@@ -32,7 +32,6 @@ export default function QuizComponent({
   const [multiplier, setMultiplier] = React.useState(1);
   const [isGameStarted, setIsGameStarted] = React.useState(false);
   const [lives, setLives] = React.useState(3);
-  const [totalTimeRemaining, setTotalTimeRemaining] = React.useState(60);
   const [questionsAnswered, setQuestionsAnswered] = React.useState(0);
 
   const { questions, quizId } = quiz;
@@ -365,7 +364,6 @@ export default function QuizComponent({
           gameMode={gameMode}
           lives={lives}
           questionsAnswered={questionsAnswered}
-          totalTimeRemaining={totalTimeRemaining}
         />
       )}
     </div>
