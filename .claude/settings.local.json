@@ -2,7 +2,19 @@
   "permissions": {
     "allow": [
       "Bash(npm run lint:*)",
-      "Bash(npx tsc --noEmit)"
+      "Bash(npx tsc --noEmit)",
+      "Bash(npm run build:*)",
+      "Bash(ls:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(npx prisma migrate:*)",
+      "Bash(npx prisma generate)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd UserHighScore model and fix pre-merge issues\n\n- Add UserHighScore model to track high scores per game mode\n- Fix ESLint errors \\(remove unused totalTimeRemaining state/prop\\)\n- Consolidate duplicate style guides into single STYLING_GUIDE.md\n- Add migration for UserHighScore table with optimized indexes\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "Bash(where gh:*)"
     ]
   }
 }

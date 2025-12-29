@@ -12,7 +12,7 @@ enum DosageForm {
   POWDER
   INJECTION
   LIQUID
-  DROP
+  DROPS
   CREAM
   INHALER
   INSERT
