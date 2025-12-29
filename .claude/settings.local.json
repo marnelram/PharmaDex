@@ -22,7 +22,11 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__get-library-docs",
       "Bash(pnpm remove:*)",
-      "Bash(npx @better-auth/cli@latest generate:*)"
+      "Bash(npx @better-auth/cli@latest generate:*)",
+      "Bash(node --version:*)",
+      "Bash(git mv:*)",
+      "Bash(npx next build:*)",
+      "Bash(pnpm install:*)"
     ]
   }
 }

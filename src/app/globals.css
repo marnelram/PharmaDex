@@ -25,6 +25,7 @@
    1. FONT IMPORTS
    ============================================ */
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap");
+@import "retro-components.css";
 
 /* ============================================
    2. TAILWIND DIRECTIVES
@@ -303,9 +304,8 @@
    - .pixel-perfect
 
    See: retro-components.css for full definitions
+   (imported at top of file per CSS spec)
    ============================================ */
-
-@import "retro-components.css";
 
 /* ============================================
    7. ANIMATIONS
