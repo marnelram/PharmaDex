@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Fact, Pokemon } from "@prisma/client";
+import { Fact, Pokemon } from "@/generated/prisma/browser";
 
 export type PokemonWithFacts = Pokemon & {
   facts: Fact[];

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DosageForm, Drug, Fact } from "@prisma/client";
+import { DosageForm, Drug, Fact } from "@/generated/prisma/browser";
 
 export type DrugWithFacts = Drug & {
   facts: Fact[];

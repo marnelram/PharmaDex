@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Answer } from "@prisma/client";
+import { Answer } from "@/generated/prisma/browser";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface MistakeDialogProps {

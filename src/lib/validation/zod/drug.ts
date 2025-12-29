@@ -1,4 +1,4 @@
-import { DosageForm } from "@prisma/client";
+import { DosageForm } from "@/generated/prisma/browser";
 import { z } from "zod";
 
 export const drugFormSchema = z.object({

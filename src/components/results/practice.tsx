@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import { Answer, QuizAttempt } from "@prisma/client";
+import { Answer, QuizAttempt } from "@/generated/prisma/browser";
 import { useState } from "react";
 import { MistakeDialog } from "./mistakes-dialog";
 import { PokeballPercentage } from "./pokeball";

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
-import { Answer, QuizAttempt } from "@prisma/client";
+import { Answer, QuizAttempt } from "@/generated/prisma/browser";
 import { DisplayNameDialog } from "@/components/results/display-name-dialog";
 import { MistakeDialog } from "./mistakes-dialog";
 import { LeaderboardDialog } from "./leaderboard-dialog";

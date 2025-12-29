@@ -3,8 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Trophy, Medal, UserIcon, ChevronLeft } from "lucide-react";
-import { User } from "@prisma/client";
-import { QuizAttempt } from "@prisma/client";
+import { User, QuizAttempt } from "@/generated/prisma/browser";
 import Link from "next/link";
 
 interface LeaderboardProps {

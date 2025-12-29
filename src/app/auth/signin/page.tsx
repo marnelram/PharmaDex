@@ -1,11 +1,19 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const router = useRouter();
+
+  const handleGoogleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="bg-primary-light rounded-[15px] shadow-xl p-8 max-w-md w-full space-y-8">
@@ -20,9 +28,7 @@ export default function SignIn() {
         {/* Sign In Options */}
         <div className="space-y-6">
           <button
-            onClick={() =>
-              signIn("google", { callbackUrl: "/", redirect: true })
-            }
+            onClick={handleGoogleSignIn}
             className="w-full flex items-center justify-center gap-3 bg-primary-light border-2 border-muted-foreground rounded-[25px] py-4 px-6 font-medium hover:scale-105 transition-transform duration-200"
           >
             <Image

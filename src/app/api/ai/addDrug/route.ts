@@ -19,7 +19,7 @@ const drugSchema = z.object({
         "POWDER",
         "INJECTION",
         "LIQUID",
-        "DROP",
+        "DROPS",
         "CREAM",
         "INHALER",
         "INSERT",

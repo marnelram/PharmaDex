@@ -1,5 +1,5 @@
 import { Quiz } from "@/lib/validation/types/quiz";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth";
 import QuizComponent from "@/components/quiz/quiz";
 import { headers } from "next/headers";
 import { GameMode, GAME_MODES } from "@/lib/validation/types/gameMode";
@@ -19,11 +19,13 @@ export default async function QuizPage({ params }: QuizPageProps) {
     notFound();
   }
 
-  // Get the session
-  const session = await auth();
+  // Get the headers and session
+  const headersList = await headers();
+  const session = await auth.api.getSession({
+    headers: headersList,
+  });
 
   // Get the host from headers
-  const headersList = await headers();
   const host = headersList.get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 

@@ -10,7 +10,7 @@ import {
   SprayCan,
   Syringe,
 } from "lucide-react";
-import { DosageForm } from "@prisma/client";
+import { DosageForm } from "@/generated/prisma/browser";
 
 interface DosageFormConfig {
   icon: React.ComponentType<{ className?: string }>;
@@ -34,7 +34,7 @@ export const dosageFormConfig: Record<DosageForm, DosageFormConfig> = {
     icon: Droplet,
     label: "Liquid",
   },
-  DROP: {
+  DROPS: {
     icon: Eye,
     label: "Drops",
   },

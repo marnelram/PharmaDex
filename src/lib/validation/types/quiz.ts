@@ -1,4 +1,4 @@
-import { Drug, Pokemon } from "@prisma/client";
+import { Drug, Pokemon } from "@/generated/prisma/browser";
 
 export type Questions = Array<
   (Drug & { type: "Drug" }) | (Pokemon & { type: "Pokemon" })

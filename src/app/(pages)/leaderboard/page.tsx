@@ -1,10 +1,13 @@
 import React from "react";
 import Leaderboard from "@/components/leaderboard";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import prisma from "@/lib/db/prisma";
 
 export default async function LeaderboardPage() {
-  const session = await auth();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const userId = session?.user.id;
 
   const user = await prisma.user.findFirst({
