@@ -125,11 +125,9 @@ export default function AchievementsPage() {
       <Card className="w-full max-w-4xl bg-muted">
         <CardHeader className="relative p-4 border-b w-full">
           <Link href="/">
-            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-6 sm:size-8 left-3 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
           </Link>
-          <CardTitle className="text-center">
-            Achievements & Badges
-          </CardTitle>
+          <CardTitle className="text-center">Achievements & Badges</CardTitle>
           <CardDescription className="text-center">
             Coming Soon!
           </CardDescription>
@@ -149,13 +147,11 @@ export default function AchievementsPage() {
                           badge.progress >= badge.total ? "animate-bounce" : ""
                         }`}
                       >
-                        <CardContent className="p-6 flex flex-col items-center">
+                        <CardContent className="p-4 sm:p-6 flex flex-col items-center">
                           {badge.icon && (
                             <badge.icon className="w-16 h-16 mb-4" />
                           )}
-                          <h3 className="text-center mb-2">
-                            {badge.name}
-                          </h3>
+                          <h3 className="text-center mb-2">{badge.name}</h3>
                           <Badge
                             variant="outline"
                             className="bg-muted/20 text-muted mb-4"

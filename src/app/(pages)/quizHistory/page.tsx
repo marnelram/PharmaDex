@@ -9,16 +9,12 @@ export default function QuizHistoryPage() {
       <Card className="w-full max-w-2xl rounded-lg shadow-lg">
         <CardHeader className="relative p-4 border-b w-full">
           <Link href="/">
-            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-8 left-4 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
+            <ChevronLeft className="hover:translate-x-[-5px] transition-transform absolute size-6 sm:size-8 left-3 sm:left-12 top-1/2 translate-y-[-50%] cursor-pointer" />
           </Link>
-          <h1 className="text-center font-bold">
-            Quiz History
-          </h1>
+          <h1 className="text-center font-bold">Quiz History</h1>
         </CardHeader>
         <CardContent className="p-8">
-          <h2 className="font-bold text-center mb-8">
-            Coming Soon!
-          </h2>
+          <h2 className="font-bold text-center mb-8">Coming Soon!</h2>
         </CardContent>
       </Card>
     </div>
