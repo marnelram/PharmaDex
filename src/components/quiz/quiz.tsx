@@ -12,8 +12,15 @@ import { Quiz } from "@/lib/validation/types/quiz";
 import TimedQuiz from "./timed";
 import Instructions from "./instructions";
 import PracticeQuiz from "./practice";
+import { GameMode, GAME_MODES } from "@/lib/validation/types/gameMode";
 
-export default function QuizComponent({ quiz }: { quiz: Quiz }) {
+export default function QuizComponent({
+  quiz,
+  gameMode,
+}: {
+  quiz: Quiz;
+  gameMode: GameMode;
+}) {
   const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const [totalScore, setTotalScore] = React.useState(0);
@@ -24,9 +31,11 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
   const [streak, setStreak] = React.useState(0);
   const [multiplier, setMultiplier] = React.useState(1);
   const [isGameStarted, setIsGameStarted] = React.useState(false);
-  const [isPracticeMode, setIsPracticeMode] = React.useState(false);
+  const [lives, setLives] = React.useState(3);
+  const [questionsAnswered, setQuestionsAnswered] = React.useState(0);
 
   const { questions, quizId } = quiz;
+  const modeConfig = GAME_MODES[gameMode];
 
   const handleTimeComplete = () => {
     if (!showFeedback) {
@@ -67,7 +76,11 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     error: quizAttemptError,
     isError: isQuizAttemptError,
   } = useMutation({
-    mutationFn: async (data: { quizId: string; totalScore: number }) => {
+    mutationFn: async (data: {
+      quizId: string;
+      totalScore: number;
+      gameMode: GameMode;
+    }) => {
       const response = await fetch("/api/quiz/complete", {
         method: "POST",
         body: JSON.stringify(data),
@@ -81,24 +94,28 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
 
   const calculateScore = (elapsedTime: number) => {
     let baseScore;
+    const timeLimit = modeConfig.timePerQuestion || 5;
+
     // If remaining time is between 4.95 and 5 seconds (answered within first 0.05s)
     if (elapsedTime <= 0.1) {
       baseScore = 1000;
-    } else if (elapsedTime >= 4.9) {
+    } else if (elapsedTime >= timeLimit - 0.1) {
       baseScore = 100;
     } else {
       const x = elapsedTime;
       baseScore = Math.round(25 + 1000 * Math.exp(-0.5 * (x - 0.05)));
     }
 
-    // Apply streak multiplier
-    return Math.round(baseScore * multiplier);
+    // Apply streak multiplier and mode multiplier
+    return Math.round(baseScore * multiplier * modeConfig.scoreMultiplier);
   };
 
   const handleAnswer = async (answer: string) => {
     const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
     const correct = answer === questions[currentQuestion].type;
     let currentScore = 0;
+
+    setQuestionsAnswered((prev) => prev + 1);
 
     if (correct) {
       // Increment streak and update multiplier
@@ -109,21 +126,36 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       const newMultiplier = calculateMultiplier(newStreak);
       setMultiplier(newMultiplier);
 
-      currentScore = calculateScore(elapsedTime);
-      setTotalScore((prev) => prev + currentScore);
+      if (gameMode !== "practice") {
+        currentScore = calculateScore(elapsedTime);
+        setTotalScore((prev) => prev + currentScore);
+      }
     } else {
+      // Handle wrong answer based on game mode
+      if (gameMode === "endless") {
+        // Endless mode: game ends on first wrong answer
+        setIsQuizComplete(true);
+      } else if (gameMode === "survival") {
+        // Survival mode: lose a life
+        const newLives = lives - 1;
+        setLives(newLives);
+        if (newLives === 0) {
+          setIsQuizComplete(true);
+        }
+      }
+
       // Reset streak and multiplier on wrong answer
       setStreak(0);
       setMultiplier(1);
     }
 
-    if (isPracticeMode) {
+    if (gameMode === "practice") {
       setShowFeedback(true);
     } else {
       handleNextQuestion();
     }
 
-    if (isPracticeMode) {
+    if (gameMode === "practice") {
       toast({
         title: correct ? "Correct! 🎉" : "Incorrect! 😅",
         variant: correct ? "success" : "destructive",
@@ -161,7 +193,20 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     setShowFeedback(false);
     startTimeRef.current = Date.now(); // Reset start time for next question
     console.log("start time: ", startTimeRef.current);
-    if (currentQuestion < questions.length - 1) {
+
+    // Check if we've reached the question limit for modes with fixed counts
+    const questionLimit =
+      typeof modeConfig.questionCount === "number"
+        ? modeConfig.questionCount
+        : questions.length;
+
+    if (currentQuestion < questions.length - 1 && questionsAnswered < questionLimit) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else if (
+      modeConfig.questionCount === "unlimited" &&
+      currentQuestion < questions.length - 1
+    ) {
+      // For unlimited modes, keep going through available questions
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setIsQuizComplete(true);
@@ -182,10 +227,11 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
       {
         quizId,
         totalScore,
+        gameMode,
       },
       {
         onSuccess: () => {
-          if (isPracticeMode) {
+          if (gameMode === "practice") {
             router.push(`/practice/${quizId}`);
           } else {
             router.push(`/results/${quizId}`);
@@ -195,7 +241,19 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     );
   };
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  // Calculate progress based on question count or questions answered
+  const getProgress = () => {
+    if (modeConfig.questionCount === "unlimited") {
+      return 0; // No progress bar for unlimited modes
+    }
+    const total =
+      typeof modeConfig.questionCount === "number"
+        ? modeConfig.questionCount
+        : questions.length;
+    return ((currentQuestion + 1) / total) * 100;
+  };
+
+  const progress = getProgress();
 
   // needed to calculate the streak multiplier
   const calculateMultiplier = (currentStreak: number) => {
@@ -263,18 +321,25 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
     );
   }
 
+  // Instructions view needs scrolling, quiz view needs centering
+  if (!isGameStarted) {
+    return (
+      <div className="w-full h-full overflow-y-auto">
+        <Instructions
+          gameMode={gameMode}
+          setIsGameStarted={setIsGameStarted}
+          startTimeRef={startTimeRef}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full flex flex-col items-center sm:p-4 gap-4">
+    <div className="w-full h-full flex flex-col items-center justify-center sm:p-4 gap-4">
       <h1 className="hidden sm:block text-center text-accent-red text-outline-thick animate-retro-glow">
         Drug or Pokémon?
       </h1>
-      {!isGameStarted ? (
-        <Instructions
-          setIsGameStarted={setIsGameStarted}
-          setIsPracticeMode={setIsPracticeMode}
-          startTimeRef={startTimeRef}
-        />
-      ) : isPracticeMode ? (
+      {gameMode === "practice" ? (
         <PracticeQuiz
           progress={progress}
           showFeedback={showFeedback}
@@ -296,6 +361,9 @@ export default function QuizComponent({ quiz }: { quiz: Quiz }) {
           startTimeRef={startTimeRef}
           handleQuizComplete={handleQuizComplete}
           handleAnswer={handleAnswer}
+          gameMode={gameMode}
+          lives={lives}
+          questionsAnswered={questionsAnswered}
         />
       )}
     </div>

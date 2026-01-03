@@ -4,7 +4,7 @@ import { CardContent } from "@/components/ui/card";
 
 import { Users, Award, Settings, Loader2, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Fact, QuizAttempt } from "@prisma/client";
+import { Fact, QuizAttempt } from "@/generated/prisma/browser";
 import { useQuery } from "@tanstack/react-query";
 import {
   Carousel,

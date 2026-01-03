@@ -1,8 +1,14 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+// Create the PostgreSQL adapter with the connection string
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
 
 // Ensure the prisma instance is only created once
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  return new PrismaClient({ adapter });
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;

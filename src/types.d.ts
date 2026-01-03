@@ -1,27 +1,4 @@
-import type { DefaultUser } from "next-auth";
+// BetterAuth types are automatically inferred from the auth configuration
+// See src/lib/auth.ts for the Session type export
 
-/**
- * stack overflow articles for role based access controls
- * @see https://stackoverflow.com/questions/70409219/get-user-id-from-session-in-next-auth-client
- * @see https://stackoverflow.com/questions/74425533/property-role-does-not-exist-on-type-user-adapteruser-in-nextauth
- */
-declare module "next-auth" {
-  interface Session {
-    user?: DefaultUser & {
-      id: string;
-      isAdmin: boolean;
-    };
-  }
-
-  interface User extends DefaultUser {
-    id: string;
-    isAdmin: boolean;
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-    isAdmin: boolean;
-  }
-}
+// Additional type declarations can be added here as needed

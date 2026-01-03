@@ -9,13 +9,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { Session } from "next-auth";
+import { authClient } from "@/lib/auth-client";
+import { redirect, useRouter } from "next/navigation";
+import type { Session } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function AppHeader({ session }: { session: Session | null }) {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+          router.refresh();
+        },
+      },
+    });
+  };
+
   return (
     <header className="sticky top-0 w-full z-50 ">
       <div className="flex items-center gap-2 justify-between w-full max-w-5xl mx-auto bg-primary-light backdrop-blur-sm border-[6px] border-t-0 rounded-lg rounded-t-none p-2 sm:p-4 px-6 sm:px-8">
@@ -58,7 +71,7 @@ export default function AppHeader({ session }: { session: Session | null }) {
                   Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => signOut({ redirectTo: "/" })}
+                  onClick={handleSignOut}
                   className="hover:bg-accent-red hover:text-primary cursor-pointer"
                 >
                   <LogOut className="mr-2 h-5 w-5" />

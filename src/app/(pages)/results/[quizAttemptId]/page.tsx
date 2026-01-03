@@ -1,12 +1,15 @@
 import React from "react";
 import TimedResults from "@/components/results/timed";
 import prisma from "@/lib/db/prisma";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 type tParams = Promise<{ quizAttemptId: string }>;
 
 export default async function ResultsPage(props: { params: tParams }) {
-  const session = await auth();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const username = session?.user.name;
 
   const { quizAttemptId } = await props.params;

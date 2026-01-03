@@ -3,7 +3,7 @@ import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { DosageFormIcon } from "@/lib/utils/dosage-form";
-import { DosageForm } from "@prisma/client";
+import { DosageForm } from "@/generated/prisma/browser";
 import { Questions } from "@/lib/validation/types/quiz";
 
 interface PracticeQuizProps {
