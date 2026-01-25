@@ -26,7 +26,8 @@
       "Bash(node --version:*)",
       "Bash(git mv:*)",
       "Bash(npx next build:*)",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "mcp__Neon__list_projects"
     ]
   }
 }
