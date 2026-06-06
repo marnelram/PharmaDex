@@ -3,8 +3,10 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "PharmaDex",
   description: "A quiz app to test your knowledge on drugs and Pokémon.",
 };
